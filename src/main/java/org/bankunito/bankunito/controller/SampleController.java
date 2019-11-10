@@ -5,6 +5,7 @@
  */
 package org.bankunito.bankunito.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.bankunito.bankunito.dao.model.User;
+import org.bankunito.bankunito.dao.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +32,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/sample")
 public class SampleController {
+    
+    @Autowired
+    private UserRepository userRepository;
     
     /*
     Esempio 1: richiesta GET dell'url /sample/test
@@ -95,6 +102,21 @@ public class SampleController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody TestObject echo(@Valid @ModelAttribute TestObject test){
         return test;
+    }
+    
+    @RequestMapping(value = "/users",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody List<User> getUsers(){
+        return userRepository.findAll();
+    }
+    
+    @RequestMapping(value = "/adduser",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String addUser(@Valid @ModelAttribute User user){
+        userRepository.save(user);
+        return "redirect:/sample/users";
     }
     
     @Data
