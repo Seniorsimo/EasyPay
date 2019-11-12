@@ -5,15 +5,15 @@
  */
 package org.bankunito.bankunito.dao.repository;
 
-import org.bankunito.bankunito.dao.model.User;
+import java.util.List;
+import org.bankunito.bankunito.dao.model.SpringSession;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author simo
  */
-@Repository
-public interface UserRepository extends JpaRepository<User, String>{
+public interface SpringSessionRepository extends JpaRepository<SpringSession, String>{
     
+    public List<SpringSession> findAllByUsername(String username);
 }
