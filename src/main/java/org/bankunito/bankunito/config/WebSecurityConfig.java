@@ -96,7 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/js/**",
                         "/jquery/**",
                         "/error",
-                        "/login*").permitAll()
+                        "/login*",
+                        "/register*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
