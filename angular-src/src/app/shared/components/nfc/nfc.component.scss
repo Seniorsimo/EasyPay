@@ -1,0 +1,21 @@
+%color {
+  color: gold;
+}
+
+.nfc-icon {
+  @extend %color;
+  $nfc-icon-size: 60px;
+  width: $nfc-icon-size;
+  height: $nfc-icon-size;
+
+  & ::ng-deep svg {
+    width: $nfc-icon-size;
+    height: $nfc-icon-size;
+  }
+}
+
+.nfc-message {
+  @extend %color;
+  margin: auto;
+  max-width: 300px;
+}

@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      // apre easyPay per pagare
+      function openEasyPay(idConto, prezzo) {
+        console.log('apertura easypay');
+        // modificare l'url per le esigenze
+        const easyPayOrigin = 'http://localhost:4200';
+        const url = easyPayOrigin + '/home/pin?idConto='+idConto+'&prezzo='+prezzo;
+        const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
+      }
+
+      window.addEventListener('message', receiveMessage, false);
+
+      function receiveMessage(event) {
+        // controllo dell' origine per controlli di sicurezza
+        // if (event.origin !== 'http://localhost:4200') return;
+
+        // contenuto del messaggio che determinerà il successo del pagamento
+        // event.data
+        document.getElementById('success').style.display = "block";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Esempio di Utilizzo</h1>
+    <div>
+      <p>Gelateria</p>
+      <p>4 euro</p>
+      <button onclick="openEasyPay('001', 4)">Paga</button>
+    </div>
+    <div id="success" style="display:none"> Pagato! :) </div>
+    <div id="failed" style="display:none"> Pagamento fallito! :( </div>
+  </body>
+</html>
