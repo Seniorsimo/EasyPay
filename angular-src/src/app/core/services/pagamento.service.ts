@@ -38,11 +38,11 @@ export class PrezzoService {
       this.clienteService.cliente$.value.id,
       this.prezzo$.value
     ).subscribe(result => {
-      const response = {timestamp: new Date().toTimeString() };
+      const response = { timestamp: new Date().getTime() };
       if (result.success) {
         if (window.opener) {
-          window.opener.postMessage(JSON.stringify({success: true,  ...response }), '*');
-          setInterval(() => window.close(), 1000 );
+          window.opener.postMessage(JSON.stringify({ success: true, ...response }), '*');
+          setInterval(() => window.close(), 1000);
         } else {
           console.error('Impossibile chiudere pagina');
         }
@@ -50,8 +50,11 @@ export class PrezzoService {
         const titleLabel = 'Impossibile procedere con il pagamento';
         const message = 'Ricaricare il conto';
         const error: CustomError = { type: CUSTOM_ERROR, name: result.error.id, message: result.error.message };
-        window.opener.postMessage(JSON.stringify({success: false, ...result.error, ...response }), '*');
-        setInterval(() => window.close(), 1000 );
+        window.opener.postMessage(
+          JSON.stringify({ success: false, erroCode: result.error.id, errorMessage: result.error.message, ...response }),
+          '*'
+        );
+        setInterval(() => window.close(), 1000);
         this.router.navigateByUrl(`/error?titleLabel=${titleLabel}&content=${message}&error=${JSON.stringify(error)}`);
       }
     });
