@@ -15,10 +15,23 @@
       function receiveMessage(event) {
         // controllo dell' origine per controlli di sicurezza
         // if (event.origin !== 'http://localhost:4200') return;
+        try {
+          const response = JSON.parse(event.data);
+          if(response.success) {
+            document.getElementById('success').style.display = "block";
+            document.getElementById('failed').style.display = "none";
+          } else {
+            document.getElementById('success').style.display = "none";
+            document.getElementById('failed').style.display = "block";
+          }
+        }
+        catch (e) {
+          consol.error(e);
+        }
 
         // contenuto del messaggio che determinerà il successo del pagamento
         // event.data
-        document.getElementById('success').style.display = "block";
+
       }
     </script>
   </head>
