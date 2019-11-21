@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.bankunito.bankunito.controller;
+package org.easypay.easypay.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @author simo
  */
 @Controller
-public class HomeController {
+public class DemoController {
     
     @GetMapping("/")
     public ModelAndView home(){
-        return new ModelAndView("home");
+        return new ModelAndView("demo");
     }
     
 }

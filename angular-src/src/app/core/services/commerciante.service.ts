@@ -33,7 +33,7 @@ export class CommercianteService {
     }
 
     return this.httpClient
-      .get<ApiResponse<Commerciante>>('/api/commercianti', { params: { idConto } })
+      .get<ApiResponse<Commerciante>>(`/api/commercianti/${idConto}`)
       .pipe(
         map(result => {
           if (result && result.success) {

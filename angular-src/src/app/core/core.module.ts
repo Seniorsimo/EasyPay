@@ -17,7 +17,7 @@ import { PrezzoService } from './services/pagamento.service';
 export class CoreModule {
   constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
     // aggiunge le nuova svg a material
-    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('../../assets/svgs/mdi.svg'));
+    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('assets/svgs/mdi.svg'));
     // matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('../../assets/fonts/materialdesignicons-webfont.woff'));
   }
 
