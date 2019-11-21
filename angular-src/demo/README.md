@@ -1,4 +1,7 @@
-Un semplice file di demo utilizzato per mostrare il metodo di implementazione
+# EASYPAY DEMO
+Un semplice file di demo utilizzato per mostrare come implementare correttamente easyPay.
+
+In seguito saranno presenti i passaggi fondamentali, mentre in index.html è presente un esempio completo di implementazione.
 
 EasyPay va aperto tramite windows.open passando i parametri **idConto** e **prezzo** (valore numerico) che indicano rispettivamente l'id del commerciante e il prezzo da pagare.
 
@@ -35,5 +38,43 @@ interface Response {
   errorMessage?: string;
   /** data di avvenuto pagamento */
   timestamp: number;
+}
+```
+
+## Dati del Mock
+
+
+```js
+const commercianti = {
+  '001': {
+    idConto: '001',
+    nome: 'Mario Rossi',
+    nomenclatura: 'Gelateria Buongustario',
+  },
+  '002': {
+    idConto: '002',
+    nome: 'Paolo Bianco',
+    nomenclatura: 'Pizzeria Bufalona',
+  }
+}
+```
+
+
+```js
+const clienti = {
+  '0010001': {
+    id: '001',
+    pin: '0001',
+    token: '0001',
+    nome: 'Paolo Pioppo',
+    budget: 5000,
+  },
+  '0020002': {
+    id: '002',
+    pin: '0002',
+    token: '0002',
+    nome: 'Anna Dico',
+    budget: 2,
+  }
 }
 ```
