@@ -48,8 +48,6 @@ public class Application extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/images/**").addResourceLocations("/img/");
         registry.addResourceHandler("/img/**").addResourceLocations("/img/");
         registry.addResourceHandler("/js/**").addResourceLocations("/js/");
-        // registry.addResourceHandler("/easypay-online/**").addResourceLocations("/easypay-online/");
-        // registry.addResourceHandler("/assets/**").addResourceLocations("/easypay-online/assets/");
 
         registry.addResourceHandler("/easypay-online/**/*")
                 .addResourceLocations("/easypay-online/")

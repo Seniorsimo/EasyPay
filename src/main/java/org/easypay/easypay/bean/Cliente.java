@@ -7,15 +7,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "COMMERCIANTE")
-public class Commerciante {
+@Entity(name = "CLIENTE")
+public class Cliente implements Serializable {
+
+    String id;
+    String pin;
     @Id
-    String idConto;
+    String token;
     String nome;
-    String nomenclatura;
+    Integer budget;
 }
