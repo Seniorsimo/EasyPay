@@ -21,13 +21,21 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import java.io.IOException;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  *
  * @author simo
  */
-@SpringBootApplication
 @Configuration
+@EnableJpaAuditing
+@EnableJpaRepositories
+@SpringBootApplication
+@EntityScan(basePackages = "org.easypay.easypay.dao.entity")
+@ComponentScan(basePackages = "org.easypay.easypay")
 public class Application extends WebMvcConfigurerAdapter {
 
     private static Logger LOG = Logger.getLogger(Application.class);
