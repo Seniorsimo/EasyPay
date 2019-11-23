@@ -3,17 +3,30 @@ package org.easypay.easypay.controller;
 import java.util.List;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.bean.Response;
-import org.easypay.easypay.bean.ResponseError;
+//import org.easypay.easypay.bean.ResponseError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Transient;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.apache.log4j.Logger;
+import org.easypay.easypay.dao.exception.CustomException;
+import org.easypay.easypay.dao.exception.InvalidRequestException;
+import org.easypay.easypay.dao.exception.NotFoundException;
+import org.easypay.easypay.dao.exception.WrongPinException;
 import org.easypay.easypay.dao.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 
 @RestController
 @RequestMapping("/api")
 public class ClienteController {
+    
+    private static final Logger LOG = Logger.getLogger(ClienteController.class);
 
     @Autowired
     private ClientRepository clientRepository;
@@ -24,33 +37,63 @@ public class ClienteController {
         clientRepository.save(Cliente.builder().id("002").pin("0002").token("0020002").nome("Anna Dico").budget(5).build());
     }
 
+    @ExceptionHandler(CustomException.class)
+    public Response handleNotFound(CustomException exception) {
+        return Response.create(exception);
+    }
+
+    //se usi postman per testare, rimuovi lh'header: application/x-www-form-urlencoded
     @PostMapping("/clienti")
-    public Response getCliente(@RequestParam("id") String id, @RequestParam("pin") String pin, @RequestParam("token") String token) {
-        if (id != null && pin != null) {
-            return this.getClienteById(id, pin);
-        } else if (token != null) {
-            return this.getClienteByToken(token);
-        } else {
-            return Response.builder().success(false).error(new ResponseError("NO_COUNT", "conto dell'utente non trovato")).build();
+    public Response getCliente(@Valid LoginForm loginForm, BindingResult result) {
+        if (!result.hasErrors()) {
+            switch (loginForm.getType()) {
+                case ID_AND_PIN:
+                    return getClienteById(loginForm.getId(), loginForm.getPin());
+                case TOKEN:
+                    return getClienteByToken(loginForm.getToken());
+                default:
+                    throw new InvalidRequestException(Cliente.class.getName());
+            }
         }
+        LOG.error(result.getAllErrors());
+        throw new InvalidRequestException(Cliente.class.getName());
     }
 
     private Response getClienteById(@NotNull String id, @NotNull String pin) {
-        Cliente cliente = clientRepository.findById(id).orElse(null);
-        if (cliente != null && cliente.getPin().equals(pin)) {
-            return Response.builder().success(true).body(cliente).build();
-        } else {
-            return Response.builder().success(false).error(new ResponseError("NO_COUNT", "conto dell'utente non trovato")).build();
+        Cliente cliente = clientRepository.findById(id).orElseThrow(() -> new NotFoundException(Cliente.class.getName(), "id", id));
+        if (cliente.getPin().equals(pin)) {
+            return Response.create(cliente);
         }
+        throw new WrongPinException(Cliente.class.getName());
     }
 
     private Response getClienteByToken(@NotNull String token) {
         List<Cliente> clienti = clientRepository.findAllByToken(token);
-        Cliente cliente = null;
-        if (clienti != null && clienti.size() == 1 && (cliente = clienti.get(0)) != null) {
-            return Response.builder().success(true).body(cliente).build();
-        } else {
-            return Response.builder().success(false).error(new ResponseError("NO_COUNT", "conto dell'utente non trovato")).build();
+        if (clienti.size() < 1) {
+            throw new NotFoundException(Cliente.class.getName(), "token", token);
+        }
+        return Response.create(clienti.get(0));
+    }
+
+    @Data
+    @RequiredArgsConstructor
+    public static class LoginForm {
+
+        public enum LoginType {
+            ID_AND_PIN, TOKEN, INVALID
+        }
+
+        private String id, pin, token;
+
+        @Transient
+        protected LoginType getType() {
+            if (id != null && !id.isEmpty() && pin != null && !pin.isEmpty()) {
+                return LoginType.ID_AND_PIN;
+            }
+            if (token != null && !token.isEmpty()) {
+                return LoginType.TOKEN;
+            }
+            return LoginType.INVALID;
         }
     }
 
