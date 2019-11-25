@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { numericValidator } from '../../directives/numeric.directive';
-import { ClienteService, PrezzoService, CUSTOM_ERROR } from 'src/app/core';
+import { ClienteService, PrezzoService, CUSTOM_ERROR } from '../../../core';
 
 @Component({
   selector: 'app-pin',

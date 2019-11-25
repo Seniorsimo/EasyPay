@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "body": {
+    "idConto": "001",
+    "nome": "Mario Rossi",
+    "nomenclatura": "Gelateria Buongustario"
+  }
+}

@@ -62,13 +62,11 @@ export class PrezzoService {
 
   /** effettua il pagamento e da un esito dell' operazione  */
   pagamento(idCommerciante: string, idCliente: string, prezzo: number) {
-    const params: ApiRequest<any> = {
-      payload: {
-        idCommerciante,
-        idCliente,
-        prezzo
-      }
+    const params = {
+      idCommerciante,
+      idCliente,
+      prezzo, // : prezzo + ''
     };
-    return this.http.post<ApiResponse<{ success: boolean; error?: { id: string; message: string } }>>('/api/pagamento', params);
+    return this.http.post<ApiResponse<{ success: boolean; error?: { id: string; message: string } }>>('/api/pagamenti', params);
   }
 }
