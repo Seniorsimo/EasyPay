@@ -4,6 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Gestisce i redirect dell' applicazione angular per farla funzionare correttamente, per permettere la gestione
+ * del routing internamente
+ */
 @Controller
 @RequestMapping(value = "/easypay-online")
 public class EasyPayController {
