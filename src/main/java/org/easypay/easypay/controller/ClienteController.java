@@ -3,13 +3,11 @@ package org.easypay.easypay.controller;
 import java.util.List;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.bean.Response;
-//import org.easypay.easypay.bean.ResponseError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -25,8 +25,9 @@
         function openEasyPay(idConto, prezzo) {
             console.log('apertura easypay');
             // modificare l'url per le esigenze
-            const easyPayOrigin = "<c:url value="/easypay-online" />";
+            const easyPayOrigin = "/easypay-online";
             const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
+             console.log('apertura easypay: '+url);
             const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
         }
 

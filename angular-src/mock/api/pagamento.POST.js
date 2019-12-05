@@ -31,10 +31,10 @@ const commercianti = {
 
 
 module.exports = function(req, res, log, next) {
-  if(req.body && req.body.payload) {
-    const cliente = clienti[req.body.payload.idCliente];
-    const commerciante = commercianti[req.body.payload.idCommerciante];
-    const prezzo = req.body.payload.prezzo;
+  if(req.body) {
+    const cliente = clienti[req.body.idCliente];
+    const commerciante = commercianti[req.body.idCommerciante];
+    const prezzo = req.body.prezzo;
     if ( cliente && commerciante && prezzo ) {
       if(prezzo <= cliente.budget ) {
         res.json({ success: true }   );

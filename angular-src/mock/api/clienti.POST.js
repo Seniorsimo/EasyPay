@@ -16,8 +16,8 @@ const clienti = {
 }
 
 module.exports = function(req, res, log, next) {
-  const id = (req.query.id + req.query.pin) || req.query.token;
-  if (req.query && clienti[id]) {
+  const id = (req.body.id + req.body.pin) || req.body.token;
+  if (req.body && clienti[id]) {
     res.json({ success: true, body: clienti[id] }   );
   } else {
     res.json({ success: false, error: {id: 'NO_COUNT', message: 'conto dell\'utente non trovato'} }   );

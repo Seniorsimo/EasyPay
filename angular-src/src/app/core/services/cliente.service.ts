@@ -34,19 +34,8 @@ export class ClienteService {
       return throwError(new WrongParamError({id, pin}));
     }
 
-    return this.httpClient
-      .get<ApiResponse<Cliente>>('/api/clienti', { params: { id, pin } })
-      .pipe(
-        map(result => {
-          if (result && result.success) {
-            const cliente = { type: CLIENTE_TYPE, ...result.body };
-            this.cliente$.next(cliente);
-            return cliente;
-          } else {
-            throw { type: CUSTOM_ERROR, name: 'account not found', message: `non è stato possibile trovare l'account` };
-          }
-        })
-      );
+    const params: {id: string, pin: string} =  { id, pin } ;
+    return this._getClient(params);
   }
 
   getClienteByToken(token: string): Observable<Cliente | CustomError> {
@@ -59,8 +48,18 @@ export class ClienteService {
       return throwError(new WrongParamError(token));
     }
 
+    const params: {token: string} = { token };
+    return this._getClient(params);
+  }
+
+  /** effettua la richiesta HTTP per verificare se il login del cliente va a buon fine */
+  private _getClient(params: {id?: string, pin?: string; token?: string}): Observable<Cliente | CustomError> {
+    const formData = new FormData();
+    formData.append('id', params.id);
+    formData.append('pin', params.pin);
+    formData.append('token', params.token);
     return this.httpClient
-      .get<ApiResponse<Cliente>>('/api/clienti', { params: { token } })
+      .post<ApiResponse<Cliente>>('/api/clienti', formData)
       .pipe(
         map(result => {
           if (result && result.success) {
