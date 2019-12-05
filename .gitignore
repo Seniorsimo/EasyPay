@@ -3,4 +3,5 @@ target
 BankUnito.iml
 /angular-src/nbproject/private/
 
-log
+
+*.log
