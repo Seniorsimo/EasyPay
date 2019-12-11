@@ -38,7 +38,7 @@ window.addEventListener('message', receiveMessage, false);
 
 function receiveMessage(event) {
   const response = JSON.parse(event.data);
-
+  
 }
 ```
 
