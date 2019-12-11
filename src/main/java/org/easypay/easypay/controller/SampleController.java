@@ -13,8 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.bankunito.bankunito.dao.model.User;
-import org.bankunito.bankunito.dao.repository.UserRepository;
+import org.easypay.easypay.dao.entity.Commerciante;
+import org.easypay.easypay.dao.repository.CommercianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -32,9 +32,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/sample")
 public class SampleController {
-    
+
     @Autowired
-    private UserRepository userRepository;
+    private CommercianteRepository userRepository;
     
     /*
     Esempio 1: richiesta GET dell'url /sample/test
@@ -107,14 +107,14 @@ public class SampleController {
     @RequestMapping(value = "/users",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody List<User> getUsers(){
+    public @ResponseBody List<Commerciante> getUsers(){
         return userRepository.findAll();
     }
     
     @RequestMapping(value = "/adduser",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String addUser(@Valid @ModelAttribute User user){
+    public String addUser(@Valid @ModelAttribute Commerciante user){
         userRepository.save(user);
         return "redirect:/sample/users";
     }
