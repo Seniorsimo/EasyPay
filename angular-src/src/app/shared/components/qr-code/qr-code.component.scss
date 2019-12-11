@@ -1,0 +1,26 @@
+.qr-reader {
+  width: 100px;
+  margin: auto;
+}
+
+%color {
+  color: gold;
+}
+
+.qr-icon {
+  @extend %color;
+  $nfc-icon-size: 60px;
+  width: $nfc-icon-size;
+  height: $nfc-icon-size;
+
+  & ::ng-deep svg {
+    width: $nfc-icon-size;
+    height: $nfc-icon-size;
+  }
+}
+
+.qr-message {
+  @extend %color;
+  margin: auto;
+  max-width: 300px;
+}

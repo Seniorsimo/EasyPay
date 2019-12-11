@@ -1,0 +1,15 @@
+<!-- scanner -->
+<div [hidden]="!(statusScanner$ | async)">
+  <zxing-scanner
+    class="qr-reader"
+    [formats]="allowedFormats"
+    (scanSuccess)="scanSuccessHandler($event)"
+    (permissionResponse)="readerStatus($event)"
+  ></zxing-scanner>
+</div>
+
+<!-- gestione in caso di scanner disabilitato o non funzionante -->
+<div [hidden]="statusScanner$ | async">
+  <mat-icon svgIcon="qrcode" class="qr-icon"></mat-icon>
+  <div class="qr-message">abilitare il lettore qrcode.</div>
+</div>
