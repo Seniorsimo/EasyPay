@@ -18,14 +18,28 @@
             padding: 20px;
             border: 1px solid;
         }
+
+        .jscode {
+            margin: 10px;
+            white-space: pre;
+            background: #555;
+            color: white;
+            padding: 10px;
+            font-family: "Arial";
+        }
     </style>
 
+    <!--
+     ##################################################################################################################
+     JAVASCRIPT DELLA DEMO
+     ##################################################################################################################
+     -->
     <script type="text/javascript">
         // apre easyPay per pagare
         function openEasyPay(idConto, prezzo) {
             console.log('apertura easypay');
             // modificare l'url per le esigenze
-            const easyPayOrigin = "/easypay-online";
+            const easyPayOrigin = "https://easypay-mock.herokuapp.com/easypay-online";
             const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
              console.log('apertura easypay: '+url);
             const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
@@ -52,9 +66,83 @@
             }
         }
     </script>
+    <!--
+     ##################################################################################################################
+     END JAVASCRIPT DELLA DEMO
+     ##################################################################################################################
+     -->
 </head>
 <body>
-<h1>Esempio di Utilizzo</h1>
+
+<h1>Demo EasyPay Online</h1>
+
+<p>
+    EasyPay è un sistema di pagamento online fittizio, realizzato per un progetto universitario.
+    In questo file è presente un rapido tutorial per l'integrazione di EasyPay Online per permettere il pagamento online.
+
+    NOTA: Attualmente è attivo solo un mock con due possibili commercianti e simulerà il pagamento da parte di 2 utenti.
+    Successivamente sarà possibile effettivamente registrarsi oppure richiedere di essere inseriti nel database
+    come commercianti o utenti.
+</p>
+
+<h2>Integrazione</h2>
+<p>
+    EasyPay va aperto in una nuova finestra del browser tramite <var>windows.open</var> passando i parametri <b>idConto</b> e <b>prezzo</b> (valore numerico) che indicano rispettivamente l'id del commerciante e il prezzo da pagare.
+    Nel mock i valori accettabili da <b>idConto</b> sono 001 e 002.
+</p>
+
+<div class="jscode">
+// const idConto = '001';
+// const prezzo = 30;
+const easyPayOrigin = 'https://easypay-mock.herokuapp.com/';
+const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
+const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
+</div>
+
+<p>Si prosegue quindi ponendosi in ascolto di eventi <strong>message</strong> inviati tramite postMessage (see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">postMessage MDN</a>)</p>
+
+<div class="jscode">
+window.addEventListener('message', receiveMessage, false);
+
+function receiveMessage(event) {
+    const response = JSON.parse(event.data);
+    // use response
+}
+</div>
+
+La risposta ottenuta da easypay è lo stringify di un JSON.
+
+
+<div class="jscode">
+    interface Response {
+      /** true in caso di successo durante il pagamento, false con esito negativo */
+      success: boolean;
+      /** codice dell' errore in caso di fallimento  */
+      errorCode?: string;
+      /** messaggio dell' errore ottenuto durante il pagamento*/
+      errorMessage?: string;
+      /** data di avvenuto pagamento */
+      timestamp: number;
+    }
+</div>
+
+Nota: <var>errorCode</var> ed <var>errorMessage</var> sono presenti solo in caso di errore
+
+
+<h2>Utilizzo di EasyPay</h2>
+Se la richiesta di apertura di una istanza di pagamento è andata a buon fine, si aprirà un tab del browser che chiederà
+al cliente di effettuare il login.
+Come per i commercianti, in basso sono presenti i dati mock di un paio di utenti.
+
+NOTA: Attualmente è possibile effettuare il login e il pagamento tramite il pin (inserimento password) o usando il qrcode
+(l'NFC non è implementato in questa demo, nè lo sara)
+    <!--
+     ##################################################################################################################
+     HTML DELLA DEMO
+     ##################################################################################################################
+     -->
+
+<h1>Esempio (usare crtl+U per visualizzare il codice)</h1>
 <div>
     <div class="blocco">
         <p>Gelateria Buongustario</p>
