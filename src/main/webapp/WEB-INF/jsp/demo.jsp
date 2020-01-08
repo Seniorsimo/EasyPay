@@ -77,12 +77,16 @@
 <h1>Demo EasyPay Online</h1>
 
 <p>
-    EasyPay è un sistema di pagamento online fittizio, realizzato per un progetto universitario.
-    In questo file è presente un rapido tutorial per l'integrazione di EasyPay Online per permettere il pagamento online.
-
-    NOTA: Attualmente è attivo solo un mock con due possibili commercianti e simulerà il pagamento da parte di 2 utenti.
-    Successivamente sarà possibile effettivamente registrarsi oppure richiedere di essere inseriti nel database
-    come commercianti o utenti.
+    EasyPay è una simulazione di pagamento online, ideato per la realizzazione di un progetto universitario.
+</p>
+<p>
+    Nel  file che segue è presente un rapido tutorial che mostra l'integrazione di EasyPay Online con le proprie piattaforme di e-commerce
+    Tale integrazione permette ad un cliente di una piattaforma di procedere al pagamento online sulla piattaforma prescelta.
+</p>
+<p>
+NOTA - Attualmente, nel caso d'uso rappresentato, è attivo un solo mock con due ipotetici commercianti, ai quali due clienti  simuleranno il pagamento.
+    Successivamente sarà possibile registrarsi in maniera effettiva oppure richiedere di essere inseriti nel database con il ruolo di commerciante oppure di cliente.
+    (Anche i commercianti sono utenti del servizio)
 </p>
 
 <h2>Integrazione</h2>
@@ -132,10 +136,10 @@ Nota: <var>errorCode</var> ed <var>errorMessage</var> sono presenti solo in caso
 <h2>Utilizzo di EasyPay</h2>
 Se la richiesta di apertura di una istanza di pagamento è andata a buon fine, si aprirà un tab del browser che chiederà
 al cliente di effettuare il login.
-Come per i commercianti, in basso sono presenti i dati mock di un paio di utenti.
+Come per i commercianti, in basso sono presenti i dati mock di un paio di acquirenti.
 
-NOTA: Attualmente è possibile effettuare il login e il pagamento tramite il pin (inserimento password) o usando il qrcode
-(l'NFC non è implementato in questa demo, nè lo sara)
+ NOTA - Attualmente sono in grado di essere effettuate due azioni principali: la fase di login e quella di pagamento. In entrambe le casistiche, è possibile procedere tramite "pin"
+(con l'inserimento di una password) oppure per mezzo di qrcode (cui si evidenzia che l'NFC non è stato implementato nella seguente demo, nè si è deciso di considerare un futuro sviluppo).
     <!--
      ##################################################################################################################
      HTML DELLA DEMO
