@@ -5,7 +5,7 @@
  */
 package org.easypay.easypay.dao.repository;
 
-import org.easypay.easypay.dao.entity.Commerciante;
+import org.easypay.easypay.dao.entity.Conto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author simo
  */
 @Repository
-public interface CommercianteRepository extends JpaRepository<Commerciante, Long> {
+public interface ContoRepository extends JpaRepository<Conto, Long> {
 
+//    public List<Utente> findAllByToken(String token);
 }

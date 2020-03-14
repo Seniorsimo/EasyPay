@@ -5,26 +5,32 @@
  */
 package org.easypay.easypay;
 
+import java.io.IOException;
+import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
+import org.easypay.easypay.dao.entity.Cliente;
+import org.easypay.easypay.dao.entity.Commerciante;
+import org.easypay.easypay.dao.entity.Conto;
+import org.easypay.easypay.dao.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
-import java.io.IOException;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  *
@@ -49,7 +55,7 @@ public class Application extends WebMvcConfigurerAdapter {
 //            LOG.info(beanName);
 //        }
     }
-    
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("/css/");
@@ -83,5 +89,57 @@ public class Application extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+    @Component
+    public static class Initializer {
+
+        @Autowired
+        private AtmRepository atmRepository;
+        @Autowired
+        private ClientRepository clientRepository;
+        @Autowired
+        private CommercianteRepository commercianteRepository;
+        @Autowired
+        private ContoRepository contoRepository;
+        @Autowired
+        private MovimentoRepository movimentoRepository;
+        @Autowired
+        private PagamentoRepository pagamentoRepository;
+        @Autowired
+        private RicaricaRepository ricaricaRepository;
+        @Autowired
+        private UtenteRepository utenteRepository;
+
+        @PostConstruct
+        public void init() {
+            Cliente cliente1 = clientRepository.save(Cliente.builder()
+                    .nome("Paolo")
+                    .cognome("Pioppo")
+                    .pin("password")
+                    .cf("ASDFGHJKLPOIUYTRE")
+                    .build());
+            Cliente cliente2 = clientRepository.save(Cliente.builder()
+                    .nome("Anna")
+                    .cognome("Dico")
+                    .pin("password")
+                    .cf("SNHFAIHCFIUHFCUHACUHND")
+                    .build());
+            Commerciante comm1 = commercianteRepository.save(Commerciante.builder()
+                    .ragSoc("Pizzeria Mare Blu")
+                    .pin("password")
+                    .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
+                    .build());
+            Commerciante comm2 = commercianteRepository.save(Commerciante.builder()
+                    .ragSoc("Osteria Bella Napoli")
+                    .pin("password")
+                    .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
+                    .build());
+            Conto contoCliente1 = contoRepository.save(Conto.builder()
+                    .utente(cliente1)
+                    .budget(20)
+                    .saldo(100)
+                    .build());
+        }
+
+    }
 
 }

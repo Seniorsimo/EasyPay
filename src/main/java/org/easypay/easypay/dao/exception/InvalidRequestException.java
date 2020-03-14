@@ -18,9 +18,9 @@ public class InvalidRequestException extends CustomException {
     private static final String ERROR_CODE = "INVALID_REQUEST";
     private final String resourceName;
 
-    public InvalidRequestException(String resourceName) {
+    public InvalidRequestException(Class<?> c) {
         super(ERROR_CODE, "Invalid request");
-        this.resourceName = resourceName;
+        this.resourceName = c.getSimpleName();
     }
 
     public String getResourceName() {

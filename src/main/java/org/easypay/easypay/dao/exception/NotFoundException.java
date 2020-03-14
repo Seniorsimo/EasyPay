@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(value = HttpStatus.OK)
 public class NotFoundException extends CustomException {
-    
+
     private static final String ERROR_CODE = "NO_COUNT";
 
     private final String resourceName;
     private final String fieldName;
     private final Object fieldValue;
 
-    public NotFoundException(String resourceName, String fieldName, Object fieldValue) {
-        super(ERROR_CODE, String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
-        this.resourceName = resourceName;
+    public NotFoundException(Class<?> c, String fieldName, Object fieldValue) {
+        super(ERROR_CODE, String.format("%s not found with %s : '%s'", c.getSimpleName(), fieldName, fieldValue));
+        this.resourceName = c.getSimpleName();
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
     }
