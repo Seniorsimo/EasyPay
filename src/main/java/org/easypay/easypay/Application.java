@@ -112,25 +112,29 @@ public class Application extends WebMvcConfigurerAdapter {
         @PostConstruct
         public void init() {
             Cliente cliente1 = clientRepository.save(Cliente.builder()
+                    .username("user1")
+                    .pin("password")
                     .nome("Paolo")
                     .cognome("Pioppo")
-                    .pin("password")
                     .cf("ASDFGHJKLPOIUYTRE")
                     .build());
             Cliente cliente2 = clientRepository.save(Cliente.builder()
+                    .username("user2")
+                    .pin("password")
                     .nome("Anna")
                     .cognome("Dico")
-                    .pin("password")
                     .cf("SNHFAIHCFIUHFCUHACUHND")
                     .build());
             Commerciante comm1 = commercianteRepository.save(Commerciante.builder()
-                    .ragSoc("Pizzeria Mare Blu")
+                    .username("user3")
                     .pin("password")
+                    .ragSoc("Pizzeria Mare Blu")
                     .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
                     .build());
             Commerciante comm2 = commercianteRepository.save(Commerciante.builder()
-                    .ragSoc("Osteria Bella Napoli")
+                    .username("user4")
                     .pin("password")
+                    .ragSoc("Osteria Bella Napoli")
                     .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                     .build());
             Conto contoCliente1 = contoRepository.save(Conto.builder()
