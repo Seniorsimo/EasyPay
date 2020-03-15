@@ -19,7 +19,7 @@ public class WrongPinException extends CustomException {
     private final String resourceName;
 
     public WrongPinException(Class<?> c) {
-        super(ERROR_CODE, "Wrong pin");
+        super(HttpStatus.BAD_REQUEST, ERROR_CODE, "Wrong pin");
         this.resourceName = c.getSimpleName();
     }
 

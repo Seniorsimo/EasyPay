@@ -22,7 +22,7 @@ public class NotFoundException extends CustomException {
     private final Object fieldValue;
 
     public NotFoundException(Class<?> c, String fieldName, Object fieldValue) {
-        super(ERROR_CODE, String.format("%s not found with %s : '%s'", c.getSimpleName(), fieldName, fieldValue));
+        super(HttpStatus.NOT_FOUND, ERROR_CODE, String.format("%s not found with %s : '%s'", c.getSimpleName(), fieldName, fieldValue));
         this.resourceName = c.getSimpleName();
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;

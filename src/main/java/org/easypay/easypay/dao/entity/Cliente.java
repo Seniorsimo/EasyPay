@@ -19,8 +19,8 @@ public class Cliente extends Utente {
     private String cf;
 
     @Builder
-    public Cliente(String nome, String cognome, String pin, String cf) {
-        super(pin);
+    public Cliente(String username, String pin, String nome, String cognome, String cf) {
+        super(username, pin);
         this.nome = nome;
         this.cognome = cognome;
         this.cf = cf;
