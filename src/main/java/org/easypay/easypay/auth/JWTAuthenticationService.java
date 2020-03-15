@@ -5,13 +5,13 @@
  */
 package org.easypay.easypay.auth;
 
-import java.util.Objects;
 import java.util.Optional;
 import org.easypay.easypay.dao.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,12 +25,14 @@ public class JWTAuthenticationService implements UserAuthenticationService {
     private JWTService jwtService;
     @Autowired
     private UtenteRepository utenteRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public String login(String username, String password) throws BadCredentialsException {
         return utenteRepository
                 .findByUsername(username)
-                .filter(user -> Objects.equals(password, user.getPin()))
+                .filter(user -> passwordEncoder.matches(password, user.getPin()))
                 .map(user -> {
                     String token = jwtService.create(username);
                     user.setToken(token);

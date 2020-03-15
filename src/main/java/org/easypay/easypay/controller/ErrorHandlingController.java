@@ -32,6 +32,7 @@ public interface ErrorHandlingController {
     public static class Error {
 
         private String type, message;
+        private final long timestamp = System.currentTimeMillis();
     }
 
 }

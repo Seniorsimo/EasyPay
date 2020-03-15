@@ -24,6 +24,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -109,31 +110,34 @@ public class Application extends WebMvcConfigurerAdapter {
         @Autowired
         private UtenteRepository utenteRepository;
 
+        @Autowired
+        private PasswordEncoder passwordEncoder;
+
         @PostConstruct
         public void init() {
             Cliente cliente1 = clientRepository.save(Cliente.builder()
                     .username("user1")
-                    .pin("password")
+                    .pin(passwordEncoder.encode("password"))
                     .nome("Paolo")
                     .cognome("Pioppo")
                     .cf("ASDFGHJKLPOIUYTRE")
                     .build());
             Cliente cliente2 = clientRepository.save(Cliente.builder()
                     .username("user2")
-                    .pin("password")
+                    .pin(passwordEncoder.encode("password"))
                     .nome("Anna")
                     .cognome("Dico")
                     .cf("SNHFAIHCFIUHFCUHACUHND")
                     .build());
             Commerciante comm1 = commercianteRepository.save(Commerciante.builder()
                     .username("user3")
-                    .pin("password")
+                    .pin(passwordEncoder.encode("password"))
                     .ragSoc("Pizzeria Mare Blu")
                     .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
                     .build());
             Commerciante comm2 = commercianteRepository.save(Commerciante.builder()
                     .username("user4")
-                    .pin("password")
+                    .pin(passwordEncoder.encode("password"))
                     .ragSoc("Osteria Bella Napoli")
                     .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                     .build());
