@@ -44,7 +44,6 @@ public class JWTAuthenticationService implements UserAuthenticationService {
     public User authenticateByToken(String token) {
         try {
             Object username = jwtService.verify(token).get("username");
-            System.out.println(String.valueOf(username));
             return Optional.ofNullable(username)
                     .flatMap(name -> utenteRepository.findByUsername(String.valueOf(name)))
                     .filter(u -> token.equals(u.getToken()))

@@ -6,11 +6,11 @@
 package org.easypay.easypay.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,8 +19,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -30,14 +30,21 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
  */
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/css/**"),
+            new AntPathRequestMatcher("/images/**"),
+            new AntPathRequestMatcher("/img/**"),
+            new AntPathRequestMatcher("/js/**"),
+            new AntPathRequestMatcher("/favicon.ico"),
             new AntPathRequestMatcher("/register"),
             new AntPathRequestMatcher("/login")
     );
-    private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
+    private static final RequestMatcher API_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/api/**")
+    );
 
     @Autowired
     private TokenAuthenticationProvider authenticationProvider;
@@ -55,16 +62,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
-                .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
+                .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), API_URLS)
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(PUBLIC_URLS).permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .formLogin().disable()
@@ -73,24 +81,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public TokenAuthenticationFilter restAuthenticationFilter() throws Exception {
-        TokenAuthenticationFilter filter = new TokenAuthenticationFilter(PROTECTED_URLS);
-        filter.setAuthenticationManager(authenticationManager());
-        filter.setAuthenticationSuccessHandler(new JWTSuccessAuthenticationHandler());
+    public BasicAuthenticationFilter restAuthenticationFilter() throws Exception {
+        BasicAuthenticationFilter filter = new TokenAuthenticationFilter(authenticationManager());
         return filter;
-    }
-
-//    @Bean
-//    SimpleUrlAuthenticationSuccessHandler successHandler() {
-//        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
-//        successHandler.setRedirectStrategy(new NoRedirectStrategy());
-//        return successHandler;
-//    }
-    @Bean
-    public FilterRegistrationBean disableAutoRegistration(TokenAuthenticationFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.setEnabled(false);
-        return registration;
     }
 
     @Bean

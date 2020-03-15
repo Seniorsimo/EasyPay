@@ -42,6 +42,5 @@ public class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticati
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails ud, UsernamePasswordAuthenticationToken upat) throws AuthenticationException {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
