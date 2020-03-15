@@ -18,7 +18,7 @@ export class QrCodeComponent implements OnInit {
    * scanner.
    * documentazione: https://github.com/zxing-js/ngx-scanner/wiki/Advanced-Usage
    */
-  @ViewChild(ZXingScannerComponent, { static: false })
+  @ViewChild(ZXingScannerComponent)
   scanner: ZXingScannerComponent;
 
   /** determina se è riuscito ad aprire o meno lo scanner */
