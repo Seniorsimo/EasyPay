@@ -20,7 +20,7 @@ public class OutOfBudgetException extends CustomException {
     private final String idCliente;
 
     public OutOfBudgetException(String idCliente) {
-        super(ERROR_CODE, String.format("budget del cliente %s insufficiente", idCliente));
+        super(HttpStatus.BAD_REQUEST, ERROR_CODE, String.format("budget del cliente %s insufficiente", idCliente));
         this.idCliente = idCliente;
     }
 
