@@ -32,7 +32,7 @@ public abstract class Movimento implements Serializable {
     @NotNull
     @ManyToOne
     private Conto conto;
-    @NotNull
+//    @NotNull
     @Min(1)
     private int valore;
 }

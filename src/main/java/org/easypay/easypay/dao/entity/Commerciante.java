@@ -17,8 +17,8 @@ public class Commerciante extends Utente {
     private String pIva;
 
     @Builder
-    public Commerciante(String ragSoc, String pin, String pIva) {
-        super(pin);
+    public Commerciante(String username, String pin, String ragSoc, String pIva) {
+        super(username, pin);
         this.ragSoc = ragSoc;
         this.pIva = pIva;
     }

@@ -34,6 +34,9 @@ public abstract class Utente implements Serializable {
     @GeneratedValue
     private long id;
     @NotBlank
+    @Column(unique = true, nullable = false)
+    private String username;
+    @NotBlank
     @JsonIgnore
     private String pin;
     @JsonIgnore
@@ -60,7 +63,8 @@ public abstract class Utente implements Serializable {
                         : "sconosciuto";
     }
 
-    public Utente(String pin) {
+    public Utente(String username, String pin) {
+        this.username = username;
         this.pin = pin;
     }
 

@@ -19,7 +19,7 @@ public class InvalidRequestException extends CustomException {
     private final String resourceName;
 
     public InvalidRequestException(Class<?> c) {
-        super(ERROR_CODE, "Invalid request");
+        super(HttpStatus.BAD_REQUEST, ERROR_CODE, "Invalid request");
         this.resourceName = c.getSimpleName();
     }
 

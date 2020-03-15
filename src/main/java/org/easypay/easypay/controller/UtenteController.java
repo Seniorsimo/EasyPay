@@ -1,11 +1,11 @@
 package org.easypay.easypay.controller;
 
 import org.apache.log4j.Logger;
-import org.easypay.easypay.bean.Response;
 import org.easypay.easypay.dao.entity.Utente;
 import org.easypay.easypay.dao.exception.NotFoundException;
 import org.easypay.easypay.dao.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +21,13 @@ public class UtenteController implements ErrorHandlingController {
     private UtenteRepository utenteRepository;
 
     @GetMapping("")
-    public Response getAll() {
-        return Response.create(utenteRepository.findAll());
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(utenteRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Response getById(@PathVariable("id") long id) {
-        return Response.create(utenteRepository.findById(id)
+    public ResponseEntity getById(@PathVariable("id") long id) {
+        return ResponseEntity.ok(utenteRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Utente.class, "id", id)));
     }
 
