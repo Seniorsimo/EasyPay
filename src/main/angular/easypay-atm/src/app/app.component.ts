@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { LoadingStatus, LoaderService } from './core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'easypay-atm';
+
+  statusLoader$: BehaviorSubject<LoadingStatus>;
+
+  constructor(
+    public loaderService: LoaderService,
+  ) {
+    this.statusLoader$ = this.loaderService.status$;
+  }
 }

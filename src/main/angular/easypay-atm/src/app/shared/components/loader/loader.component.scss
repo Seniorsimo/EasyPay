@@ -1,0 +1,15 @@
+.logo {
+  $nfc-icon-size: 90px;
+  width: $nfc-icon-size;
+  height: $nfc-icon-size;
+
+  & ::ng-deep svg {
+    width: $nfc-icon-size;
+    height: $nfc-icon-size;
+  }
+
+  position: absolute;
+  top: 195px;
+  left: 50%;
+  transform: translateX(-50%);
+}
