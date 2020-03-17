@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href /easypay-atm/",
-    "build:prod": "ng build --prod --base-href /easypay-atm/",
+    "build": "ng build --base-href /atm/",
+    "build:prod": "ng build --prod --base-href /atm/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
