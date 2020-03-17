@@ -5,8 +5,11 @@
  */
 package org.easypay.easypay.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,15 +28,19 @@ public class PublicEndpointsController {
     @Autowired
     private UserAuthenticationService authenticationService;
 
-    @PostMapping("/login")
-    public ResponseEntity login(
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> login(
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
         try {
-            return ResponseEntity.ok(authenticationService.login(username, password));
+            ObjectMapper om = new ObjectMapper();
+            return ResponseEntity.ok(om.writeValueAsString(authenticationService.login(username, password)));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(e.getMessage());
+        } catch (JsonProcessingException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ex.getMessage());
         }
     }
 
