@@ -41,6 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/images/**"),
             new AntPathRequestMatcher("/img/**"),
             new AntPathRequestMatcher("/js/**"),
+            new AntPathRequestMatcher("/"),
+            new AntPathRequestMatcher("/atm/**"),
+            new AntPathRequestMatcher("/online/**"),
             new AntPathRequestMatcher("/favicon.ico"),
             new AntPathRequestMatcher("/register"),
             new AntPathRequestMatcher("/login")
