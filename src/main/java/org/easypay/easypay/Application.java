@@ -64,14 +64,25 @@ public class Application extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/img/**").addResourceLocations("/img/");
         registry.addResourceHandler("/js/**").addResourceLocations("/js/");
 
-        registry.addResourceHandler("/easypay-online/**/*")
-                .addResourceLocations("/easypay-online/")
+        registry.addResourceHandler("/online/**/*")
+                .addResourceLocations("/online/")
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver() {
                     @Override
                     protected Resource getResource(String resourcePath, Resource location) throws IOException {
                         Resource requestedResource = location.createRelative(resourcePath);
-                        return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/easypay-online/index.html");
+                        return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/online/index.html");
+                    }
+                });
+
+        registry.addResourceHandler("/atm/**/*")
+                .addResourceLocations("/atm/")
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver() {
+                    @Override
+                    protected Resource getResource(String resourcePath, Resource location) throws IOException {
+                        Resource requestedResource = location.createRelative(resourcePath);
+                        return requestedResource.exists() && requestedResource.isReadable() ? requestedResource : new ClassPathResource("/atm/index.html");
                     }
                 });
     }
