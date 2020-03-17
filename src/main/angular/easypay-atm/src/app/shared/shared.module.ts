@@ -13,10 +13,27 @@ import { PinComponent } from './components/pin/pin.component';
 import { QrCodeComponent } from './components/qr-code/qr-code.component';
 import { NumericDirective } from './directives/numeric.directive';
 import { LoginComponent } from './components/login/login.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [QrCodeComponent, NfcComponent, PinComponent, NumericDirective, LoaderComponent, ErrorPageComponent, ErrorComponent, LoginComponent],
-  imports: [CommonModule, CoreModule, MatInputModule, ReactiveFormsModule, ZXingScannerModule],
+  declarations: [
+    QrCodeComponent,
+    NfcComponent,
+    PinComponent,
+    NumericDirective,
+    LoaderComponent,
+    ErrorPageComponent,
+    ErrorComponent,
+    LoginComponent
+  ],
+  imports: [
+    CommonModule,
+    CoreModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    ZXingScannerModule
+  ],
   exports: [LoaderComponent, ErrorComponent]
 })
 export class SharedModule {}
