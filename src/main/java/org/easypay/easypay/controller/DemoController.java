@@ -11,14 +11,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Sample controller
+ *
  * @author simo
  */
 @Controller
 public class DemoController {
-    
+
     @GetMapping("/")
-    public ModelAndView home(){
+    public String home() {
+        return "redirect:/atm";
+    }
+
+    @GetMapping("/demo")
+    public ModelAndView demo() {
         return new ModelAndView("demo");
     }
-    
+
 }
