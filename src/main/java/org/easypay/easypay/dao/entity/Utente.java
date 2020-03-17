@@ -33,7 +33,6 @@ public abstract class Utente implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    @NotBlank
     @Column(unique = true, nullable = false)
     private String username;
     @NotBlank
