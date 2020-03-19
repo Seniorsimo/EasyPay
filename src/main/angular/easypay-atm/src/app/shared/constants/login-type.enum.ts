@@ -1,5 +1,5 @@
 export enum LoginType {
   pin= 'PIN',
-  gr= 'GR',
+  qr= 'QR',
   nfc= 'NFC',
 }

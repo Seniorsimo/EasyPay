@@ -1,6 +1,13 @@
+
+  $marginBorder: 6%;
+
 .container {
   margin-top: 50px;
+  margin-right: $marginBorder;
+  margin-left: $marginBorder;
+}
 
-  margin-right: 3%;
-  margin-left: 3%;
+mat-toolbar-row {
+  margin-right: $marginBorder - 2%;
+  margin-left: $marginBorder - 2%;
 }
