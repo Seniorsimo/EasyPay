@@ -55,7 +55,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/online/"),
             new AntPathRequestMatcher("/online/**"),
             new AntPathRequestMatcher("/favicon.ico"),
+            new AntPathRequestMatcher("/error"),
             new AntPathRequestMatcher("/register"),
+            new AntPathRequestMatcher("/api/login"),
             new AntPathRequestMatcher("/login")
     );
     private static final RequestMatcher API_URLS = new OrRequestMatcher(

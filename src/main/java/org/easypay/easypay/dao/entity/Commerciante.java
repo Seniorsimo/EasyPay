@@ -1,5 +1,6 @@
 package org.easypay.easypay.dao.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import lombok.Builder;
@@ -12,8 +13,18 @@ import lombok.RequiredArgsConstructor;
 public class Commerciante extends Utente {
 
     @NotBlank
+    @ApiModelProperty(
+            position = 10,
+            required = true,
+            value = "Business name"
+    )
     private String ragSoc;
     @NotBlank
+    @ApiModelProperty(
+            position = 11,
+            required = true,
+            value = "VAT number"
+    )
     private String pIva;
 
     @Builder
