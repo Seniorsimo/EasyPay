@@ -8,3 +8,10 @@
 .shadow-border {
   box-shadow: 1px 1px 7px grey;
 }
+
+.centralize {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

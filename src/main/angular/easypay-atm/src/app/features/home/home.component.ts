@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  readonly buttonWidth = '400px';
+  readonly buttonHeight = '250px';
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  gotoPayment() {
+
+  }
+
+  gotoMovements() {
+
   }
 
 }

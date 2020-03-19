@@ -1,7 +1,51 @@
-<p>home works!</p>
-fdfdsfdsfdsf
-dsf
-ds
-fds
-f
-dsf
+<mat-grid-list cols="3" rowHeight="2:1">
+  <mat-grid-tile>
+    <app-big-button
+      class="info_conto"
+      [width]="buttonWidth"
+      [height]="buttonHeight"
+      label="Pagamento"
+      icon="euro"
+      (clickEmitter)="gotoPayment()"
+    ></app-big-button>
+  </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <app-big-button
+      class="info_conto"
+      [width]="buttonWidth"
+      [height]="buttonHeight"
+      label="Info Conto"
+      icon="info"
+      (clickEmitter)="gotoPayment()"
+    ></app-big-button
+  ></mat-grid-tile>
+
+  <mat-grid-tile>
+    <app-big-button
+      class="info_conto"
+      [width]="buttonWidth"
+      [height]="buttonHeight"
+      label="Ricarica"
+      icon="publish"
+      (clickEmitter)="gotoPayment()"
+    ></app-big-button>
+  </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <app-big-button
+      class="info_conto"
+      [width]="buttonWidth"
+      [height]="buttonHeight"
+      label="Movimenti"
+      icon="account_balance_wallet"
+      (clickEmitter)="gotoMovements()"
+    ></app-big-button
+  ></mat-grid-tile>
+
+  <mat-grid-tile colspan="3" rowspan="1">
+    <div class="widget-container shadow-border spam-widget">
+      <app-banner></app-banner>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

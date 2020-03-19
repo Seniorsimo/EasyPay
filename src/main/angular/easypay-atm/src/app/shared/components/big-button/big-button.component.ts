@@ -9,6 +9,12 @@ export class BigButtonComponent implements OnInit {
 
   @Input() label: string;
   @Input() icon: string;
+  @Input() width: string;
+  @Input() height: string;
+
+  get iconSize(): string {
+    return  (parseInt(this.width, 10) / 3) + 'px';
+  }
 
   @Output() clickEmitter: EventEmitter<void> = new  EventEmitter();
 
@@ -20,5 +26,4 @@ export class BigButtonComponent implements OnInit {
   clickEvent(): void {
     this.clickEmitter.next();
   }
-
 }
