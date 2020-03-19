@@ -17,6 +17,7 @@ import { NfcComponent } from './components/nfc/nfc.component';
 import { PinComponent } from './components/pin/pin.component';
 import { QrCodeComponent } from './components/qr-code/qr-code.component';
 import { NumericDirective } from './directives/numeric.directive';
+import { BannerComponent } from './components/banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NumericDirective } from './directives/numeric.directive';
     ErrorPageComponent,
     ErrorComponent,
     LoginComponent,
-    BigButtonComponent
+    BigButtonComponent,
+    BannerComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,6 @@ import { NumericDirective } from './directives/numeric.directive';
     ZXingScannerModule,
     MatGridListModule,
   ],
-  exports: [LoaderComponent, ErrorComponent, LoginComponent, BigButtonComponent, MatGridListModule]
+  exports: [LoaderComponent, ErrorComponent, LoginComponent, BigButtonComponent, MatGridListModule, BannerComponent]
 })
 export class SharedModule {}
