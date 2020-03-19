@@ -1,0 +1,23 @@
+.button-container {
+  width: 120px;
+  height: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.icon-content {
+  background-color: #d5e6f2;
+  padding: 10px 0px 5px 0px;
+}
+
+.label-body {
+  position: relative;
+  height: 36px;
+}
+
+.label {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  left: 0;
+}

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { TemplateComponent } from './features/template/template.component';
+import { RouterModule, Routes } from '@angular/router';
+
 import { HomeComponent } from './features/home/home.component';
-import { LoginComponent } from './shared';
+import { LoginPageComponent } from './features/login-page/login-page.component';
+import { TemplateComponent } from './features/template/template.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/login',
         pathMatch: 'full'
       },
       {
@@ -20,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginPageComponent
       }
     ]
   }

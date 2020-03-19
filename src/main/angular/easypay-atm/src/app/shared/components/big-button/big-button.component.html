@@ -1,0 +1,18 @@
+<!-- <mat-card class="button-container">
+  <mat-card-header></mat-card-header>
+  <mat-card-content>
+    <mat-icon aria-hidden="false">{{icon}}</mat-icon>
+  </mat-card-content>
+  <mat-card-actions>
+    <span>{{label}}</span>
+  </mat-card-actions>
+</mat-card> -->
+
+<div class="button-container shadow-border" (click)="clickEvent()">
+  <div class="icon-content">
+    <mat-icon aria-hidden="false">{{icon}}</mat-icon>
+  </div>
+  <div class="label-body">
+    <span class="label">{{label}}</span>
+  </div>
+</div>
