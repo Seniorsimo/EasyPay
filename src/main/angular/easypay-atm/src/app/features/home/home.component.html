@@ -1,9 +1,7 @@
-<mat-grid-list cols="3" rowHeight="2:1">
+<mat-grid-list cols="3" rowHeight="2:1" gutterSize="30px">
   <mat-grid-tile>
     <app-big-button
-      class="button button--left"
-      [width]="buttonWidth"
-      [height]="buttonHeight"
+      class="button"
       label="Pagamento"
       icon="euro"
       (clickEmitter)="gotoPayment()"
@@ -12,9 +10,7 @@
   <mat-grid-tile></mat-grid-tile>
   <mat-grid-tile>
     <app-big-button
-      class="button button--right"
-      [width]="buttonWidth"
-      [height]="buttonHeight"
+      class="button"
       label="Info Conto"
       icon="info"
       (clickEmitter)="gotoPayment()"
@@ -23,9 +19,7 @@
 
   <mat-grid-tile>
     <app-big-button
-      class="button button--left"
-      [width]="buttonWidth"
-      [height]="buttonHeight"
+      class="button"
       label="Ricarica"
       icon="publish"
       (clickEmitter)="gotoPayment()"
@@ -34,9 +28,7 @@
   <mat-grid-tile></mat-grid-tile>
   <mat-grid-tile>
     <app-big-button
-      class="button button--right"
-      [width]="buttonWidth"
-      [height]="buttonHeight"
+      class="button"
       label="Movimenti"
       icon="account_balance_wallet"
       (clickEmitter)="gotoMovements()"

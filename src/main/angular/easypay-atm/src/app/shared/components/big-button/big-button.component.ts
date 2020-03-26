@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+/**
+ * Nota: <app-big-button> richiede width e height impostati a 100%
+ */
 @Component({
   selector: 'app-big-button',
   templateUrl: './big-button.component.html',
@@ -9,12 +12,6 @@ export class BigButtonComponent implements OnInit {
 
   @Input() label: string;
   @Input() icon: string;
-  @Input() width: string;
-  @Input() height: string;
-
-  get iconSize(): string {
-    return  (parseInt(this.width, 10) / 3) + 'px';
-  }
 
   @Output() clickEmitter: EventEmitter<void> = new  EventEmitter();
 
