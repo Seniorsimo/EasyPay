@@ -4,26 +4,27 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
+      <button mat-menu-item (click)="routingService.gotoHome()">
+        <mat-icon>more_vert</mat-icon>
         <span>Home</span>
       </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
+      <button mat-menu-item (click)="routingService.gotoReload()">
+        <mat-icon>publish</mat-icon>
         <span>Ricarica</span>
       </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
+      <button mat-menu-item (click)="routingService.gotoPayment()">
+        <mat-icon>euro</mat-icon>
         <span>Pagamento</span>
       </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
+      <button mat-menu-item (click)="routingService.gotoMovement()">
+        <mat-icon>account_balance_wallet</mat-icon>
         <span>Movimenti</span>
       </button>
     </mat-menu>
 
     <span class="title-big">EasyPay</span>
     <span class="title-separe"> --> </span>
+    <span class="title-activePage"> {{actSection}} </span>
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="container">

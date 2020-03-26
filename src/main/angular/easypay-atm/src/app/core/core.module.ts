@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ClienteService } from './services/cliente.service';
 import { CommercianteService } from './services/commerciante.service';
 import { PrezzoService } from './services/pagamento.service';
+import { RoutingService } from './services/routing.service';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ export class CoreModule {
         CommercianteService,
         ClienteService,
         PrezzoService,
+        RoutingService,
       ],
     };
   }
