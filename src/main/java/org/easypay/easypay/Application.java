@@ -5,7 +5,11 @@
  */
 package org.easypay.easypay;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.easypay.easypay.dao.entity.Cliente;
@@ -34,7 +38,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -113,8 +119,38 @@ public class Application extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.easypay.easypay.controller"))
-                .paths(PathSelectors.ant("/api/*"))
-                .build();
+                .paths(PathSelectors.ant("/api/**"))
+                .build()
+                .apiInfo(new ApiInfo(
+                        "EasyPay REST API",
+                        "General api to interact with EasyPay service",
+                        "1.0",
+                        "Terms of Service",
+                        new Contact("EasyPay Team", "https://easypay-unito.herokuapp.com/", ""),
+                        "Apache 2.0", // Apache 2.0
+                        "http://www.apache.org/licenses/LICENSE-2.0", // http://www.apache.org/licenses/LICENSE-2.0
+                        Collections.emptyList()
+                ))
+                .securitySchemes(Lists.newArrayList(apiKey()))
+                .securityContexts(Arrays.asList(securityContext()));
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("Bearer", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder().securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any()).build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope(
+                "global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Bearer",
+                authorizationScopes));
     }
 
     @Component
