@@ -11,6 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.easypay.easypay.auth.PublicEndpointsController;
 import org.easypay.easypay.auth.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +50,19 @@ public class LoginController {
         ,
         @ApiResponse(code = 401, message = "Bad credential")
     })
-    public ResponseEntity<String> login(
+    public ResponseEntity<LoginResponse> login(
             @RequestBody PublicEndpointsController.LoginForm form) {
         try {
             ObjectMapper om = new ObjectMapper();
-            return ResponseEntity.ok(om.writeValueAsString(authenticationService.login(form.getUsername(), form.getPassword())));
+            return ResponseEntity.ok(LoginResponse.builder()
+                    .token(om.writeValueAsString(authenticationService.login(form.getUsername(), form.getPassword())))
+                    .build());
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//                    .body(e.getMessage());
         } catch (JsonProcessingException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//                    .body(ex.getMessage());
         }
     }
 
@@ -75,5 +81,14 @@ public class LoginController {
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
+    }
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @RequiredArgsConstructor
+    public static class LoginResponse {
+
+        private String token;
     }
 }
