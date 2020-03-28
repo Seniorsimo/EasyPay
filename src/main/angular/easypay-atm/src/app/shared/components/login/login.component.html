@@ -1,16 +1,22 @@
-<div class="content">
-  <div class="login-body">
-    <div *ngIf="loginType === LoginType.pin" (loginEvent)="login($event)"><app-pin></app-pin></div>
-    <div *ngIf="loginType === LoginType.qr"><app-qr-code></app-qr-code></div>
-    <div *ngIf="loginType === LoginType.nfc"><app-nfc></app-nfc></div>
-  </div>
+<div>
+  <form class="form" [formGroup]="formCrl">
+    <div>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="username*" formControlName="username" />
+        <mat-error *ngIf="formCrl.controls['username'].hasError('required')"> Username <strong>obbligatorio</strong> </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="full-width">
+        <input matInput type="password" placeholder="Password*" formControlName="password"/>
+        <mat-error *ngIf="formCrl.controls['password'].hasError('minLength') || formCrl.controls['password'].hasError('maxLength') || formCrl.controls['password'].hasError('numeric')">
+          il pin è composto da 4-16 cifre <strong>numeriche</strong>
+        </mat-error>
+        <mat-error *ngIf="formCrl.controls['password'].hasError('required')"> pin obbligatorio per il login </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="login">
+        <button mat-button color="primary" [disabled]="formCrl.status === 'INVALID'" (click)="login()">Login</button>
+    </div>
+  </form>
 </div>
-<button mat-icon-button (click)="changeLogin(LoginType.pin)">
-  <mat-icon svgIcon="textbox-password"></mat-icon>
-</button>
-<button mat-icon-button (click)="changeLogin(LoginType.qr)" class="mr-2 ml-2">
-  <mat-icon svgIcon="qrcode"></mat-icon>
-</button>
-<button mat-icon-button (click)="changeLogin(LoginType.nfc)">
-  <mat-icon svgIcon="nfc-variant"></mat-icon>
-</button>

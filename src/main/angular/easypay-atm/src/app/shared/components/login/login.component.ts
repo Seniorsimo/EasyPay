@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginType } from '../../constants/login-type.enum';
-import { RoutingService } from 'src/app/core/services/routing.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/features/login-page/services/login.service';
 
 
@@ -10,21 +9,23 @@ import { LoginService } from 'src/app/features/login-page/services/login.service
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  readonly LoginType = LoginType;
-  public loginType = LoginType.pin;
+  /** controller del form */
+  formCrl: FormGroup;
 
-  constructor(private routingService: RoutingService, private loginService: LoginService) { }
-
-  ngOnInit(): void {
-    this.routingService.updateHeader('Login');
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+  ) {
+    this.formCrl = this.fb.group({
+      username: this.fb.control('', [Validators.required]),
+      password: this.fb.control('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
+    });
   }
 
-  changeLogin(choosenLoginType: LoginType) {
-    this.loginType = choosenLoginType;
-  }
+  ngOnInit() {}
 
-  login({username, password}: { username: string, password: string}) {
-    this.loginService.getToken(username, password);
+  login() {
+    this.loginService.getToken(this.formCrl.value.username, this.formCrl.value.password).subscribe(tokel => {});
   }
 
 }

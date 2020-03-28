@@ -1,0 +1,16 @@
+<div class="content">
+  <div class="login-body">
+    <div *ngIf="loginType === LoginType.pin"><app-pin></app-pin></div>
+    <div *ngIf="loginType === LoginType.qr"><app-qr-code></app-qr-code></div>
+    <div *ngIf="loginType === LoginType.nfc"><app-nfc></app-nfc></div>
+  </div>
+</div>
+<button mat-icon-button (click)="changeLogin(LoginType.pin)">
+  <mat-icon svgIcon="textbox-password"></mat-icon>
+</button>
+<button mat-icon-button (click)="changeLogin(LoginType.qr)" class="mr-2 ml-2">
+  <mat-icon svgIcon="qrcode"></mat-icon>
+</button>
+<button mat-icon-button (click)="changeLogin(LoginType.nfc)">
+  <mat-icon svgIcon="nfc-variant"></mat-icon>
+</button>

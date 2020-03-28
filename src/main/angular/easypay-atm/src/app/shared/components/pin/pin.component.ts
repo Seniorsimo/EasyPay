@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
-import { numericValidator } from '../../directives/numeric.directive';
-
 @Component({
   selector: 'app-pin',
   templateUrl: './pin.component.html',
@@ -19,7 +17,7 @@ export class PinComponent implements OnInit {
   ) {
     this.formCrl = this.fb.group({
       userId: this.fb.control('', [Validators.required]),
-      password: this.fb.control('', [Validators.required, numericValidator(), Validators.minLength(4), Validators.maxLength(16)])
+      password: this.fb.control('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
     });
   }
 
