@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { ApiRoute } from '../../../core';
+import { map } from 'rxjs/operators';
+import { LoginStore } from '../store/login.store';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private _token: string;
+  private pToken: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private loginStore: LoginStore) { }
 
-  getToken(): string {
-    if (this._token === null ||  this._token === undefined) {
-      this._token = this.requestToken();
-    }
-    return this._token;
-  }
-
-  requestToken(username: string, password: string): string {
+  getToken(username: string, password: string) {
     const params = {username, password};
-    return this.http.post<string>('', params);
+    return this.http.post<{token: string}>(ApiRoute.login, params).pipe(map(response => {
+      if (response && response.token) {
+        this.loginStore.token = response.token;
+        return response.token;
+      }
+      return '';
+    }));
   }
 }

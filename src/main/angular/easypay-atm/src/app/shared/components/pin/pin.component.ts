@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { numericValidator } from '../../directives/numeric.directive';
-import { ClienteService, PrezzoService, CUSTOM_ERROR } from '../../../core';
 
 @Component({
   selector: 'app-pin',
@@ -13,10 +12,10 @@ export class PinComponent implements OnInit {
   /** controller del form */
   formCrl: FormGroup;
 
+  @Output() loginEvent = new EventEmitter<{username: string, password: string}>();
+
   constructor(
-    private fb: FormBuilder,
-    private clienteService: ClienteService,
-    private pagamentoService: PrezzoService
+    private fb: FormBuilder
   ) {
     this.formCrl = this.fb.group({
       userId: this.fb.control('', [Validators.required]),
@@ -27,10 +26,6 @@ export class PinComponent implements OnInit {
   ngOnInit() {}
 
   login() {
-    this.clienteService.getClienteByPin(this.formCrl.value.userId, this.formCrl.value.pinCode).subscribe(result => {
-      if (result.type !== CUSTOM_ERROR) {
-        this.pagamentoService.handlePagamento();
-      }
-    });
+    this.loginEvent.emit({username: this.formCrl.value.userId, password: this.formCrl.value.pinCode});
   }
 }

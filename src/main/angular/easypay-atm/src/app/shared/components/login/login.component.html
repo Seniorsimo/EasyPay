@@ -1,6 +1,6 @@
 <div class="content">
   <div class="login-body">
-    <div *ngIf="loginType === LoginType.pin"><app-pin></app-pin></div>
+    <div *ngIf="loginType === LoginType.pin" (loginEvent)="login($event)"><app-pin></app-pin></div>
     <div *ngIf="loginType === LoginType.qr"><app-qr-code></app-qr-code></div>
     <div *ngIf="loginType === LoginType.nfc"><app-nfc></app-nfc></div>
   </div>

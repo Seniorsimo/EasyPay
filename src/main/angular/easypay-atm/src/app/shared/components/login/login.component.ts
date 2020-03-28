@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginType } from '../../constants/login-type.enum';
 import { RoutingService } from 'src/app/core/services/routing.service';
+import { LoginService } from 'src/app/features/login-page/services/login.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   readonly LoginType = LoginType;
   public loginType = LoginType.pin;
 
-  constructor(private routingService: RoutingService) { }
+  constructor(private routingService: RoutingService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.routingService.updateHeader('Login');
@@ -20,6 +21,10 @@ export class LoginComponent implements OnInit {
 
   changeLogin(choosenLoginType: LoginType) {
     this.loginType = choosenLoginType;
+  }
+
+  login({username, password}: { username: string, password: string}) {
+    this.loginService.getToken(username, password);
   }
 
 }

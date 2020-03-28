@@ -1,4 +1,4 @@
-export { RoutersPath } from './constants/routing.constants';
+export * from './constants/routing.constants';
 
 export { PrezzoService } from './services/pagamento.service';
 export { CommercianteService } from './services/commerciante.service';

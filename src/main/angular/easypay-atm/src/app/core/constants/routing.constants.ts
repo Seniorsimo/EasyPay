@@ -7,6 +7,8 @@ export const RoutersPath = {
   reload: '/reload'
 };
 
+export const baseUrl = '';
+
 export const ApiRoute = {
-  login: '/api/login'
+  login: baseUrl + '/api/login'
 };
