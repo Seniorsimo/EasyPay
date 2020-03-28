@@ -20,6 +20,10 @@
         <mat-icon>account_balance_wallet</mat-icon>
         <span>Movimenti</span>
       </button>
+      <button *ngIf="isLogin()" mat-menu-item (click)="logout()">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <span>Movimenti</span>
+      </button>
     </mat-menu>
 
     <span class="title-big">EasyPay</span>

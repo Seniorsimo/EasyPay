@@ -8,6 +8,8 @@ import { ClienteService } from './services/cliente.service';
 import { CommercianteService } from './services/commerciante.service';
 import { PrezzoService } from './services/pagamento.service';
 import { RoutingService } from './services/routing.service';
+import { AuthGuard } from './guards/auth-guard.service';
+import { NoLoginGuard } from './guards/no-login-guard.service';
 
 @NgModule({
   declarations: [],
@@ -30,6 +32,8 @@ export class CoreModule {
         ClienteService,
         PrezzoService,
         RoutingService,
+        AuthGuard,
+        NoLoginGuard,
       ],
     };
   }

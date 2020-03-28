@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RoutingService } from 'src/app/core/services/routing.service';
+import { LoginStore } from '../login-page/store/login.store';
 
 @Component({
   selector: 'app-template',
@@ -13,7 +14,7 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(public routingService: RoutingService) {}
+  constructor(public routingService: RoutingService, private loginStore: LoginStore) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -25,5 +26,15 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+
+  isLogin(): boolean {
+    return !!this.loginStore.token;
+  }
+
+  logout() {
+    this.loginStore.token = undefined;
+    this.routingService.gotoLogin();
   }
 }

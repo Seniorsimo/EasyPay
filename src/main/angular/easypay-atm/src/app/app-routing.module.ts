@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { TemplateComponent } from './features/template/template.component';
+import { AuthGuard } from './core/guards/auth-guard.service';
+import { NoLoginGuard } from './core/guards/no-login-guard.service';
 
 const routes: Routes = [
   {
@@ -17,11 +19,13 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'login',
-        component: LoginPageComponent
+        component: LoginPageComponent,
+        canActivate: [NoLoginGuard],
       }
     ]
   }
