@@ -761,7 +761,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     !*** ./src/app/core/index.ts ***!
     \*******************************/
 
-  /*! exports provided: PrezzoService, CommercianteService, ClienteService, LoaderService, LoadingStatus, RoutersPath, baseUrl, ApiRoute, WrongParamError, CUSTOM_ERROR, COMMERCIANTE_TYPE, CLIENTE_TYPE */
+  /*! exports provided: RoutersPath, baseUrl, ApiRoute, PrezzoService, CommercianteService, ClienteService, LoaderService, LoadingStatus, WrongParamError, CUSTOM_ERROR, COMMERCIANTE_TYPE, CLIENTE_TYPE */
 
   /***/
   function srcAppCoreIndexTs(module, __webpack_exports__, __webpack_require__) {
@@ -3918,7 +3918,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " il pin \xE8 composto da 4 cifre ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " il pin \xE8 composto da 4-16 cifre ");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "strong");
 
@@ -3950,7 +3950,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.loginEvent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.formCrl = this.fb.group({
           userId: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-          pinCode: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, Object(_directives_numeric_directive__WEBPACK_IMPORTED_MODULE_2__["numericValidator"])(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(4)])
+          password: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, Object(_directives_numeric_directive__WEBPACK_IMPORTED_MODULE_2__["numericValidator"])(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16)])
         });
       }
 
@@ -3962,7 +3962,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function login() {
           this.loginEvent.emit({
             username: this.formCrl.value.userId,
-            password: this.formCrl.value.pinCode
+            password: this.formCrl.value.password
           });
         }
       }]);
@@ -3982,7 +3982,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       },
       decls: 16,
       vars: 5,
-      consts: [[1, "form", 3, "formGroup"], [1, "full-width"], ["matInput", "", "placeholder", "ID*", "formControlName", "userId"], [4, "ngIf"], ["matInput", "", "type", "password", "placeholder", "Pin*", "formControlName", "pinCode"], [1, "login"], ["mat-button", "", "color", "primary", 3, "disabled", "click"]],
+      consts: [[1, "form", 3, "formGroup"], [1, "full-width"], ["matInput", "", "placeholder", "ID*", "formControlName", "userId"], [4, "ngIf"], ["matInput", "", "type", "password", "placeholder", "Password*", "formControlName", "password"], [1, "login"], ["mat-button", "", "color", "primary", 3, "disabled", "click"]],
       template: function PinComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
@@ -4051,11 +4051,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["pinCode"].hasError("minLength") || ctx.formCrl.controls["pinCode"].hasError("maxLength") || ctx.formCrl.controls["pinCode"].hasError("numeric"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("minLength") || ctx.formCrl.controls["password"].hasError("maxLength") || ctx.formCrl.controls["password"].hasError("numeric"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["pinCode"].hasError("required"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("required"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 

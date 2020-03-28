@@ -19,13 +19,13 @@ export class PinComponent implements OnInit {
   ) {
     this.formCrl = this.fb.group({
       userId: this.fb.control('', [Validators.required]),
-      pinCode: this.fb.control('', [Validators.required, numericValidator(), Validators.minLength(4), Validators.maxLength(4)])
+      password: this.fb.control('', [Validators.required, numericValidator(), Validators.minLength(4), Validators.maxLength(16)])
     });
   }
 
   ngOnInit() {}
 
   login() {
-    this.loginEvent.emit({username: this.formCrl.value.userId, password: this.formCrl.value.pinCode});
+    this.loginEvent.emit({username: this.formCrl.value.userId, password: this.formCrl.value.password});
   }
 }
