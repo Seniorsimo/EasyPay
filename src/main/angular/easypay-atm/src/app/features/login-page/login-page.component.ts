@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoutingService } from 'src/app/core/services/routing.service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,10 +14,11 @@ export class LoginPageComponent implements OnInit {
 
   private deviceSize = 850;
 
-  constructor() { }
+  constructor(private routingService: RoutingService ) { }
 
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
+    this.routingService.updateHeader('Login');
   }
 
   clickInfo() {

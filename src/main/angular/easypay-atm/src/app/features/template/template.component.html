@@ -1,34 +1,24 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="" [disabled]="menuDisabled()">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="routingService.gotoHome()">
-        <mat-icon>more_vert</mat-icon>
-        <span>Home</span>
-      </button>
-      <button mat-menu-item (click)="routingService.gotoReload()">
-        <mat-icon>publish</mat-icon>
-        <span>Ricarica</span>
-      </button>
-      <button mat-menu-item (click)="routingService.gotoPayment()">
-        <mat-icon>euro</mat-icon>
-        <span>Pagamento</span>
-      </button>
-      <button mat-menu-item (click)="routingService.gotoMovement()">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <span>Movimenti</span>
-      </button>
-      <button *ngIf="isLogin()" mat-menu-item (click)="logout()">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <span>Movimenti</span>
-      </button>
+      <ng-container  *ngFor="let item of menuItems">
+        <button
+          mat-menu-item
+          *ngIf="item.isVisible()"
+          (click)="item.clickEvent()"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </button>
+      </ng-container>
     </mat-menu>
 
     <span class="title-big">EasyPay</span>
     <span class="title-separe"> --> </span>
-    <span class="title-activePage"> {{actSection}} </span>
+    <span class="title-activePage"> {{ actSection }} </span>
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="container">

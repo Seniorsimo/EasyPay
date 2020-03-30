@@ -10,7 +10,7 @@ export class LoginStore {
 
   public get token() {
 
-    return this.pToken || localStorage.getItem('token');
+    return this.pToken || this.getLocalStorage('token');
   }
 
   public set token(token) {
@@ -19,5 +19,10 @@ export class LoginStore {
   }
 
   constructor() { }
+
+
+  private getLocalStorage(variable: string) {
+    return JSON.parse(localStorage[variable] === 'undefined' ? null : localStorage[variable]);
+  }
 
 }
