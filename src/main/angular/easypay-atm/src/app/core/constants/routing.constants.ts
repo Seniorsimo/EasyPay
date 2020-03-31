@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+
 export const RoutersPath = {
   base: '/',
   home: 'home',
@@ -7,8 +9,8 @@ export const RoutersPath = {
   reload: 'reload'
 };
 
-export const baseUrl = '';
+export const baseUrl = environment.apiUrl;
 
 export const ApiRoute = {
-  login: baseUrl + '/api/login',
+  login: baseUrl + 'api/login',
 };

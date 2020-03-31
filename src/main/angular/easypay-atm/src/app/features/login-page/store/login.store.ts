@@ -9,20 +9,30 @@ export class LoginStore {
 
 
   public get token() {
-
-    return this.pToken || this.getLocalStorage('token');
+    if (!this.pToken) {
+      this.pToken = this.getLocalStorage('token');
+    }
+    return this.pToken;
   }
 
   public set token(token) {
     this.pToken = token;
-    localStorage.setItem('token', token);
+    this.setLocalStorage('token', token);
   }
 
   constructor() { }
 
 
-  private getLocalStorage(variable: string) {
-    return JSON.parse(localStorage[variable] === 'undefined' ? null : localStorage[variable]);
+  private getLocalStorage(name: string) {
+    return JSON.parse(!localStorage[name] || localStorage[name] === 'undefined' ? null : localStorage[name]);
+  }
+
+  private setLocalStorage(name: string, value: any) {
+    if (value === undefined) {
+      localStorage.removeItem(value);
+    } else {
+      localStorage.setItem(name, JSON.stringify(value));
+    }
   }
 
 }
