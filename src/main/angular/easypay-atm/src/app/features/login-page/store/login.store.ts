@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from 'src/app/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,29 +11,16 @@ export class LoginStore {
 
   public get token() {
     if (!this.pToken) {
-      this.pToken = this.getLocalStorage('token');
+      this.pToken = this.localStorageService.getItem('token');
     }
     return this.pToken;
   }
 
   public set token(token) {
     this.pToken = token;
-    this.setLocalStorage('token', token);
+    this.localStorageService.setItem('token', token);
   }
 
-  constructor() { }
-
-
-  private getLocalStorage(name: string) {
-    return JSON.parse(!localStorage[name] || localStorage[name] === 'undefined' ? null : localStorage[name]);
-  }
-
-  private setLocalStorage(name: string, value: any) {
-    if (value === undefined) {
-      localStorage.removeItem(value);
-    } else {
-      localStorage.setItem(name, JSON.stringify(value));
-    }
-  }
+  constructor(private localStorageService: LocalStorageService) { }
 
 }
