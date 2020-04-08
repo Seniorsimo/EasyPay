@@ -21,6 +21,7 @@ import { BannerComponent } from './components/banner/banner.component';
 import { RecognitionComponent } from './components/recognition/recognition.component';
 import { MinPipe } from './pipes/min.pipe';
 import { SwitchNumberPipe } from './pipes/switch-number.pipe';
+import { InfoWidgetComponent } from './components/info-widget/info-widget.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     RecognitionComponent,
     MinPipe,
     SwitchNumberPipe,
+    InfoWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     RecognitionComponent,
     MinPipe,
     SwitchNumberPipe,
+    InfoWidgetComponent,
   ],
 })
 export class SharedModule {}

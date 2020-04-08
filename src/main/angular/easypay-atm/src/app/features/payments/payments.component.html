@@ -2,9 +2,13 @@
   <mat-grid-tile colspan="1" rowspan="1">
     <app-recognition class="relative widget-container shadow-border recognition "></app-recognition>
   </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1" [style.backgroundColor]="randomColor()">
+  <mat-grid-tile colspan="1" rowspan="1">
+    <app-info-widget class="relative widget-container shadow-border info-table" title="Personale" numConto="xxxxxxxxxx" name="Franco Rossi" regSocial="Gelateria Buongusto" address=" via colombo, 45, Torino"  ></app-info-widget>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="[2, breakpoint] | min" rowspan="1" [style.backgroundColor]="randomColor()">
+  <mat-grid-tile [colspan]="[2, breakpoint] | min" rowspan="1">
+    <div class="widget-container shadow-border spam-widget">
+      <app-banner></app-banner>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>
 
