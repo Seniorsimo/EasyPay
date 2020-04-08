@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 
 export const RoutersPath = {
-  base: '/',
+  base: '',
   home: 'home',
   login: 'login',
   payment: 'payments',

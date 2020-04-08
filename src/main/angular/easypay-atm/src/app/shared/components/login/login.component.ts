@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoginService } from "src/app/features/login-page/services/login.service";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/features/login-page/services/login.service';
+import { Router } from '@angular/router';
 import { RoutersPath } from 'src/app/core';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   /** controller del form */
@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.formCrl = this.fb.group({
-      username: this.fb.control("", [Validators.required]),
-      password: this.fb.control("", [
+      username: this.fb.control('', [Validators.required]),
+      password: this.fb.control('', [
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(16)

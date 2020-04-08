@@ -9,6 +9,7 @@ export function numericValidator(): ValidatorFn {
   };
 }
 
+/** Direttiva usata per validare se in un HTMLInput ha solo valori numerici */
 @Directive({
   selector: '[appNumeric]',
   providers: [{ provide: NG_VALIDATORS, useExisting: NumericDirective, multi: true }]

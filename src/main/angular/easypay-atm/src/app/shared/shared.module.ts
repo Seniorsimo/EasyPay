@@ -19,6 +19,9 @@ import { QrCodeComponent } from './components/qr-code/qr-code.component';
 import { NumericDirective } from './directives/numeric.directive';
 import { BannerComponent } from './components/banner/banner.component';
 import { RecognitionComponent } from './components/recognition/recognition.component';
+import { MinPipe } from './pipes/min.pipe';
+import { SwitchNumberPipe } from './pipes/switch-number.pipe';
+import { InfoWidgetComponent } from './components/info-widget/info-widget.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { RecognitionComponent } from './components/recognition/recognition.compo
     LoginComponent,
     BigButtonComponent,
     BannerComponent,
-    RecognitionComponent
+    RecognitionComponent,
+    MinPipe,
+    SwitchNumberPipe,
+    InfoWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +50,17 @@ import { RecognitionComponent } from './components/recognition/recognition.compo
     ZXingScannerModule,
     MatGridListModule,
   ],
-  exports: [LoaderComponent, ErrorComponent, LoginComponent, BigButtonComponent, MatGridListModule, BannerComponent, RecognitionComponent]
+  exports: [
+    LoaderComponent,
+    ErrorComponent,
+    LoginComponent,
+    BigButtonComponent,
+    MatGridListModule,
+    BannerComponent,
+    RecognitionComponent,
+    MinPipe,
+    SwitchNumberPipe,
+    InfoWidgetComponent,
+  ],
 })
 export class SharedModule {}
