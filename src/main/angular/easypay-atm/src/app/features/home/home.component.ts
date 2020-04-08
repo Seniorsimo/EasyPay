@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   gotoPayment() {
-
+    this.routingService.gotoPayment();
   }
 
   gotoMovements() {

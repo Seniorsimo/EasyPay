@@ -6,6 +6,8 @@ import { LoginPageComponent } from './features/login-page/login-page.component';
 import { TemplateComponent } from './features/template/template.component';
 import { AuthGuard } from './core/guards/auth-guard.service';
 import { NoLoginGuard } from './core/guards/no-login-guard.service';
+import { PaymentsComponent } from './features/payments/payments.component';
+import { RoutersPath } from './core';
 
 const routes: Routes = [
   {
@@ -13,20 +15,25 @@ const routes: Routes = [
     component: TemplateComponent,
     children: [
       {
-        path: '',
+        path: RoutersPath.base,
         redirectTo: '/login',
         pathMatch: 'full'
       },
       {
-        path: 'home',
+        path: RoutersPath.home,
         component: HomeComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'login',
+        path: RoutersPath.login,
         component: LoginPageComponent,
         canActivate: [NoLoginGuard],
-      }
+      },
+      {
+        path: RoutersPath.payment,
+        component: PaymentsComponent,
+        canActivate: [AuthGuard],
+      },
     ]
   }
 ];

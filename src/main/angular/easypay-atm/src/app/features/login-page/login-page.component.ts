@@ -25,14 +25,8 @@ export class LoginPageComponent implements OnInit {
     console.warn('not yet implement');
   }
 
-  randomColor(): string {
-    // return 'white';
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  onResize(event) {
+    this.breakpoint = (event.target.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
   }
-
-
-onResize(event) {
-  this.breakpoint = (event.target.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
-}
 
 }
