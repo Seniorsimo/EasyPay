@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { LoginStore } from 'src/app/features/login-page/store/login.store';
+import { AuthStore } from 'src/app/features/login-page/store/auth.store';
 import { RoutersPath } from '../constants/routing.constants';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { RoutersPath } from '../constants/routing.constants';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router, private loginStore: LoginStore) { }
+  constructor(private router: Router, private loginStore: AuthStore) { }
 
   canActivate(): boolean {
     if (!this.loginStore.token) {

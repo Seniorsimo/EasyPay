@@ -13,4 +13,5 @@ export const baseUrl = environment.apiUrl;
 
 export const ApiRoute = {
   login: baseUrl + 'api/login',
+  logout: baseUrl + 'api/logout',
 };

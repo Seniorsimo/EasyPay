@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { ApiRequest } from 'src/app/core/models/api.request';
 import { ApiResponse } from 'src/app/core/models/api.response';
 import { ClienteService } from 'src/app/core/services/cliente.service';
 import { CommercianteService } from 'src/app/core/services/commerciante.service';

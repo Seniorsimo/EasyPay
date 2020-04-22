@@ -14,7 +14,7 @@ export class LocalStorageService {
 
   public setItem(name: string, value: any) {
     if (value === undefined) {
-      localStorage.removeItem(value);
+      localStorage.removeItem(name);
     } else {
       localStorage.setItem(name, JSON.stringify(value));
     }

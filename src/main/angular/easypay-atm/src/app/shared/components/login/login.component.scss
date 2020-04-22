@@ -5,3 +5,7 @@
 .login {
   margin-top: 20px;
 }
+
+.join ::ng-deep.mat-button-wrapper {
+  font-size: 0.5em;
+}

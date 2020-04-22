@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/features/login-page/services/login.service';
 import { Router } from '@angular/router';
 import { RoutersPath } from 'src/app/core';
+import { LoginService } from 'src/app/features/login-page/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +12,8 @@ import { RoutersPath } from 'src/app/core';
 export class LoginComponent implements OnInit {
   /** controller del form */
   formCrl: FormGroup;
+
+  @Output() joinRequest = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -34,5 +36,9 @@ export class LoginComponent implements OnInit {
     this.loginService
       .getToken(this.formCrl.value.username, this.formCrl.value.password)
       .subscribe(token => this.router.navigate([RoutersPath.home], { }));
+  }
+
+  join() {
+    this.joinRequest.next();
   }
 }

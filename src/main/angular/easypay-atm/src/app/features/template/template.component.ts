@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RoutingService } from 'src/app/core/services/routing.service';
-import { LoginStore } from '../login-page/store/login.store';
+import { AuthStore } from '../login-page/store/auth.store';
+import { LoginService } from '../login-page/services/login.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template',
@@ -47,7 +49,7 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(public routingService: RoutingService, private loginStore: LoginStore) {}
+  constructor(public routingService: RoutingService, private authStore: AuthStore, private loginService: LoginService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -63,12 +65,13 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
 
   isLogin(): boolean {
-    return !!this.loginStore.token;
+    return !!this.authStore.token;
   }
 
   logout() {
-    this.loginStore.token = undefined;
-    this.routingService.gotoLogin();
+    this.loginService.logout().subscribe(() => {
+      this.routingService.gotoLogin();
+    });
   }
 
   menuDisabled(): boolean {

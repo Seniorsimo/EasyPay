@@ -1,7 +1,7 @@
 <mat-grid-list [cols]="breakpoint" rowHeight="1:1" gutterSize="20px" (window:resize)="onResize($event)">
   <mat-grid-tile colspan="2" rowspan="2" >
     <div class="widget-container login-widget shadow-border">
-      <app-login></app-login>
+      <app-login (joinRequest)="switchForm(FormTypes.join)"></app-login>
     </div>
   </mat-grid-tile>
   <mat-grid-tile *ngIf="breakpoint ===  maxCol" class="empty" colspan="3" rowspan="2" ></mat-grid-tile>

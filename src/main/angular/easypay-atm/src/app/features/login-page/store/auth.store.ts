@@ -4,7 +4,7 @@ import { LocalStorageService } from 'src/app/core';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginStore {
+export class AuthStore {
 
   private pToken: string;
 
