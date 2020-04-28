@@ -5,7 +5,6 @@
  */
 package org.easypay.easypay.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,14 +54,11 @@ public class LoginController {
         try {
             ObjectMapper om = new ObjectMapper();
             return ResponseEntity.ok(LoginResponse.builder()
-                    .token(om.writeValueAsString(authenticationService.login(form.getUsername(), form.getPassword())))
+                    .token(authenticationService.login(form.getUsername(), form.getPassword()))
                     .build());
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 //                    .body(e.getMessage());
-        } catch (JsonProcessingException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//                    .body(ex.getMessage());
         }
     }
 
