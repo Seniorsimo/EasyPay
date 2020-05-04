@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/commercianti")
 @Api(value = "Merchant", description = "Merchant listing")
-public class CommercianteController implements ErrorHandlingController {
+public class CommercianteController implements ErrorHandlingController, SelfHandlingController {
 
     @Autowired
     private CommercianteRepository commercianteRepository;
@@ -69,8 +69,8 @@ public class CommercianteController implements ErrorHandlingController {
         ,
         @ApiResponse(code = 403, message = "Accessing the merchant is forbidden")
     })
-    public ResponseEntity<Commerciante> getById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(commercianteRepository.findById(id)
+    public ResponseEntity<Commerciante> getById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(commercianteRepository.findById(getUserId(id))
                 .orElseThrow(() -> new NotFoundException(Commerciante.class, "id", id)));
     }
 
@@ -88,10 +88,10 @@ public class CommercianteController implements ErrorHandlingController {
         @ApiResponse(code = 403, message = "Accessing the merchant is forbidden")
     })
     public ResponseEntity<Commerciante> edit(
-            @PathVariable("id") long id,
+            @PathVariable("id") String id,
             @Valid @RequestBody CommercianteEdit commerciante
     ) {
-        return ResponseEntity.ok(commercianteRepository.findById(id)
+        return ResponseEntity.ok(commercianteRepository.findById(getUserId(id))
                 .map(u -> {
                     u.setRagSoc(commerciante.getRagSoc());
                     u.setPIva(commerciante.getPIva());
@@ -110,8 +110,8 @@ public class CommercianteController implements ErrorHandlingController {
         ,
         @ApiResponse(code = 403, message = "Accessing the merchant is forbidden")
     })
-    public ResponseEntity<Commerciante> deleteById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(commercianteRepository.findById(id)
+    public ResponseEntity<Commerciante> deleteById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(commercianteRepository.findById(getUserId(id))
                 .map(u -> {
                     commercianteRepository.delete(u);
                     return u;

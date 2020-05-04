@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/clienti")
 @Api(value = "Client", description = "Client listing")
 public class ClienteController implements ErrorHandlingController, SelfHandlingController {
-
+    
     private static final Logger LOG = Logger.getLogger(ClienteController.class);
-
+    
     @Autowired
     private ClientRepository clientRepository;
-
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "Retrieve all client")
     @ApiResponses(value = {
@@ -42,7 +42,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     public ResponseEntity<List<Cliente>> getAll() {
         return ResponseEntity.ok(clientRepository.findAll());
     }
-
+    
     @PostMapping(value = "",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -63,7 +63,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 .cf(cliente.getCf())
                 .build()));
     }
-
+    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "Retrieve client by id")
     @ApiResponses(value = {
@@ -77,7 +77,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         return ResponseEntity.ok(clientRepository.findById(getUserId(id))
                 .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id)));
     }
-
+    
     @PostMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -92,10 +92,10 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         @ApiResponse(code = 403, message = "Accessing the client is forbidden")
     })
     public ResponseEntity<Cliente> edit(
-            @PathVariable("id") long id,
+            @PathVariable("id") String id,
             @Valid @RequestBody ClienteEdit cliente
     ) {
-        return ResponseEntity.ok(clientRepository.findById(id)
+        return ResponseEntity.ok(clientRepository.findById(getUserId(id))
                 .map(u -> {
                     u.setNome(cliente.getNome());
                     u.setCognome(cliente.getCognome());
@@ -105,7 +105,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 })
                 .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id)));
     }
-
+    
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "Delete client by id")
     @ApiResponses(value = {
@@ -115,8 +115,8 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         ,
         @ApiResponse(code = 403, message = "Accessing the client is forbidden")
     })
-    public ResponseEntity<Cliente> deleteById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(clientRepository.findById(id)
+    public ResponseEntity<Cliente> deleteById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(clientRepository.findById(getUserId(id))
                 .map(u -> {
                     clientRepository.delete(u);
                     return u;
@@ -124,12 +124,12 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 .orElseThrow(
                         () -> new NotFoundException(Cliente.class, "id", id)));
     }
-
+    
     @Data
     @AllArgsConstructor
     @RequiredArgsConstructor
     public static class ClienteCreate extends ClienteEdit {
-
+        
         @NotBlank
         @ApiModelProperty(
                 position = 1,
@@ -137,7 +137,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 value = "The login credential"
         )
         private String username;
-
+        
         @NotBlank
         @ApiModelProperty(
                 position = 2,
@@ -145,14 +145,14 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 value = "The login secret"
         )
         private String pin;
-
+        
     }
-
+    
     @Data
     @AllArgsConstructor
     @RequiredArgsConstructor
     public static class ClienteEdit {
-
+        
         @NotBlank
         @ApiModelProperty(
                 position = 10,
@@ -160,7 +160,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 value = "Client firstname"
         )
         private String nome;
-
+        
         @NotBlank
         @ApiModelProperty(
                 position = 11,
@@ -168,7 +168,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 value = "Client lastname"
         )
         private String cognome;
-
+        
         @NotBlank
         @ApiModelProperty(
                 position = 12,
