@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/clienti")
 @Api(value = "Client", description = "Client listing")
-public class ClienteController implements ErrorHandlingController {
+public class ClienteController implements ErrorHandlingController, SelfHandlingController {
 
     private static final Logger LOG = Logger.getLogger(ClienteController.class);
 
@@ -73,8 +73,8 @@ public class ClienteController implements ErrorHandlingController {
         ,
         @ApiResponse(code = 403, message = "Accessing the client is forbidden")
     })
-    public ResponseEntity<Cliente> getById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(clientRepository.findById(id)
+    public ResponseEntity<Cliente> getById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(clientRepository.findById(getUserId(id))
                 .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id)));
     }
 
@@ -121,62 +121,10 @@ public class ClienteController implements ErrorHandlingController {
                     clientRepository.delete(u);
                     return u;
                 })
-                .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id)));
+                .orElseThrow(
+                        () -> new NotFoundException(Cliente.class, "id", id)));
     }
 
-    //se usi postman per testare, rimuovi lh'header: application/x-www-form-urlencoded
-//    @PostMapping("")
-//    public ResponseEntity getCliente(@Valid LoginForm loginForm, BindingResult result) {
-//        if (!result.hasErrors()) {
-//            switch (loginForm.getType()) {
-//                case ID_AND_PIN:
-//                    return getClienteById(loginForm.getId(), loginForm.getPin());
-//                case TOKEN:
-//                    return getClienteByToken(loginForm.getToken());
-//                default:
-//                    throw new InvalidRequestException(Cliente.class);
-//            }
-//        }
-//        LOG.error(result.getAllErrors());
-//        throw new InvalidRequestException(Cliente.class);
-//    }
-//
-//    private ResponseEntity getClienteById(@NotNull long id, @NotNull String pin) {
-//        Cliente cliente = clientRepository.findById(id)
-//                .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id));
-//        if (cliente.getPin().equals(pin)) {
-//            return ResponseEntity.ok(cliente);
-//        }
-//        throw new WrongPinException(Cliente.class);
-//    }
-//
-//    private ResponseEntity getClienteByToken(@NotNull String token) {
-//        return ResponseEntity.ok(clientRepository.findByToken(token)
-//                .orElseThrow(() -> new NotFoundException(Cliente.class, "token", token)));
-//    }
-//
-//    @Data
-//    @RequiredArgsConstructor
-//    public static class LoginForm {
-//
-//        public enum LoginType {
-//            ID_AND_PIN, TOKEN, INVALID
-//        }
-//
-//        private Long id;
-//        private String pin, token;
-//
-//        @Transient
-//        protected LoginType getType() {
-//            if (id != null && pin != null && !pin.isEmpty()) {
-//                return LoginType.ID_AND_PIN;
-//            }
-//            if (token != null && !token.isEmpty()) {
-//                return LoginType.TOKEN;
-//            }
-//            return LoginType.INVALID;
-//        }
-//    }
     @Data
     @AllArgsConstructor
     @RequiredArgsConstructor

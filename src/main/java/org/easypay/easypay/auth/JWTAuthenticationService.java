@@ -5,10 +5,14 @@
  */
 package org.easypay.easypay.auth;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 import org.easypay.easypay.dao.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,11 +53,14 @@ public class JWTAuthenticationService implements UserAuthenticationService {
             return Optional.ofNullable(username)
                     .flatMap(name -> utenteRepository.findByUsername(String.valueOf(name)))
                     .filter(u -> token.equals(u.getToken()))
-                    .map(u -> (User) User.builder()
-                    .username(u.getUsername())
-                    .password(u.getPin())
-                    .roles("user")
-                    .build())
+                    .map(u -> {
+                        Collection<GrantedAuthority> authorities = new HashSet<>();
+                        authorities.add(new SimpleGrantedAuthority("ROLE_" + "user"));
+                        MyUser user = new MyUser(u.getUsername(), u.getPin(),
+                                true, true, true, true,
+                                authorities, u.getId());
+                        return user;
+                    })
                     .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found."));
         } catch (JWTService.TokenVerificationException e) {
             throw new BadCredentialsException("Invalid JWT token.", e);
@@ -68,4 +75,5 @@ public class JWTAuthenticationService implements UserAuthenticationService {
                     utenteRepository.save(u);
                 });
     }
+
 }

@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
+import org.easypay.easypay.auth.JWTAuthenticationService;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.entity.Conto;
@@ -24,10 +25,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -104,6 +108,11 @@ public class Application extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new SelfConverter());
+    }
+
     @Bean
     public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -151,6 +160,19 @@ public class Application extends WebMvcConfigurerAdapter {
         authorizationScopes[0] = authorizationScope;
         return Arrays.asList(new SecurityReference("Bearer",
                 authorizationScopes));
+    }
+
+    public static class SelfConverter implements Converter<String, Long> {
+
+        @Override
+        public Long convert(String s) {
+            if ("self".equalsIgnoreCase(s)) {
+                JWTAuthenticationService.MyUser u = (JWTAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                return u != null ? u.getId() : null;
+            }
+            return null;
+        }
+
     }
 
     @Component

@@ -18,4 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface ClientRepository extends JpaRepository<Cliente, Long> {
 
     public Optional<Cliente> findByToken(String token);
+
+    public Optional<Cliente> findByUsername(String username);
 }

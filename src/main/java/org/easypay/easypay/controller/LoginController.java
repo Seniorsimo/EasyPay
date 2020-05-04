@@ -5,7 +5,6 @@
  */
 package org.easypay.easypay.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -52,9 +51,9 @@ public class LoginController {
     public ResponseEntity<LoginResponse> login(
             @RequestBody PublicEndpointsController.LoginForm form) {
         try {
-            ObjectMapper om = new ObjectMapper();
+            String token = authenticationService.login(form.getUsername(), form.getPassword());
             return ResponseEntity.ok(LoginResponse.builder()
-                    .token(authenticationService.login(form.getUsername(), form.getPassword()))
+                    .token(token)
                     .build());
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
