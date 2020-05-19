@@ -182,8 +182,8 @@ public class Application extends WebMvcConfigurerAdapter {
         private AtmRepository atmRepository;
         @Autowired
         private ClientRepository clientRepository;
-        @Autowired
-        private CommercianteRepository commercianteRepository;
+//        @Autowired
+//        private CommercianteRepository commercianteRepository;
         @Autowired
         private ContoRepository contoRepository;
         @Autowired
@@ -193,7 +193,7 @@ public class Application extends WebMvcConfigurerAdapter {
         @Autowired
         private RicaricaRepository ricaricaRepository;
         @Autowired
-        private UtenteRepository utenteRepository;
+        private CredenzialiRepository utenteRepository;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
@@ -202,32 +202,38 @@ public class Application extends WebMvcConfigurerAdapter {
         public void init() {
             Cliente cliente1 = clientRepository.save(Cliente.builder()
                     .username("user1")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
                     .nome("Paolo")
                     .cognome("Pioppo")
                     .cf("ASDFGHJKLPOIUYTRE")
                     .build());
             Cliente cliente2 = clientRepository.save(Cliente.builder()
                     .username("user2")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
                     .nome("Anna")
                     .cognome("Dico")
                     .cf("SNHFAIHCFIUHFCUHACUHND")
                     .build());
-            Commerciante comm1 = commercianteRepository.save(Commerciante.builder()
+            Commerciante comm1 = clientRepository.save(Commerciante.builder()
                     .username("user3")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
+                    .nome("Ababua")
+                    .cognome("Bau")
+                    .cf("SNHFAIHCFIUHFHSYDCUHND")
                     .ragSoc("Pizzeria Mare Blu")
                     .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
                     .build());
-            Commerciante comm2 = commercianteRepository.save(Commerciante.builder()
+            Commerciante comm2 = clientRepository.save(Commerciante.builder()
                     .username("user4")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
+                    .nome("Ciro")
+                    .cognome("Blu")
+                    .cf("SNHFDLKKLIUHFCUHACUHND")
                     .ragSoc("Osteria Bella Napoli")
                     .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                     .build());
             Conto contoCliente1 = contoRepository.save(Conto.builder()
-                    .utente(cliente1)
+                    .cliente(cliente1)
                     .budget(20)
                     .saldo(100)
                     .build());

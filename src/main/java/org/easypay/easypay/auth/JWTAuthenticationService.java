@@ -8,7 +8,7 @@ package org.easypay.easypay.auth;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
-import org.easypay.easypay.dao.repository.UtenteRepository;
+import org.easypay.easypay.dao.repository.CredenzialiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,20 +28,20 @@ public class JWTAuthenticationService implements UserAuthenticationService {
     @Autowired
     private JWTService jwtService;
     @Autowired
-    private UtenteRepository utenteRepository;
+    private CredenzialiRepository credenzialiRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public String login(String username, String password) throws BadCredentialsException {
-        return utenteRepository
+        return credenzialiRepository
                 .findByUsername(username)
-                .filter(user -> passwordEncoder.matches(password, user.getPin()))
-                .map(user -> {
+                .filter(c -> passwordEncoder.matches(password, c.getPassword()))
+                .map(c -> {
                     String token = jwtService.create(username);
-                    user.setToken(token);
-                    utenteRepository.save(user);
-                    return user.getToken();
+                    c.setToken(token);
+                    credenzialiRepository.save(c);
+                    return c.getToken();
                 })
                 .orElseThrow(() -> new BadCredentialsException("Invalid username or password."));
     }
@@ -51,14 +51,14 @@ public class JWTAuthenticationService implements UserAuthenticationService {
         try {
             Object username = jwtService.verify(token).get("username");
             return Optional.ofNullable(username)
-                    .flatMap(name -> utenteRepository.findByUsername(String.valueOf(name)))
-                    .filter(u -> token.equals(u.getToken()))
-                    .map(u -> {
+                    .flatMap(name -> credenzialiRepository.findByUsername(String.valueOf(name)))
+                    .filter(c -> token.equals(c.getToken()))
+                    .map(c -> {
                         Collection<GrantedAuthority> authorities = new HashSet<>();
                         authorities.add(new SimpleGrantedAuthority("ROLE_" + "user"));
-                        MyUser user = new MyUser(u.getUsername(), u.getPin(),
+                        MyUser user = new MyUser(c.getUsername(), c.getPassword(),
                                 true, true, true, true,
-                                authorities, u.getId());
+                                authorities, c.getCliente().getId());
                         return user;
                     })
                     .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found."));
@@ -69,10 +69,10 @@ public class JWTAuthenticationService implements UserAuthenticationService {
 
     @Override
     public void logout(String username) {
-        utenteRepository.findByUsername(username)
-                .ifPresent(u -> {
-                    u.setToken(null);
-                    utenteRepository.save(u);
+        credenzialiRepository.findByUsername(username)
+                .ifPresent(c -> {
+                    c.setToken(null);
+                    credenzialiRepository.save(c);
                 });
     }
 
