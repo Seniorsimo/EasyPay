@@ -1,25 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+
+import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
 
 @Component({
   selector: 'app-join-part3',
   templateUrl: './join-part3.component.html',
   styleUrls: ['./join-part3.component.scss']
 })
-export class JoinPart3Component implements OnInit {
-
-  /** controller del form */
-  formCrl: FormGroup;
+export class JoinPart3Component extends AbstractJoinPartComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
+    super();
     this.formCrl = this.fb.group({
       userType: this.fb.control('', []),
       piva: this.fb.control('', [Validators.required]),
       ragSoc: this.fb.control('', [Validators.required]),
     });
   }
-
-  ngOnInit(): void {
-  }
-
 }

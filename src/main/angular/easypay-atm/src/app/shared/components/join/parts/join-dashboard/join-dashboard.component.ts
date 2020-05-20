@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-join-dashboard',
@@ -18,22 +18,22 @@ export class JoinDashboardComponent implements OnInit {
   }
 
   backPage() {
-    this.setPage(this.page - 1);
+    this.changePage.emit(this.page - 1);
   }
 
   nextPage() {
-    this.setPage(this.page + 1);
+    this.changePage.emit(this.page + 1);
   }
 
-  private setPage(pg: number) {
-    if (pg < 0) {
-      this.page = 0;
-    } else if (pg > this.maxPage ) {
-      this.page = this.maxPage;
-    } else {
-      this.page = pg;
-    }
-    this.changePage.emit(this.page);
-  }
+  // private setPage(pg: number) {
+  //   if (pg < 0) {
+  //     this.page = 0;
+  //   } else if (pg > this.maxPage ) {
+  //     this.page = this.maxPage;
+  //   } else {
+  //     this.page = pg;
+  //   }
+  //   this.changePage.emit(this.page);
+  // }
 
 }

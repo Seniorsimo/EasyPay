@@ -1,19 +1,22 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
+import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
 
 @Component({
   selector: 'app-join-part1',
   templateUrl: './join-part1.component.html',
-  styleUrls: ['./join-part1.component.scss']
+  styleUrls: ['./join-part1.component.scss'],
 })
-export class JoinPart1Component implements OnInit {
+export class JoinPart1Component extends AbstractJoinPartComponent implements OnInit {
 
-  /** controller del form */
-  formCrl: FormGroup;
-
-  @Output() valuesOutput = new EventEmitter<{username: string, password: string}>();
+  @Output() valuesOutput = new EventEmitter<{
+    username: string;
+    password: string;
+  }>();
 
   constructor(private fb: FormBuilder) {
+    super();
     this.formCrl = this.fb.group({
       username: this.fb.control('', [Validators.required]),
       password: this.fb.control('', [
@@ -24,7 +27,5 @@ export class JoinPart1Component implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

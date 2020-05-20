@@ -17,6 +17,10 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 import { ErrorComponent } from './components/error/error.component';
 import { InfoWidgetComponent } from './components/info-widget/info-widget.component';
 import { JoinComponent } from './components/join/join.component';
+import { JoinDashboardComponent } from './components/join/parts/join-dashboard/join-dashboard.component';
+import { JoinPart1Component } from './components/join/parts/join-part1/join-part1.component';
+import { JoinPart2Component } from './components/join/parts/join-part2/join-part2.component';
+import { JoinPart3Component } from './components/join/parts/join-part3/join-part3.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoginComponent } from './components/login/login.component';
 import { NfcComponent } from './components/nfc/nfc.component';
@@ -26,11 +30,6 @@ import { RecognitionComponent } from './components/recognition/recognition.compo
 import { NumericDirective } from './directives/numeric.directive';
 import { MinPipe } from './pipes/min.pipe';
 import { SwitchNumberPipe } from './pipes/switch-number.pipe';
-import { JoinPart1Component } from './components/join/parts/join-part1/join-part1.component';
-import { JoinPart2Component } from './components/join/parts/join-part2/join-part2.component';
-import { JoinPart3Component } from './components/join/parts/join-part3/join-part3.component';
-import { JoinTranslateComponent } from './components/join/parts/join-translate/join-translate.component';
-import { JoinDashboardComponent } from './components/join/parts/join-dashboard/join-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +51,6 @@ import { JoinDashboardComponent } from './components/join/parts/join-dashboard/j
     JoinPart1Component,
     JoinPart2Component,
     JoinPart3Component,
-    JoinTranslateComponent,
     JoinDashboardComponent,
   ],
   imports: [
@@ -81,5 +79,6 @@ import { JoinDashboardComponent } from './components/join/parts/join-dashboard/j
     InfoWidgetComponent,
     JoinComponent,
   ],
+  entryComponents: [JoinPart1Component, JoinPart2Component, JoinPart3Component],
 })
 export class SharedModule {}

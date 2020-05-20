@@ -2,7 +2,7 @@
   <mat-grid-tile colspan="2" rowspan="2" >
     <div class="widget-container login-widget shadow-border">
       <app-login *ngIf="formType === FormTypes.login" (joinRequest)="switchForm(FormTypes.join)"></app-login>
-      <app-join *ngIf="formType === FormTypes.join" (joinRequest)="switchForm(FormTypes.login)"></app-join>
+      <app-join *ngIf="formType === FormTypes.join" (loginRequest)="switchForm(FormTypes.login)"></app-join>
     </div>
   </mat-grid-tile>
   <mat-grid-tile *ngIf="breakpoint ===  maxCol" class="empty" colspan="3" rowspan="2" ></mat-grid-tile>
