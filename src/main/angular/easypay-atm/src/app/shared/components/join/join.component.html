@@ -1,0 +1,18 @@
+<div>
+  <div>
+    <mat-slider class="slider" min="0" max="3" step="1" [value]="page"
+    ></mat-slider>
+  </div>
+  <mat-divider></mat-divider>
+  <div [ngSwitch]="page" class="join-container">
+    <app-join-part1 [ngSwitchCase]="0"></app-join-part1>
+    <app-join-part2 [ngSwitchCase]="1"></app-join-part2>
+    <app-join-part3 [ngSwitchCase]="2"></app-join-part3>
+  </div>
+  <app-join-dashboard [page]="page" [maxPage]="maxPage"></app-join-dashboard>
+  <div class="login">
+    <button mat-button color="primary" (click)="login()">
+      Annulla creazione account
+    </button>
+  </div>
+</div>
