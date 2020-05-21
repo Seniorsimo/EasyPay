@@ -29,10 +29,11 @@ public abstract class Movimento implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+
     @NotNull
     @ManyToOne
     private Conto conto;
-//    @NotNull
+
     @Min(1)
     private int valore;
 }

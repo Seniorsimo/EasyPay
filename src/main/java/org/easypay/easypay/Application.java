@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
+import org.easypay.easypay.auth.JWTAuthenticationService;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.entity.Conto;
@@ -24,10 +25,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -104,6 +108,11 @@ public class Application extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new SelfConverter());
+    }
+
     @Bean
     public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -153,6 +162,19 @@ public class Application extends WebMvcConfigurerAdapter {
                 authorizationScopes));
     }
 
+    public static class SelfConverter implements Converter<String, Long> {
+
+        @Override
+        public Long convert(String s) {
+            if ("self".equalsIgnoreCase(s)) {
+                JWTAuthenticationService.MyUser u = (JWTAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                return u != null ? u.getId() : null;
+            }
+            return null;
+        }
+
+    }
+
     @Component
     public static class Initializer {
 
@@ -160,8 +182,8 @@ public class Application extends WebMvcConfigurerAdapter {
         private AtmRepository atmRepository;
         @Autowired
         private ClientRepository clientRepository;
-        @Autowired
-        private CommercianteRepository commercianteRepository;
+//        @Autowired
+//        private CommercianteRepository commercianteRepository;
         @Autowired
         private ContoRepository contoRepository;
         @Autowired
@@ -171,7 +193,7 @@ public class Application extends WebMvcConfigurerAdapter {
         @Autowired
         private RicaricaRepository ricaricaRepository;
         @Autowired
-        private UtenteRepository utenteRepository;
+        private CredenzialiRepository utenteRepository;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
@@ -180,32 +202,38 @@ public class Application extends WebMvcConfigurerAdapter {
         public void init() {
             Cliente cliente1 = clientRepository.save(Cliente.builder()
                     .username("user1")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
                     .nome("Paolo")
                     .cognome("Pioppo")
                     .cf("ASDFGHJKLPOIUYTRE")
                     .build());
             Cliente cliente2 = clientRepository.save(Cliente.builder()
                     .username("user2")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
                     .nome("Anna")
                     .cognome("Dico")
                     .cf("SNHFAIHCFIUHFCUHACUHND")
                     .build());
-            Commerciante comm1 = commercianteRepository.save(Commerciante.builder()
+            Commerciante comm1 = clientRepository.save(Commerciante.builder()
                     .username("user3")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
+                    .nome("Ababua")
+                    .cognome("Bau")
+                    .cf("SNHFAIHCFIUHFHSYDCUHND")
                     .ragSoc("Pizzeria Mare Blu")
                     .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
                     .build());
-            Commerciante comm2 = commercianteRepository.save(Commerciante.builder()
+            Commerciante comm2 = clientRepository.save(Commerciante.builder()
                     .username("user4")
-                    .pin(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("password"))
+                    .nome("Ciro")
+                    .cognome("Blu")
+                    .cf("SNHFDLKKLIUHFCUHACUHND")
                     .ragSoc("Osteria Bella Napoli")
                     .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                     .build());
             Conto contoCliente1 = contoRepository.save(Conto.builder()
-                    .utente(cliente1)
+                    .cliente(cliente1)
                     .budget(20)
                     .saldo(100)
                     .build());

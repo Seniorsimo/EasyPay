@@ -5,12 +5,14 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@Entity(name = "Commerciante")
 @RequiredArgsConstructor
-public class Commerciante extends Utente {
+@Entity(name = "Commerciante")
+@EqualsAndHashCode(callSuper = true)
+public class Commerciante extends Cliente {
 
     @NotBlank
     @ApiModelProperty(
@@ -19,6 +21,7 @@ public class Commerciante extends Utente {
             value = "Business name"
     )
     private String ragSoc;
+
     @NotBlank
     @ApiModelProperty(
             position = 11,
@@ -27,11 +30,19 @@ public class Commerciante extends Utente {
     )
     private String pIva;
 
+    @Override
+    public String type() {
+        return "commerciante";
+    }
+
     @Builder
-    public Commerciante(String username, String pin, String ragSoc, String pIva) {
-        super(username, pin);
+    public Commerciante(String username, String password, String nome, String cognome, String cf, String ragSoc, String pIva) {
+        super(username, password, nome, cognome, cf);
         this.ragSoc = ragSoc;
         this.pIva = pIva;
+    }
+
+    public static class CommercianteBuilder extends ClienteBuilder {
     }
 
 }
