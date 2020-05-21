@@ -1,0 +1,16 @@
+<div>
+  <div>
+    <mat-slider class="slider" min="0" max="3" step="1" [value]="page"
+    ></mat-slider>
+  </div>
+  <mat-divider></mat-divider>
+  <div>
+    <template #adHost></template>
+  </div>
+  <app-join-dashboard *ngIf="page < maxPage" [page]="page" [maxPage]="maxPage" (changePage)="updateForm($event)"></app-join-dashboard>
+  <div class="login">
+    <button mat-button color="primary" (click)="login()">
+      Annulla creazione account
+    </button>
+  </div>
+</div>

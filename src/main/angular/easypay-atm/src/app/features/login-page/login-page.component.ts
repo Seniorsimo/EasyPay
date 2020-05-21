@@ -14,6 +14,9 @@ enum FormTypes {
 export class LoginPageComponent implements OnInit {
   readonly FormTypes = FormTypes;
 
+
+  public formType: FormTypes = FormTypes.login;
+
   public breakpoint: number;
   public  maxCol = 6;
   public  minCol = 2;
@@ -35,12 +38,8 @@ export class LoginPageComponent implements OnInit {
     this.breakpoint = (event.target.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
   }
 
-  switchForm(formTypes: FormTypes) {
-    if (formTypes === FormTypes.join) {
-
-    } else if (formTypes === FormTypes.login) {
-
-    }
+  switchForm(formType: FormTypes) {
+    this.formType = formType;
   }
 
 }
