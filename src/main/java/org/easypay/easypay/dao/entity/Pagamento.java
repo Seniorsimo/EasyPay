@@ -29,5 +29,5 @@ public class Pagamento extends Movimento {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_ricevente")
-    private Utente ricevente;
+    private Credenziali ricevente;
 }

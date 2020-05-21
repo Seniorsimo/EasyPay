@@ -26,14 +26,18 @@ public class Conto implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+
     @Min(0)
     private int budget;
+
     @Min(0)
     private int saldo;
+
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_utente")
-    private Utente utente;
+    @JoinColumn(name = "id_cliente")
+    private Cliente utente;
+
     @OneToMany(
             mappedBy = "conto",
             cascade = CascadeType.ALL,
@@ -43,10 +47,10 @@ public class Conto implements Serializable {
     private List<Movimento> movimenti;
 
     @Builder
-    public Conto(int budget, int saldo, Utente utente) {
+    public Conto(int budget, int saldo, Cliente cliente) {
         this.budget = budget;
         this.saldo = saldo;
-        this.utente = utente;
+        this.utente = cliente;
     }
 
 }

@@ -11,7 +11,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -30,13 +29,7 @@ public class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticati
         Object token = authentication.getCredentials();
         return Optional
                 .ofNullable(token)
-                .flatMap(t
-                        -> Optional.of(userAuthenticationService.authenticateByToken(String.valueOf(t)))
-                        .map(u -> User.builder()
-                        .username(u.getUsername())
-                        .password(u.getPassword())
-                        .roles("user")
-                        .build()))
+                .flatMap(t -> Optional.of(userAuthenticationService.authenticateByToken(String.valueOf(t))))
                 .orElseThrow(() -> new BadCredentialsException("Invalid authentication token=" + token));
     }
 

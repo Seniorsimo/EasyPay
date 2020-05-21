@@ -5,7 +5,6 @@
  */
 package org.easypay.easypay.dao.repository;
 
-import java.util.Optional;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,5 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClientRepository extends JpaRepository<Cliente, Long> {
 
-    public Optional<Cliente> findByToken(String token);
+//    public Optional<Cliente> findByToken(String token);
+//
+//    public Optional<Cliente> findByUsername(String username);
 }

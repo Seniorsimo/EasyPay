@@ -5,8 +5,6 @@
  */
 package org.easypay.easypay.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +37,10 @@ public class PublicEndpointsController {
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
         try {
-            ObjectMapper om = new ObjectMapper();
-            return ResponseEntity.ok(om.writeValueAsString(authenticationService.login(username, password)));
+            return ResponseEntity.ok(authenticationService.login(username, password));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(e.getMessage());
-        } catch (JsonProcessingException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ex.getMessage());
         }
     }
 
@@ -56,14 +50,10 @@ public class PublicEndpointsController {
     public ResponseEntity<String> login(
             @RequestBody LoginForm form) {
         try {
-            ObjectMapper om = new ObjectMapper();
-            return ResponseEntity.ok(om.writeValueAsString(authenticationService.login(form.username, form.password)));
+            return ResponseEntity.ok(authenticationService.login(form.username, form.password));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(e.getMessage());
-        } catch (JsonProcessingException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ex.getMessage());
         }
     }
 
