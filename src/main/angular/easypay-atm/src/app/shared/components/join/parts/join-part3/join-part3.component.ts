@@ -1,21 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ApiRoute } from 'src/app/core';
+import { map, catchError } from 'rxjs/operators';
 
-import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
+enum StatusEnum {
+  waiting = 'waiting',
+  success = 'success',
+  failed = 'failed',
+}
 
 @Component({
   selector: 'app-join-part3',
   templateUrl: './join-part3.component.html',
   styleUrls: ['./join-part3.component.scss']
 })
-export class JoinPart3Component extends AbstractJoinPartComponent implements OnInit {
+export class JoinPart3Component implements OnInit {
+  readonly StatusEnum = StatusEnum;
 
-  constructor(private fb: FormBuilder) {
-    super();
-    this.formCrl = this.fb.group({
-      userType: this.fb.control('', []),
-      piva: this.fb.control('', [Validators.required]),
-      ragSoc: this.fb.control('', [Validators.required]),
-    });
+  @Input() data: object;
+
+  status = StatusEnum.waiting;
+
+  constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+    this.http.post(ApiRoute.clienti, this.data).pipe(
+      map(response => this.status = StatusEnum.success),
+      catchError(error => this.status = StatusEnum.failed))
+    .subscribe();
   }
+
 }

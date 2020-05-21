@@ -7,7 +7,7 @@
   <div>
     <template #adHost></template>
   </div>
-  <app-join-dashboard [page]="page" [maxPage]="maxPage" (changePage)="setPage($event)"></app-join-dashboard>
+  <app-join-dashboard *ngIf="page < maxPage" [page]="page" [maxPage]="maxPage" (changePage)="updateForm($event)"></app-join-dashboard>
   <div class="login">
     <button mat-button color="primary" (click)="login()">
       Annulla creazione account

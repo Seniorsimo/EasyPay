@@ -1,2 +1,3 @@
-<form class="form" [formGroup]="formCrl">
-</form>
+<p *ngIf="status === StatusEnum.waiting">in attesa della risposta del server...</p>
+<p *ngIf="status === StatusEnum.success">registrazione completata con successo!</p>
+<p *ngIf="status === StatusEnum.failed">registrazione fallita!</p>

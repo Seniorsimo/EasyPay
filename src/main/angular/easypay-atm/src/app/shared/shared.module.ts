@@ -18,6 +18,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { InfoWidgetComponent } from './components/info-widget/info-widget.component';
 import { JoinComponent } from './components/join/join.component';
 import { JoinDashboardComponent } from './components/join/parts/join-dashboard/join-dashboard.component';
+import { JoinPart0Component } from './components/join/parts/join-part0/join-part0.component';
 import { JoinPart1Component } from './components/join/parts/join-part1/join-part1.component';
 import { JoinPart2Component } from './components/join/parts/join-part2/join-part2.component';
 import { JoinPart3Component } from './components/join/parts/join-part3/join-part3.component';
@@ -48,10 +49,11 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     SwitchNumberPipe,
     InfoWidgetComponent,
     JoinComponent,
+    JoinPart0Component,
     JoinPart1Component,
     JoinPart2Component,
-    JoinPart3Component,
     JoinDashboardComponent,
+    JoinPart3Component,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,6 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     InfoWidgetComponent,
     JoinComponent,
   ],
-  entryComponents: [JoinPart1Component, JoinPart2Component, JoinPart3Component],
+  entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component],
 })
 export class SharedModule {}
