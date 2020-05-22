@@ -237,6 +237,22 @@ public class Application extends WebMvcConfigurerAdapter {
                     .budget(20)
                     .saldo(100)
                     .build());
+            Conto contoCliente2 = contoRepository.save(Conto.builder()
+                    .cliente(cliente2)
+                    .budget(20)
+                    .saldo(100)
+                    .build());
+            Conto contoComm1 = contoRepository.save(Conto.builder()
+                    .cliente(comm1)
+                    .budget(20)
+                    .saldo(100)
+                    .build());
+            Conto contoComm2 = contoRepository.save(Conto.builder()
+                    .cliente(comm2)
+                    .budget(20)
+                    .saldo(100)
+                    .build());
+
         }
 
     }

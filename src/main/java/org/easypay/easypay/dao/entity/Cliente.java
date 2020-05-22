@@ -72,6 +72,11 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private Conto conto;
 
+    @JsonProperty("id_conto")
+    private long getContoId() {
+        return this.conto.getId();
+    }
+
     @JsonProperty("type")
     @ApiModelProperty(
             position = 99,
