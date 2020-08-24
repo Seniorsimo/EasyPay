@@ -16,6 +16,10 @@ export class JoinPart1Component extends AbstractJoinPartComponent
       nome: this.fb.control('', [Validators.required]),
       cognome: this.fb.control('', [Validators.required]),
       cf: this.fb.control('', [Validators.required]),
+      bornDate: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required]),
+      phone: this.fb.control('', []),
+      address: this.fb.control('', []),
     });
   }
 
@@ -26,6 +30,10 @@ export class JoinPart1Component extends AbstractJoinPartComponent
       nome: this.formCrl.controls.nome.value,
       cognome: this.formCrl.controls.cognome.value,
       cf: this.formCrl.controls.cf.value,
+      bornDate: this.formCrl.controls.bornDate.value,
+      email: this.formCrl.controls.email.value,
+      phone: this.formCrl.controls.phone.value,
+      address: this.formCrl.controls.address.value,
     };
   }
 }
