@@ -35,7 +35,6 @@
         </mat-error>
       </mat-form-field>
     </div>
-
     <div fxFlex>
       <mat-form-field>
         <input
@@ -49,8 +48,11 @@
           [for]="bornDatePicker"
         ></mat-datepicker-toggle>
         <mat-datepicker #bornDatePicker></mat-datepicker>
-        <mat-error *ngIf="formCrl.controls['bornDate'].hasError('required')">
-          data di nascita <strong>obbligatoria</strong>
+        <mat-error *ngIf="formCrl.controls['bornDate'].hasError('required') && !formCrl.controls['bornDate'].hasError('matDatepickerParse')">
+          data di nascita <strong>obbligatoria</strong>.
+        </mat-error>
+        <mat-error *ngIf="formCrl.controls['bornDate'].hasError('matDatepickerParse')">
+          formato della data errato.
         </mat-error>
       </mat-form-field>
     </div>

@@ -1,5 +1,6 @@
 .button-container {
   width: 100%;
+  min-width: 60px;
   height: 100%;
   position: relative;
   text-align: center;
@@ -15,9 +16,9 @@
 }
 
 .icon {
-   font-size: 8vw;
+   font-size: 7vw;
    position: absolute;
-   top: 45%;
+   top: 40%;
    left: 50%;
    transform: translateX(-50%);
 }
