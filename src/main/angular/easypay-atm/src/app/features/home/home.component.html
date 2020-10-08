@@ -1,4 +1,4 @@
-<mat-grid-list cols="3" gutterSize="30px">
+<!-- <mat-grid-list cols="3" gutterSize="30px">
   <mat-grid-tile>
     <app-big-button
       class="button"
@@ -40,4 +40,51 @@
       <app-banner></app-banner>
     </div>
   </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list> -->
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+  <div fxFlex class="widget-container shadow-border">
+    <app-big-button
+      class="button"
+      label="Pagamento"
+      icon="euro"
+      (clickEmitter)="gotoPayment()"
+    >
+    </app-big-button>
+  </div>
+
+  <div fxFlex class="widget-container shadow-border">
+    <app-big-button
+      class="button"
+      label="Info Conto"
+      icon="info"
+      (clickEmitter)="gotoPayment()"
+    ></app-big-button>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+  <div fxFlex class="widget-container shadow-border">
+    <app-big-button
+    class="button"
+    label="Ricarica"
+    icon="publish"
+    (clickEmitter)="gotoPayment()"
+    ></app-big-button>
+  </div>
+
+  <div fxFlex class="widget-container shadow-border">
+    <app-big-button
+      class="button"
+      label="Movimenti"
+      icon="account_balance_wallet"
+      (clickEmitter)="gotoMovements()"
+    ></app-big-button>
+  </div>
+</div>
+
+<div fxLayout class="footer">
+  <div class="widget-container shadow-border spam-widget">
+    <app-banner></app-banner>
+  </div>
+</div>
