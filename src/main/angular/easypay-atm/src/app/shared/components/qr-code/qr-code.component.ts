@@ -13,6 +13,8 @@ export class QrCodeComponent implements OnInit {
 
   /** standard accettati dal lettore */
   readonly allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13];
+  availableDevices: MediaDeviceInfo[];
+  currentDevice: MediaDeviceInfo = null;
 
   /**
    * scanner.
@@ -39,6 +41,14 @@ export class QrCodeComponent implements OnInit {
       }
 
     });
+  }
+
+  onCamerasFound(devices: MediaDeviceInfo[]): void {
+    this.availableDevices = devices;
+
+    if (this.availableDevices && this.availableDevices.length > 0) {
+      this.currentDevice = this.availableDevices[0];
+    }
   }
 
   /** modifica lo stato del reader, che indica se è in funzione o ha dei problemi in esecuzione */
