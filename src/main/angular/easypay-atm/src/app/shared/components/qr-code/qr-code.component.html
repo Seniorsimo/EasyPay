@@ -2,9 +2,12 @@
 <div [hidden]="!(statusScanner$ | async)">
   <zxing-scanner
     class="qr-reader"
+    [(device)]="currentDevice"
     [formats]="allowedFormats"
+    (camerasFound)="onCamerasFound($event)"
     (scanSuccess)="scanSuccessHandler($event)"
     (permissionResponse)="readerStatus($event)"
+    [tryHarder]="true"
   ></zxing-scanner>
 </div>
 
