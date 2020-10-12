@@ -54,9 +54,14 @@
         <mat-error *ngIf="formCrl.controls['bornDate'].hasError('matDatepickerParse')">
           formato della data errato.
         </mat-error>
+        <mat-error *ngIf="formCrl.controls['bornDate'].hasError('isOver18')">
+          l'utente deve essere maggiorenne
+        </mat-error>
+        <mat-error *ngIf="formCrl.controls['bornDate'].hasError('isBorn')">
+          Sicuramente avremo offerte molto più belle per quando nascerai!
+        </mat-error>
       </mat-form-field>
     </div>
-
     <div fxFlex>
       <mat-form-field>
         <input matInput placeholder="telefono" formControlName="phone" />

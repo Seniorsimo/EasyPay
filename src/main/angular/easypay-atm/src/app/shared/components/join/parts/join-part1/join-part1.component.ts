@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { isBorn, isOver18 } from 'src/app/core/utils/custom-validator';
 
 import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
 
@@ -16,8 +17,8 @@ export class JoinPart1Component extends AbstractJoinPartComponent
       nome: this.fb.control('', [Validators.required]),
       cognome: this.fb.control('', [Validators.required]),
       cf: this.fb.control('', [Validators.required]),
-      bornDate: this.fb.control('', [Validators.required]),
-      email: this.fb.control('', [Validators.required]),
+      bornDate: this.fb.control('', [Validators.required, isOver18, isBorn]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
       phone: this.fb.control('', []),
       address: this.fb.control('', []),
     });
