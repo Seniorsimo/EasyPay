@@ -1,25 +1,29 @@
-<mat-grid-list [cols]="breakpoint" rowHeight="1:1" gutterSize="20px" (window:resize)="onResize($event)">
-  <mat-grid-tile colspan="2" rowspan="2" >
-    <div class="widget-container login-widget shadow-border">
-      <app-login *ngIf="formType === FormTypes.login" (joinRequest)="switchForm(FormTypes.join)"></app-login>
-      <app-join *ngIf="formType === FormTypes.join" (loginRequest)="switchForm(FormTypes.login)"></app-join>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile *ngIf="breakpoint ===  maxCol" class="empty" colspan="3" rowspan="2" ></mat-grid-tile>
-  <mat-grid-tile [colspan]="breakpoint ===  maxCol ? 1 : 2" rowspan="1" >
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+  <div fxFlex class="widget-container login-widget shadow-border">
+    <app-login
+      *ngIf="formType === FormTypes.login"
+      (joinRequest)="switchForm(FormTypes.join)"
+    ></app-login>
+    <app-join
+      *ngIf="formType === FormTypes.join"
+      (loginRequest)="switchForm(FormTypes.login)"
+    ></app-join>
+  </div>
+  <div
+    fxFlex
+    ngClass.xs="info_conto_flex--xs"
+    ngClass.gt-xs="info_conto_flex--gt-xs"
+  >
     <app-big-button
       class="info_conto"
       label="Info Conto"
       icon="info"
       (clickEmitter)="clickInfo()"
     ></app-big-button>
-  </mat-grid-tile>
-  <mat-grid-tile *ngIf="breakpoint ===  maxCol" class="empty" colspan="1" rowspan="1" ></mat-grid-tile>
-  <mat-grid-tile *ngIf="breakpoint ===  maxCol" colspan="6" rowspan="1" >
-    <div class="widget-container shadow-border spam-widget">
-      <app-banner></app-banner>
-    </div>
-  </mat-grid-tile>
-</mat-grid-list>
-
-
+  </div>
+</div>
+<div fxLayout class="footer">
+  <div class="widget-container shadow-border spam-widget">
+    <app-banner></app-banner>
+  </div>
+</div>

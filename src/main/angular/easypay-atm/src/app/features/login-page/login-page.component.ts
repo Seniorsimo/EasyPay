@@ -17,25 +17,14 @@ export class LoginPageComponent implements OnInit {
 
   public formType: FormTypes = FormTypes.login;
 
-  public breakpoint: number;
-  public  maxCol = 6;
-  public  minCol = 2;
-
-  private deviceSize = 850;
-
   constructor(private routingService: RoutingService ) { }
 
   ngOnInit(): void {
-    this.breakpoint = (window.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
     this.routingService.updateHeader('Login');
   }
 
   clickInfo() {
     console.warn('not yet implement');
-  }
-
-  onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
   }
 
   switchForm(formType: FormTypes) {

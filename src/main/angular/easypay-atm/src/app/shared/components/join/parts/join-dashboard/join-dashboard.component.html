@@ -1,4 +1,4 @@
 <div class="move">
-  <button mat-raised-button color="primary" [disabled]="page <= 0" (click)="backPage()">Back</button>
-  <button mat-raised-button color="primary" [disabled]="page >= maxPage" (click)="nextPage()">Next</button>
+  <button mat-raised-button class="back" color="primary" [disabled]="page <= 0" (click)="backPage()">Back</button>
+  <button mat-raised-button class="next" color="primary" [disabled]="page >= maxPage" (click)="nextPage()">Next</button>
 </div>

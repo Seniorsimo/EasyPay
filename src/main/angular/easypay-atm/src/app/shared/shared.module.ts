@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
@@ -31,6 +32,7 @@ import { RecognitionComponent } from './components/recognition/recognition.compo
 import { NumericDirective } from './directives/numeric.directive';
 import { MinPipe } from './pipes/min.pipe';
 import { SwitchNumberPipe } from './pipes/switch-number.pipe';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     MatSliderModule,
     MatRadioModule,
     MatDividerModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
   ],
   exports: [
     LoaderComponent,
