@@ -13,9 +13,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.easypay.easypay.auth.JWTAuthenticationService;
-import org.easypay.easypay.dao.entity.Cliente;
-import org.easypay.easypay.dao.entity.Commerciante;
-import org.easypay.easypay.dao.entity.Conto;
+import org.easypay.easypay.dao.entity.*;
 import org.easypay.easypay.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -232,27 +230,46 @@ public class Application extends WebMvcConfigurerAdapter {
                     .ragSoc("Osteria Bella Napoli")
                     .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                     .build());
-            Conto contoCliente1 = contoRepository.save(Conto.builder()
-                    .cliente(cliente1)
-                    .budget(20)
-                    .saldo(100)
+            Atm atm1 = atmRepository.save(Atm.builder().build());
+
+            System.out.println(atm1);
+
+            ricaricaRepository.save(Ricarica.builder()
+                    .atm(atm1)
+                    .destinatario(cliente1.getConto())
+                    .valore(100)
                     .build());
-            Conto contoCliente2 = contoRepository.save(Conto.builder()
-                    .cliente(cliente2)
-                    .budget(20)
-                    .saldo(100)
-                    .build());
-            Conto contoComm1 = contoRepository.save(Conto.builder()
-                    .cliente(comm1)
-                    .budget(20)
-                    .saldo(100)
-                    .build());
-            Conto contoComm2 = contoRepository.save(Conto.builder()
-                    .cliente(comm2)
-                    .budget(20)
-                    .saldo(100)
+            ricaricaRepository.save(Ricarica.builder()
+                    .atm(atm1)
+                    .destinatario(comm1.getConto())
+                    .valore(200)
                     .build());
 
+            pagamentoRepository.save(Pagamento.builder()
+                    .from(cliente1.getConto())
+                    .to(cliente2.getConto())
+                    .value(10)
+                    .build());
+            pagamentoRepository.save(Pagamento.builder()
+                    .from(cliente1.getConto())
+                    .to(comm1.getConto())
+                    .value(20)
+                    .build());
+            pagamentoRepository.save(Pagamento.builder()
+                    .from(cliente2.getConto())
+                    .to(comm1.getConto())
+                    .value(5)
+                    .build());
+            pagamentoRepository.save(Pagamento.builder()
+                    .from(cliente1.getConto())
+                    .to(comm2.getConto())
+                    .value(14)
+                    .build());
+            pagamentoRepository.save(Pagamento.builder()
+                    .from(comm1.getConto())
+                    .to(comm2.getConto())
+                    .value(8)
+                    .build());
         }
 
     }

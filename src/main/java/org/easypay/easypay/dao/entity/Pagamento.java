@@ -5,15 +5,13 @@
  */
 package org.easypay.easypay.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Arrays;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.ToString;
 
 /**
  *
@@ -21,13 +19,32 @@ import lombok.experimental.SuperBuilder;
  */
 @Data
 @Entity
-@SuperBuilder
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class Pagamento extends Movimento {
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_ricevente")
-    private Credenziali ricevente;
+    @ToString.Include
+    @JsonProperty("id_conto_mittente")
+    public long getMittenteId() {
+        return getMittente().getId();
+    }
+
+    @JsonIgnore
+    public Conto getMittente() {
+        return getConti().get(0);
+    }
+
+    @ToString.Include
+    @JsonProperty("id_conto_destinatario")
+    public long getDestinatarioId() {
+        return getDestinatario().getId();
+    }
+
+    @JsonIgnore
+    public Conto getDestinatario() {
+        return getConti().get(1);
+    }
+
+    @Builder
+    public Pagamento(Conto from, Conto to, int value) {
+        super(from != null && to != null ? Arrays.asList(from, to) : null, value);
+    }
 }

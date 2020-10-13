@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -41,11 +42,15 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
         if (token.startsWith(BEARER)) {
             token = token.replace(BEARER, "").trim();
         }
-        Authentication auth = getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(token, token));
-        if (auth != null) {
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            chain.doFilter(req, res);
+        try {
+            Authentication auth = getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(token, token));
+            if (auth != null) {
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+        } catch (AuthenticationException e) {
+            //disently discard it
         }
+        chain.doFilter(req, res);
     }
 
 }

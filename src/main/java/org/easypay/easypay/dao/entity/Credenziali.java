@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -57,6 +58,9 @@ public class Credenziali implements Serializable {
 
     @Builder
     public Credenziali(Cliente cliente, String username, String password) {
+        Objects.requireNonNull(cliente, "cliente cannot be null");
+        Objects.requireNonNull(username, "username cannot be null");
+        Objects.requireNonNull(password, "password cannot be null");
         this.cliente = cliente;
         this.username = username;
         this.password = password;
