@@ -5,14 +5,19 @@
  */
 package org.easypay.easypay.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Arrays;
+import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  *
@@ -20,13 +25,38 @@ import lombok.experimental.SuperBuilder;
  */
 @Data
 @Entity
-@SuperBuilder
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class Ricarica extends Movimento {
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_atm")
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Atm atm;
+
+    @JsonProperty("id_atm")
+    @ToString.Include
+    public long getAtmId() {
+        return this.atm.getId();
+    }
+
+    @ToString.Include
+    @JsonProperty("id_conto_destinatario")
+    public long getDestinatarioId() {
+        return getDestinatario().getId();
+    }
+
+    @JsonIgnore
+    public Conto getDestinatario() {
+        return getConti().get(1);
+    }
+
+    @Builder
+    public Ricarica(Conto destinatario, Atm atm, int valore) {
+        super(destinatario != null ? Arrays.asList(destinatario) : null, valore);
+        Objects.requireNonNull(atm, "atm cannot be null");
+        this.atm = atm;
+        atm.addRicarica(this);
+    }
 }

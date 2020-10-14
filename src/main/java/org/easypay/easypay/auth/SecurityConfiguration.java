@@ -10,6 +10,7 @@ import org.easypay.easypay.controller.ErrorHandlingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -58,6 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/error"),
             new AntPathRequestMatcher("/register"),
             new AntPathRequestMatcher("/api/login"),
+            new AntPathRequestMatcher("/api/clienti", HttpMethod.POST.name()),
             new AntPathRequestMatcher("/login")
     );
     private static final RequestMatcher API_URLS = new OrRequestMatcher(

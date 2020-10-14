@@ -6,12 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import javax.validation.constraints.NotNull;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -65,12 +64,23 @@ public class Cliente implements Serializable {
             value = "Client fiscal code"
     )
     private String cf;
+    @NotNull
     @OneToOne(
             fetch = FetchType.LAZY,
-            mappedBy = "utente"
+            mappedBy = "utente",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
     @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Conto conto;
+
+    @JsonProperty("id_conto")
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    private long getContoId() {
+        return this.conto.getId();
+    }
 
     @JsonProperty("type")
     @ApiModelProperty(
@@ -104,13 +114,21 @@ public class Cliente implements Serializable {
 
     @Builder
     public Cliente(String username, String password, String nome, String cognome, String cf) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.cf = cf;
+        Objects.requireNonNull(nome, "nome cannot be null");
+        Objects.requireNonNull(cognome, "cognome cannot be null");
+        Objects.requireNonNull(cf, "cf cannot be null");
         this.credenziali = Credenziali.builder()
                 .cliente(this)
                 .username(username)
                 .password(password)
+                .build();
+        this.nome = nome;
+        this.cognome = cognome;
+        this.cf = cf;
+        this.conto = Conto.builder()
+                .cliente(this)
+                .budget(20)
+                .saldo(0)
                 .build();
     }
 
