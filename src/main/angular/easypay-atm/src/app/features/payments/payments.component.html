@@ -1,15 +1,27 @@
-<mat-grid-list [cols]="breakpoint" rowHeight="2:1" gutterSize="20px" (window:resize)="onResize($event)">
-  <mat-grid-tile colspan="1" rowspan="1">
-    <app-recognition class="relative widget-container shadow-border recognition "></app-recognition>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1">
-    <app-info-widget class="relative widget-container shadow-border info-table" title="Personale" numConto="xxxxxxxxxx" name="Franco Rossi" regSocial="Gelateria Buongusto" address=" via colombo, 45, Torino"  ></app-info-widget>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="[2, breakpoint] | min" rowspan="1">
-    <div class="widget-container shadow-border spam-widget">
-      <app-banner></app-banner>
-    </div>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="flex-parent">
+  <div class="flex widget-container shadow-border mb20 mr10">
+    <app-recognition class="relative recognition"></app-recognition>
+  </div>
+  <div class="flex widget-container shadow-border mb20 ml10">
+    <app-info-widget
+      class=" info-table"
+      title="Personale"
+      numConto="xxxxxxxxxx"
+      name="Franco Rossi"
+      regSocial="Gelateria Buongusto"
+      address=" via colombo, 45, Torino"
+    ></app-info-widget>
+  </div>
+</div>
 
+<div class="flex-parent">
+  <div class="widget-container shadow-border flex mb20">
+    TODO: PAGAMENTO INFO
+  </div>
+</div>
 
+<div class="flex-parent">
+  <div class="widget-container shadow-border spam-widget">
+    <app-banner></app-banner>
+  </div>
+</div>
