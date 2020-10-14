@@ -7,7 +7,6 @@
   margin-left: $marginBorder;
 }
 
-mat-toolbar-row {
-  margin-right: $marginBorder - 2%;
-  margin-left: $marginBorder - 2%;
+mat-toolbar {
+  padding: 0 $marginBorder - 2%;
 }
