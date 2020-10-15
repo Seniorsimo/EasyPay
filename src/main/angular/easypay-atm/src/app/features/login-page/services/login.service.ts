@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { ApiRoute } from '../../../core';
-import { map, catchError } from 'rxjs/operators';
 import { AuthStore } from '../store/auth.store';
-import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
+
   constructor(private http: HttpClient, private authStore: AuthStore) {}
+
 
   getToken(username: string, password: string) {
     const params = { username, password };
@@ -21,6 +23,9 @@ export class LoginService {
           return response.token;
         }
         return '';
+      }),
+      catchError(error => {
+        throw(error);
       })
     );
   }

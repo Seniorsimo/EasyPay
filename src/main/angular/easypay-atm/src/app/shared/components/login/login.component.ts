@@ -1,5 +1,7 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RoutersPath } from 'src/app/core';
 import { LoginService } from 'src/app/features/login-page/services/login.service';
@@ -7,7 +9,7 @@ import { LoginService } from 'src/app/features/login-page/services/login.service
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   /** controller del form */
@@ -15,18 +17,25 @@ export class LoginComponent implements OnInit {
 
   @Output() joinRequest = new EventEmitter<void>();
 
+  private readonly toastConfig = {
+    horizontalPosition: 'center' as MatSnackBarHorizontalPosition,
+    verticalPosition: 'top' as MatSnackBarVerticalPosition,
+    panelClass: 'toast-error',
+  };
+
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.formCrl = this.fb.group({
       username: this.fb.control('', [Validators.required]),
       password: this.fb.control('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(16)
-      ])
+        Validators.maxLength(16),
+      ]),
     });
   }
 
@@ -35,7 +44,27 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService
       .getToken(this.formCrl.value.username, this.formCrl.value.password)
-      .subscribe(token => this.router.navigate([RoutersPath.home], { }));
+      .subscribe(
+        (token) => this.router.navigate([RoutersPath.home], {}),
+        (error: HttpErrorResponse) => {
+          if (error && error.status) {
+            if (error.status === 401) {
+              this.snackBar.open(
+                'Dati per il login errati!',
+                'Undo',
+                this.toastConfig
+              );
+            }
+          } else {
+            console.error(error);
+            this.snackBar.open(
+              'Errore generico durante il login!',
+              'Undo',
+              this.toastConfig
+            );
+          }
+        }
+      );
   }
 
   join() {

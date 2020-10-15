@@ -26,3 +26,13 @@
 mat-form-field {
   width: 85%
 }
+
+.toast-error {
+  background-color: #ca1515;
+  color: #000;
+
+  .mat-button {
+    color: yellow;
+  }
+
+}
