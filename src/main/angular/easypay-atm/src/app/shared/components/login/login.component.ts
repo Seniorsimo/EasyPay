@@ -1,7 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarRef,
+  MatSnackBarVerticalPosition,
+  TextOnlySnackBar,
+} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RoutersPath } from 'src/app/core';
 import { LoginService } from 'src/app/features/login-page/services/login.service';
@@ -16,6 +22,8 @@ export class LoginComponent implements OnInit {
   formCrl: FormGroup;
 
   @Output() joinRequest = new EventEmitter<void>();
+
+  private errorToastRef: MatSnackBarRef<TextOnlySnackBar> = null;
 
   private readonly toastConfig = {
     horizontalPosition: 'center' as MatSnackBarHorizontalPosition,
@@ -45,11 +53,16 @@ export class LoginComponent implements OnInit {
     this.loginService
       .getToken(this.formCrl.value.username, this.formCrl.value.password)
       .subscribe(
-        (token) => this.router.navigate([RoutersPath.home], {}),
+        (token) => {
+          if (this.errorToastRef) {
+            this.errorToastRef.dismiss();
+          }
+          return this.router.navigate([RoutersPath.home], {});
+        },
         (error: HttpErrorResponse) => {
           if (error && error.status) {
             if (error.status === 401) {
-              this.snackBar.open(
+                this.errorToastRef = this.snackBar.open(
                 'Dati per il login errati!',
                 'Undo',
                 this.toastConfig

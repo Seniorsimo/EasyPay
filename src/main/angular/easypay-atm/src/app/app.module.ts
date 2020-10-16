@@ -9,6 +9,7 @@ import { HomeModule } from './features/home/home.module';
 import { LoginPageModule } from './features/login-page/login-page.module';
 import { PaymentsModule } from './features/payments/payments.module';
 import { TemplateModule } from './features/template/template.module';
+import { httpInterceptorProviders } from './http-interceptors';
 import { SharedModule } from './shared';
 
 @NgModule({
@@ -26,7 +27,7 @@ import { SharedModule } from './shared';
     HomeModule,
     PaymentsModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
