@@ -1,0 +1,38 @@
+
+.widget-container {
+  border: 1px solid #3f51b5;
+  text-align: center;
+  // width: 100%;
+  height: inherit;
+  padding: inherit;
+
+}
+
+.shadow-border {
+  box-shadow: 1px 1px 7px grey;
+}
+
+.centralize {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mat-grid-tile {
+  overflow: visible !important;
+}
+
+mat-form-field {
+  width: 85%
+}
+
+.toast-error {
+  background-color: #ca1515;
+  color: #000;
+
+  .mat-button {
+    color: yellow;
+  }
+
+}

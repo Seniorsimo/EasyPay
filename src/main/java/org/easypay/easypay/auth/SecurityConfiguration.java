@@ -10,6 +10,7 @@ import org.easypay.easypay.controller.ErrorHandlingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -41,8 +42,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/images/**"),
             new AntPathRequestMatcher("/img/**"),
             new AntPathRequestMatcher("/js/**"),
+            new AntPathRequestMatcher("/"),
+            new AntPathRequestMatcher("/api-docs"),
+            new AntPathRequestMatcher("/api-docs/**"),
+            new AntPathRequestMatcher("/swagger-ui.html"),
+            new AntPathRequestMatcher("/swagger-resources/**"),
+            new AntPathRequestMatcher("/webjars/springfox-swagger-ui/**"),
+            new AntPathRequestMatcher("/demo"),
+            new AntPathRequestMatcher("/atm"),
+            new AntPathRequestMatcher("/atm/"),
+            new AntPathRequestMatcher("/atm/**"),
+            new AntPathRequestMatcher("/online"),
+            new AntPathRequestMatcher("/online/"),
+            new AntPathRequestMatcher("/online/**"),
             new AntPathRequestMatcher("/favicon.ico"),
+            new AntPathRequestMatcher("/error"),
             new AntPathRequestMatcher("/register"),
+            new AntPathRequestMatcher("/api/login"),
+            new AntPathRequestMatcher("/api/clienti", HttpMethod.POST.name()),
             new AntPathRequestMatcher("/login")
     );
     private static final RequestMatcher API_URLS = new OrRequestMatcher(

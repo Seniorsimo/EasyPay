@@ -1,0 +1,25 @@
+<form class="form" [formGroup]="formCrl">
+  <mat-radio-group formControlName="userType">
+    <mat-radio-button [value]="UserType.customer" >Sono solo un cliente</mat-radio-button>
+    <mat-radio-button [value]="UserType.merchant" >Dati del commerciante</mat-radio-button>
+  </mat-radio-group>
+  <div #merchantInfo>
+    <div>
+      <mat-form-field class="full-width">
+        <input matInput  class="mInfos" placeholder="partita iva*" formControlName="piva" />
+        <mat-error *ngIf="formCrl.controls['piva'].hasError('required')">
+          piva <strong>obbligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="full-width">
+        <input matInput class="mInfos" placeholder="ragione sociale*" formControlName="ragSoc" />
+        <mat-error *ngIf="formCrl.controls['ragSoc'].hasError('required')">
+          ragSoc <strong>obbligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

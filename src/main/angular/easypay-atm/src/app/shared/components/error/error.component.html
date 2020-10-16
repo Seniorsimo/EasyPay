@@ -1,0 +1,9 @@
+<ng-container>
+  <h1 class="mb-0">
+    <mat-icon svgIcon="alert-circle" class="logo"></mat-icon>
+  </h1>
+  <h2 class="logo-title mt-0">{{titleLabel}}</h2>
+  <div [innerHTML]="content"></div>
+
+  <p>{{ error | json }}</p>
+</ng-container>

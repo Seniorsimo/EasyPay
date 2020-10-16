@@ -1,0 +1,29 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+  <div fxFlex class="widget-container login-widget shadow-border">
+    <app-login
+      *ngIf="formType === FormTypes.login"
+      (joinRequest)="switchForm(FormTypes.join)"
+    ></app-login>
+    <app-join
+      *ngIf="formType === FormTypes.join"
+      (loginRequest)="switchForm(FormTypes.login)"
+    ></app-join>
+  </div>
+  <div
+    fxFlex
+    ngClass.xs="info_conto_flex--xs"
+    ngClass.gt-xs="info_conto_flex--gt-xs"
+  >
+    <app-big-button
+      class="info_conto"
+      label="Info Conto"
+      icon="info"
+      (clickEmitter)="clickInfo()"
+    ></app-big-button>
+  </div>
+</div>
+<div fxLayout class="footer">
+  <div class="widget-container shadow-border spam-widget">
+    <app-banner></app-banner>
+  </div>
+</div>

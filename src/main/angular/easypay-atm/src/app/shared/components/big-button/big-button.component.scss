@@ -1,0 +1,41 @@
+.button-container {
+  width: 100%;
+  min-width: 60px;
+  height: 10vw;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+
+.icon-content {
+  height: 70%;
+  position: relative;
+  background-color: #d5e6f2;
+}
+
+.icon {
+   font-size: 7vw;
+   position: absolute;
+   top: 40%;
+   left: 50%;
+   transform: translateX(-50%);
+}
+
+
+.label-body {
+  position: relative;
+  height: 30%;
+
+}
+
+.label{
+  width: 100%;
+  font-size: 2vw;
+  // display: block;
+}
+
+.fix-top {
+  // top: 70%;
+}
