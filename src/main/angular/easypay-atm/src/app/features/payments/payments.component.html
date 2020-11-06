@@ -7,9 +7,9 @@
       class=" info-table"
       title="Personale"
       numConto="xxxxxxxxxx"
-      name="Franco Rossi"
-      regSocial="Gelateria Buongusto"
-      address=" via colombo, 45, Torino"
+      [name]="this.selfStore.cognome +' '+ this.selfStore.nome"
+      [regSocial]="this.selfStore.regSociale"
+      [address]="this.selfStore.address"
     ></app-info-widget>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RoutingService } from 'src/app/core/services/routing.service';
+import { SelfStore } from 'src/app/core/store/self.store';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
   private deviceSize = 1180;
 
 
-  constructor(private routingService: RoutingService) { }
+  constructor(private routingService: RoutingService, public selfStore: SelfStore) { }
 
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;

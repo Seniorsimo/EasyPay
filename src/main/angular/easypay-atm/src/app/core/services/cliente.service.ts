@@ -5,7 +5,8 @@ import { map } from 'rxjs/operators';
 
 import { ApiResponse } from '../models/api.response';
 import { CUSTOM_ERROR, CustomError, WrongParamError } from '../models/error.model';
-import { Cliente, CLIENTE_TYPE } from '../models/cliente.model';
+import { Cliente } from '../models/cliente.model';
+import { UserType } from '../constants/user-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,17 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) {
     this.cliente$ = new BehaviorSubject({
-      type: CLIENTE_TYPE,
+      type: UserType.customer,
       id: '',
-      pin: '',
       token: '',
       nome: '',
-      budget: 0,
+      cognome: '',
+      createdAt: null,
+      updatedAt: null,
+      address: '',
+      regSociale: '',
+      pIva: '',
+      id_conto: ''
     });
   }
 
@@ -52,6 +58,14 @@ export class ClienteService {
     return this._getClient(params);
   }
 
+  getSelfClient(){
+    return this.httpClient.get('/api/clienti').pipe(
+      map(result => {
+          // TODO: continuare
+      })
+    );
+  }
+
   /** effettua la richiesta HTTP per verificare se il login del cliente va a buon fine */
   private _getClient(params: {id?: string, pin?: string; token?: string}): Observable<Cliente | CustomError> {
     const formData = new FormData();
@@ -63,7 +77,7 @@ export class ClienteService {
       .pipe(
         map(result => {
           if (result && result.success) {
-            const cliente = { type: CLIENTE_TYPE, ...result.body };
+            const cliente = { type: UserType.customer, ...result.body };
             this.cliente$.next(cliente);
             return cliente;
           } else {
