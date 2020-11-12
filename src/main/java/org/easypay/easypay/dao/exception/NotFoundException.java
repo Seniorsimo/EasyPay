@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author simo
  */
-@ResponseStatus(value = HttpStatus.OK)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class NotFoundException extends CustomException {
 
     private static final String ERROR_CODE = "NO_COUNT";

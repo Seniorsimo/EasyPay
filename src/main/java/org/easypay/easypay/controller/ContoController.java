@@ -2,6 +2,7 @@ package org.easypay.easypay.controller;
 
 import org.easypay.easypay.dao.entity.Conto;
 import org.easypay.easypay.dao.exception.NotFoundException;
+import org.easypay.easypay.dao.repository.ClientRepository;
 import org.easypay.easypay.dao.repository.ContoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/conti")
-public class ContoController implements ErrorHandlingController {
+public class ContoController implements ErrorHandlingController, SelfHandlingController {
+
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Autowired
     private ContoRepository contoRepository;
@@ -23,8 +27,8 @@ public class ContoController implements ErrorHandlingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable("id") long id) {
-        return ResponseEntity.ok(contoRepository.findById(id)
+    public ResponseEntity getById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(contoRepository.findById(getContoId(clientRepository, id))
                 .orElseThrow(() -> new NotFoundException(Conto.class, "id", id)));
     }
 }
