@@ -7,6 +7,8 @@ import { ApiResponse } from '../models/api.response';
 import { CUSTOM_ERROR, CustomError, WrongParamError } from '../models/error.model';
 import { Cliente } from '../models/cliente.model';
 import { UserType } from '../constants/user-type.enum';
+import { SelfStore } from '../store/self.store';
+import { ApiRoute } from '../constants/routing.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,14 @@ import { UserType } from '../constants/user-type.enum';
 export class ClienteService {
   cliente$: BehaviorSubject<Cliente>;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private selfStore: SelfStore) {
     this.cliente$ = new BehaviorSubject({
       type: UserType.customer,
       id: '',
       token: '',
       nome: '',
       cognome: '',
+      cf: '',
       createdAt: null,
       updatedAt: null,
       address: '',
@@ -59,9 +62,10 @@ export class ClienteService {
   }
 
   getSelfClient(){
-    return this.httpClient.get('/api/clienti').pipe(
+    return this.httpClient.get<ApiResponse<Cliente>>(`${ApiRoute.clienti}/self`).pipe(
       map(result => {
-          // TODO: continuare
+        console.error(result);
+        return (result && result.success) ? { type: UserType.customer, ...result.body } : null;
       })
     );
   }
@@ -73,7 +77,7 @@ export class ClienteService {
     formData.append('pin', params.pin);
     formData.append('token', params.token);
     return this.httpClient
-      .post<ApiResponse<Cliente>>('/api/clienti', formData)
+      .post<ApiResponse<Cliente>>(ApiRoute.clienti, formData)
       .pipe(
         map(result => {
           if (result && result.success) {

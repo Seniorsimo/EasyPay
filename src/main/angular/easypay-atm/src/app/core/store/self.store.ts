@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from 'src/app/core';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 /** Store che memorizza i dati dell' utente collegato (api/clienti/self) */
 @Injectable({
@@ -146,17 +146,15 @@ export class SelfStore {
 
   public get regSociale() {
     if (!this.pRegSociale) {
-      this.regSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+      this.pRegSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
     }
-    return this.regSociale;
+    return this.pRegSociale;
   }
 
   public set regSociale(value) {
-    this.regSociale = value;
+    this.pRegSociale = value;
     this.localStorageService.setItem(this.localStoreVariable.regSociale, value);
   }
-
-
 
   public get pIva() {
     if (!this.pPIva) {

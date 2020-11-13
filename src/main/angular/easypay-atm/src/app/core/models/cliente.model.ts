@@ -9,6 +9,7 @@ export interface Cliente {
   createdAt: Date;
   updatedAt: Date;
   address: string;
+  cf: string;
 
   regSociale: string;
   pIva: string;
