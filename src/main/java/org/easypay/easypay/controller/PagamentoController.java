@@ -1,23 +1,27 @@
 package org.easypay.easypay.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
+import org.easypay.easypay.dao.entity.Conto;
 import org.easypay.easypay.dao.entity.Pagamento;
 import org.easypay.easypay.dao.exception.NotFoundException;
+import org.easypay.easypay.dao.repository.ContoRepository;
 import org.easypay.easypay.dao.repository.PagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api")
+@RequestMapping("/api/pagamenti")
 @RestController
 public class PagamentoController {
 
     private static final Logger LOG = Logger.getLogger(PagamentoController.class);
+
+    @Autowired
+    private ContoRepository contoRepository;
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
@@ -33,24 +37,26 @@ public class PagamentoController {
                 .orElseThrow(() -> new NotFoundException(Pagamento.class, "id", id)));
     }
 
-//    @PostMapping("/pagamenti")
-//    public Response pagamento(@RequestBody RequestPayBody body) {
-//        Optional<Cliente> cliente = clientRepository.findById(body.idCliente);
-//        if(!cliente.isPresent()) {
-//            return Response.create(new NotFoundException(Cliente.class.getName(), "id", body.idCliente));
-//        } else if(cliente.get().getBudget() < body.prezzo) {
-//            return Response.create(new OutOfBudgetException(body.idCliente));
-//        }
-//        // Il pagamento per ora è solo un mock e non salva nulla nello store
-//        return Response.create(null);
-//    }
+    @PostMapping("")
+    public ResponseEntity<Pagamento> save(@Valid @RequestBody RequestPayBody body) {
+        Conto from = contoRepository.findById(body.from)
+                .orElseThrow(() -> new NotFoundException(Conto.class, "id", body.from));
+        Conto to = contoRepository.findById(body.to)
+                .orElseThrow(() -> new NotFoundException(Conto.class, "id", body.to));
+        Pagamento p = new Pagamento(from, to, body.value);
+        return ResponseEntity.ok(pagamentoRepository.save(p));
+    }
+
     @Data
     @RequiredArgsConstructor
     public static class RequestPayBody {
 
-        private String idCommerciante;
-        private String idCliente;
-        private Float prezzo;
+        @NotNull
+        private Long from;
+        @NotNull
+        private Long to;
+        @NotNull
+        private Float value;
     }
 
 }

@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import org.apache.log4j.Logger;
 import org.easypay.easypay.auth.JWTAuthenticationService;
-import org.easypay.easypay.dao.entity.*;
+import org.easypay.easypay.dao.entity.Atm;
+import org.easypay.easypay.dao.entity.Cliente;
+import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -59,7 +61,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = "org.easypay.easypay")
 public class Application extends WebMvcConfigurerAdapter {
 
-    private static Logger LOG = Logger.getLogger(Application.class);
+    private static Logger LOG = Logger.getLogger(Application.class.getName());
     private static ApplicationContext applicationContext;
 
     public static void main(String[] args) {
@@ -231,45 +233,95 @@ public class Application extends WebMvcConfigurerAdapter {
                     .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                     .build());
             Atm atm1 = atmRepository.save(Atm.builder().build());
+//
+//            System.out.println(atm1);
+//
+//            ricaricaRepository.save(Ricarica.builder()
+//                    .atm(atm1)
+//                    .destinatario(cliente1.getConto())
+//                    .valore(100)
+//                    .build());
+//            ricaricaRepository.save(Ricarica.builder()
+//                    .atm(atm1)
+//                    .destinatario(comm1.getConto())
+//                    .valore(200)
+//                    .build());
+//
+//            LOG.warning("PrePagamento");
+//            LOG.warning("Cliente 1");
+//            List<Movimento> movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//            LOG.warning("Cliente 2");
+//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//
+//            Pagamento p = new Pagamento(cliente1.getConto(), cliente2.getConto(), 10);
+//
+//            LOG.warning("Pagamento creato");
+//            LOG.warning("Cliente 1");
+//            movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//            LOG.warning("Cliente 2");
+//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//
+//            contoRepository.save(cliente1.getConto());
+//
+//            LOG.warning("Conto cliente 1 salvato");
+//            LOG.warning("Cliente 1");
+//            movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//            LOG.warning("Cliente 2");
+//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//
+//            contoRepository.save(cliente2.getConto());
+//
+//            LOG.warning("Conto cliente 2 salvato");
+//            LOG.warning("Cliente 1");
+//            movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
+//            LOG.warning("Cliente 2");
+//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
+//            movimenti.forEach(m -> LOG.warning(m.toString()));
 
-            System.out.println(atm1);
-
-            ricaricaRepository.save(Ricarica.builder()
-                    .atm(atm1)
-                    .destinatario(cliente1.getConto())
-                    .valore(100)
-                    .build());
-            ricaricaRepository.save(Ricarica.builder()
-                    .atm(atm1)
-                    .destinatario(comm1.getConto())
-                    .valore(200)
-                    .build());
-
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente1.getConto())
-                    .to(cliente2.getConto())
-                    .value(10)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente1.getConto())
-                    .to(comm1.getConto())
-                    .value(20)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente2.getConto())
-                    .to(comm1.getConto())
-                    .value(5)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente1.getConto())
-                    .to(comm2.getConto())
-                    .value(14)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(comm1.getConto())
-                    .to(comm2.getConto())
-                    .value(8)
-                    .build());
+//            LOG.warning("Conto1: " + ((Object) cliente1.getConto()).toString());
+//            cliente1.getConto().getMovimenti().forEach(m -> LOG.warning("Movimento: " + ((Object) m).toString()));
+//            LOG.warning("Conto2: " + ((Object) cliente2.getConto()).toString());
+//            cliente2.getConto().getMovimenti().forEach(m -> LOG.warning("Movimento: " + ((Object) m).toString()));
+//            LOG.warning("Movimento: " + ((Object) p).toString());
+//            LOG.warning("From: " + ((Object) p.getFrom()).toString());
+//            LOG.warning("To: " + ((Object) p.getTo()).toString());
+//            p.setFrom(cliente1.getConto());
+//            p.setTo(cliente2.getConto());
+//            contoRepository.save(cliente1.getConto());
+//            contoRepository.save(cliente2.getConto());
+//            pagamentoRepository.save(p);
+//            pagamentoRepository.save(Pagamento.builder()
+//                    .from(cliente1.getConto())
+//                    .to(cliente2.getConto())
+//                    .value(10)
+//                    .build());
+//            pagamentoRepository.save(Pagamento.builder()
+//                    .from(cliente1.getConto())
+//                    .to(comm1.getConto())
+//                    .value(20)
+//                    .build());
+//            pagamentoRepository.save(Pagamento.builder()
+//                    .from(cliente2.getConto())
+//                    .to(comm1.getConto())
+//                    .value(5)
+//                    .build());
+//            pagamentoRepository.save(Pagamento.builder()
+//                    .from(cliente1.getConto())
+//                    .to(comm2.getConto())
+//                    .value(14)
+//                    .build());
+//            pagamentoRepository.save(Pagamento.builder()
+//                    .from(comm1.getConto())
+//                    .to(comm2.getConto())
+//                    .value(8)
+//                    .build());
         }
 
     }

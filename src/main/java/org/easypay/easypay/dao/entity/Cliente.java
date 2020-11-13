@@ -7,10 +7,12 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.HibernateException;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,7 +26,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "client_id_sequence"
+    )
+    @SequenceGenerator(
+            name = "client_id_sequence",
+            allocationSize = 1
+    )
     @ApiModelProperty(
             position = 0,
             required = true,
@@ -42,6 +51,10 @@ public class Cliente implements Serializable {
     @JsonIgnore
     @ToString.Exclude
     private Credenziali credenziali;
+
+    @Column
+    @NotBlank
+    private String otp;
 
     @NotBlank
     @ApiModelProperty(
@@ -92,6 +105,12 @@ public class Cliente implements Serializable {
         return "cliente";
     }
 
+    @Transient
+    @JsonIgnore
+    public String getMovementName() {
+        return this.cognome + ' ' + this.nome;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     @ApiModelProperty(
@@ -101,6 +120,7 @@ public class Cliente implements Serializable {
             value = "The creation date"
     )
     private Date createdAt;
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
@@ -125,11 +145,27 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.cognome = cognome;
         this.cf = cf;
+        this.otp = OtpGenerator.generate();
         this.conto = Conto.builder()
                 .cliente(this)
                 .budget(20)
                 .saldo(0)
                 .build();
+    }
+
+    public static class OtpGenerator {
+
+        private static final char[] CHARACTERS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        private static final int SIZE = 6;
+        private static final Random randomizer = new Random();
+
+        public static String generate() throws HibernateException {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < SIZE; i++) {
+                sb.append(CHARACTERS[randomizer.nextInt(CHARACTERS.length)]);
+            }
+            return sb.toString();
+        }
     }
 
 }

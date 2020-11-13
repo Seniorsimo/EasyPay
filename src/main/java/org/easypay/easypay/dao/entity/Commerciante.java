@@ -1,8 +1,9 @@
 package org.easypay.easypay.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Transient;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public class Commerciante extends Cliente {
 
-    @NotBlank
+//    @NotBlank
     @ApiModelProperty(
             position = 10,
             required = true,
@@ -22,7 +23,7 @@ public class Commerciante extends Cliente {
     )
     private String ragSoc;
 
-    @NotBlank
+//    @NotBlank
     @ApiModelProperty(
             position = 11,
             required = true,
@@ -33,6 +34,13 @@ public class Commerciante extends Cliente {
     @Override
     public String type() {
         return "commerciante";
+    }
+
+    @Override
+    @Transient
+    @JsonIgnore
+    public String getMovementName() {
+        return this.ragSoc;
     }
 
     @Builder

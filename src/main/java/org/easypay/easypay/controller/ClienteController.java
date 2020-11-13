@@ -147,7 +147,7 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     public static class ClienteCreate extends ClienteEdit {
 
         @NotBlank
-        @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@]([a-zA-Z]+[.][a-zA-Z]{2,3})", message = "Username must be a valid email address")
+        @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@](([a-zA-Z]+[.])+[a-zA-Z]{2,3})$", message = "Username must be a valid email address")
         @ApiModelProperty(
                 position = 1,
                 required = true,
@@ -157,15 +157,15 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
 
         @NotBlank
         @Pattern.List({
-            //            @Pattern(regexp = "(?=.*[0-9])", message = "Password must contain one digit.")
-            //            ,
-            //            @Pattern(regexp = "(?=.*[a-z])", message = "Password must contain one lowercase letter.")
-            //            ,
-            //            @Pattern(regexp = "(?=.*[A-Z])", message = "Password must contain one uppercase letter.")
-            //            ,
-            @Pattern(regexp = "(?=\\S+$)", message = "Password must contain no whitespace.")
+            @Pattern(regexp = "^.*[0-9].*$", message = "Password must contain one digit.")
             ,
-            @Pattern(regexp = "^.{5,}", message = "Password must be at least 5 character long")
+            @Pattern(regexp = "^.*[a-z].*$", message = "Password must contain one lowercase letter.")
+            ,
+            @Pattern(regexp = "^.*[A-Z].*$", message = "Password must contain one uppercase letter.")
+            ,
+            @Pattern(regexp = "^\\S+$", message = "Password must contain no whitespace.")
+            ,
+            @Pattern(regexp = "^.{5,32}$", message = "Password must be at least 5 character long")
         })
         @ApiModelProperty(
                 position = 2,
