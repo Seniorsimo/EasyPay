@@ -10,7 +10,3 @@ export { LocalStorageService } from './services/local-storage.service';
 export * from './models/error.model';
 export * from './models/commerciante.model';
 export * from './models/cliente.model';
-
-export * from './models/api.response';
-export * from './models/api.request';
-

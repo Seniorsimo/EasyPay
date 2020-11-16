@@ -18,14 +18,14 @@ export class JoinPart2Component extends AbstractJoinPartComponent implements OnI
   constructor(private fb: FormBuilder) {
     super();
     this.formCrl = this.fb.group({
-      userType: this.fb.control(UserType.customer, []),
+      type: this.fb.control(UserType.customer, []),
       piva: this.fb.control({ value: '', disabled: true }, [Validators.required]),
       ragSoc: this.fb.control({ value: '', disabled: true }, [Validators.required]),
     });
   }
 
   ngOnInit() {
-    this.subscriptions.push(this.formCrl.get('userType').valueChanges.subscribe(userType => {
+    this.subscriptions.push(this.formCrl.get('type').valueChanges.subscribe(userType => {
         if ( userType === UserType.customer  ) {
           this.formCrl.get('piva').disable();
           this.formCrl.get('ragSoc').disable();
@@ -42,7 +42,7 @@ export class JoinPart2Component extends AbstractJoinPartComponent implements OnI
 
   getValue() {
     return {
-      userType: this.formCrl.controls.userType.value,
+      type: this.formCrl.controls.type.value,
       piva: this.formCrl.controls.piva.value,
       ragSoc: this.formCrl.controls.ragSoc.value,
     };

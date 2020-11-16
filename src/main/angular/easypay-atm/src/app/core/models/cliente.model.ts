@@ -3,16 +3,17 @@ export interface Cliente {
 
   id: string;
   // pin: string;
-  token: string;
+  otp: string;
   nome: string;
   cognome: string;
   createdAt: Date;
   updatedAt: Date;
   address: string;
-  cf: string;
 
-  regSociale: string;
-  pIva: string;
+  cf?: string;
+
+  regSociale?: string;
+  pIva?: string;
 
   id_conto: string;
 

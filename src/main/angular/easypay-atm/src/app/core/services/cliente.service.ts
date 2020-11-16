@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ApiResponse } from '../models/api.response';
 import { CUSTOM_ERROR, CustomError, WrongParamError } from '../models/error.model';
 import { Cliente } from '../models/cliente.model';
 import { UserType } from '../constants/user-type.enum';
@@ -20,7 +19,7 @@ export class ClienteService {
     this.cliente$ = new BehaviorSubject({
       type: UserType.customer,
       id: '',
-      token: '',
+      otp: '',
       nome: '',
       cognome: '',
       cf: '',
@@ -62,10 +61,9 @@ export class ClienteService {
   }
 
   getSelfClient(){
-    return this.httpClient.get<ApiResponse<Cliente>>(`${ApiRoute.clienti}/self`).pipe(
+    return this.httpClient.get<Cliente>(`${ApiRoute.clienti}/self`).pipe(
       map(result => {
-        console.error(result);
-        return (result && result.success) ? { type: UserType.customer, ...result.body } : null;
+        return (result) ? { type: UserType.customer, ...result } : null;
       })
     );
   }
@@ -77,11 +75,11 @@ export class ClienteService {
     formData.append('pin', params.pin);
     formData.append('token', params.token);
     return this.httpClient
-      .post<ApiResponse<Cliente>>(ApiRoute.clienti, formData)
+      .post<Cliente>(ApiRoute.clienti, formData)
       .pipe(
         map(result => {
-          if (result && result.success) {
-            const cliente = { type: UserType.customer, ...result.body };
+          if (result) {
+            const cliente = { type: UserType.customer, ...result };
             this.cliente$.next(cliente);
             return cliente;
           } else {

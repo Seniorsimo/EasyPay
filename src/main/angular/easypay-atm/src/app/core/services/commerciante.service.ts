@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ApiResponse } from '../models/api.response';
 import { Commerciante, COMMERCIANTE_TYPE } from '../models/commerciante.model';
 import { CustomError, WrongParamError, CUSTOM_ERROR } from '../models/error.model';
 
@@ -33,11 +32,11 @@ export class CommercianteService {
     }
 
     return this.httpClient
-      .get<ApiResponse<Commerciante>>(`/api/commercianti/${idConto}`)
+      .get<Commerciante>(`/api/commercianti/${idConto}`)
       .pipe(
         map(result => {
-          if (result && result.success) {
-            const commerciante = { type: COMMERCIANTE_TYPE, ...result.body };
+          if (result) {
+            const commerciante = { type: COMMERCIANTE_TYPE, ...result };
             this.contoCommerciante$.next(commerciante);
             return commerciante;
           } else {

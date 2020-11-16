@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { ApiResponse } from 'src/app/core/models/api.response';
 import { ClienteService } from 'src/app/core/services/cliente.service';
 import { CommercianteService } from 'src/app/core/services/commerciante.service';
 
@@ -66,6 +65,6 @@ export class PrezzoService {
       idCliente,
       prezzo, // : prezzo + ''
     };
-    return this.http.post<ApiResponse<{ success: boolean; error?: { id: string; message: string } }>>('/api/pagamenti', params);
+    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>('/api/pagamenti', params);
   }
 }
