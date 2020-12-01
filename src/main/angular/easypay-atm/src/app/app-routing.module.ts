@@ -8,6 +8,7 @@ import { AuthGuard } from './core/guards/auth-guard.service';
 import { NoLoginGuard } from './core/guards/no-login-guard.service';
 import { PaymentsComponent } from './features/payments/payments.component';
 import { RoutersPath } from './core';
+import { RechargeComponent } from './features/recharge/recharge.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
       {
         path: RoutersPath.payment,
         component: PaymentsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: RoutersPath.recharge,
+        component: RechargeComponent,
         canActivate: [AuthGuard],
       },
     ]

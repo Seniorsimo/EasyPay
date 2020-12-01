@@ -1,17 +1,14 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ClienteService } from 'src/app/core';
-import { UserType } from 'src/app/core/constants/user-type.enum';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
 
-
 @Component({
-  selector: 'app-payments',
-  templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.scss']
+  selector: 'app-recharge',
+  templateUrl: './recharge.component.html',
+  styleUrls: ['./recharge.component.scss']
 })
-export class PaymentsComponent implements OnInit, AfterViewInit {
-
+export class RechargeComponent implements OnInit, AfterViewInit {
 
   constructor(private routingService: RoutingService, public selfStore: SelfStore, private clienteService: ClienteService) { }
 
@@ -26,6 +23,6 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.routingService.updateHeader('Pagamento');
+    this.routingService.updateHeader('Ricarica');
   }
 }

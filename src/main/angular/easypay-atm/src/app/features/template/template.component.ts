@@ -22,7 +22,7 @@ export class TemplateComponent implements OnInit, OnDestroy {
     {
       label: 'Ricarica',
       icon: 'publish',
-      clickEvent: () => this.routingService.gotoReload(),
+      clickEvent: () => this.routingService.gotoRecharge(),
       isVisible: () => this.isLogin(),
     },
     {

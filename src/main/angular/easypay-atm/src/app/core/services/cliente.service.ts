@@ -60,7 +60,7 @@ export class ClienteService {
     return this._getClient(params);
   }
 
-  getSelfClient(){
+  getSelfClient(): Observable<Cliente> {
     return this.httpClient.get<Cliente>(`${ApiRoute.clienti}/self`).pipe(
       map(result => {
         return (result) ? { type: UserType.customer, ...result } : null;

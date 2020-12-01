@@ -23,7 +23,7 @@ export class PriceWidgetComponent implements OnInit {
   ngOnInit(): void {
     this.formCrl = this.fb.group({
       price: this.fb.control('', [Validators.required]),
-      date: this.fb.control({value: this.getDateNow, disabled: true}, [Validators.required]),
+      date: this.fb.control({value: this.getDateNow(), disabled: true}, [Validators.required]),
       invoice: this.fb.control(false, []),
     });
   }

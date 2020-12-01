@@ -29,12 +29,16 @@ export class RoutingService {
     this.router.navigate([RoutersPath.login]);
   }
 
-  gotoReload() {
-    this.router.navigate([RoutersPath.reload]);
-  }
+  // gotoReload() {
+  //   this.router.navigate([RoutersPath.reload]);
+  // }
 
   gotoPayment() {
     this.router.navigate([RoutersPath.payment]);
+  }
+
+  gotoRecharge() {
+    this.router.navigate([RoutersPath.recharge]);
   }
 
   gotoMovement() {

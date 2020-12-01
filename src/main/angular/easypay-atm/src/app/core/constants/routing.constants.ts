@@ -5,8 +5,9 @@ export const RoutersPath = {
   home: 'home',
   login: 'login',
   payment: 'payments',
+  recharge: 'recharges',
   movement: 'movements',
-  reload: 'reload'
+  // reload: 'reload'
 };
 
 export const baseUrl = environment.apiUrl;
