@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class InfoWidgetComponent implements OnInit {
 
   /** titolo della sezione */
-  @Input() title;
+  @Input() title: string;
   /** numero del conto */
   @Input() numConto: string;
   /** nome del proprietario conto */

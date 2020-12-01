@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CoreModule } from '../core/core.module';
 import { BannerComponent } from './components/banner/banner.component';
@@ -33,6 +34,7 @@ import { NumericDirective } from './directives/numeric.directive';
 import { MinPipe } from './pipes/min.pipe';
 import { SwitchNumberPipe } from './pipes/switch-number.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PriceWidgetComponent } from './components/price-widget/price-widget.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     JoinPart2Component,
     JoinDashboardComponent,
     JoinPart3Component,
+    PriceWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +74,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDividerModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatCheckboxModule,
   ],
   exports: [
     LoaderComponent,
@@ -84,6 +88,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     SwitchNumberPipe,
     InfoWidgetComponent,
     JoinComponent,
+    PriceWidgetComponent,
   ],
   entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component],
 })
