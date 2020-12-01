@@ -2,25 +2,27 @@
 
 <form class="form" [formGroup]="formCrl">
   <div class="flex-container">
-  <div class="inputs-pay">
-    <div>
-      <mat-form-field class="middle-width">
-        <mat-label>Prezzo</mat-label>
-        <input matInput type="number" formControlName="price" />
-      </mat-form-field>
+    <div class="inputs-pay">
+      <div>
+        <mat-form-field class="middle-width">
+          <mat-label>Prezzo</mat-label>
+          <input matInput type="number" formControlName="price" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="middle-width">
+          <mat-label>Data</mat-label>
+          <input matInput type="date" formControlName="date" />
+        </mat-form-field>
+      </div>
     </div>
-    <div>
-      <mat-form-field class="middle-width">
-        <mat-label>Data</mat-label>
-        <input matInput type="date" formControlName="date" />
-      </mat-form-field>
+    <div class="inputs-button">
+      <span *ngIf="canInvoice !== false"  style="margin: 0 5px 5px 40px">
+        <mat-checkbox formControlName="invoice">Fattura elettronica</mat-checkbox>
+      </span>
+      <span>
+        <button mat-raised-button color="primary" (click)="makeAction()">{{operationLabel}}</button>
+      </span>
     </div>
   </div>
-  <div class="inputs-button flex-container">
-    <div style="margin-right: 5px; margin-bottom: 5px;"><mat-checkbox formControlName="invoice">Fattura elettronica</mat-checkbox></div>
-    <div>
-      <button mat-raised-button color="primary" (click)="makeAction()">Paga</button>
-    </div>
-  </div>
-</div>
 </form>

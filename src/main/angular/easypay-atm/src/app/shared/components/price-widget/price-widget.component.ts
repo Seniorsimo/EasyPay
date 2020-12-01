@@ -9,6 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class PriceWidgetComponent implements OnInit {
 
   @Input() title: string;
+  /** nome del bottone da cliccare */
+  @Input() operationLabel: string;
+  /** flag che fa apparire il tasto per la fattura elettronica */
+  @Input() canInvoice: boolean;
 
   @Output() submitAction = new EventEmitter<{price: string, date: string, invoice: string}>();
 
