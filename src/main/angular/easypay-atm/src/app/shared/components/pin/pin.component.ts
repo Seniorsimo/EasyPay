@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Cliente, ClienteService } from 'src/app/core';
 
 @Component({
   selector: 'app-pin',
@@ -10,20 +11,23 @@ export class PinComponent implements OnInit {
   /** controller del form */
   formCrl: FormGroup;
 
-  @Output() loginEvent = new EventEmitter<{username: string, password: string}>();
+  @Output() clientAuthEvent = new EventEmitter<Cliente>();
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private clienteService: ClienteService,
   ) {
     this.formCrl = this.fb.group({
       userId: this.fb.control('', [Validators.required]),
-      password: this.fb.control('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
+      pin: this.fb.control('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
     });
   }
 
   ngOnInit() {}
 
   login() {
-    this.loginEvent.emit({username: this.formCrl.value.userId, password: this.formCrl.value.password});
+    this.clienteService.getClienteByPin(this.formCrl.value.userId, this.formCrl.value.pin).subscribe(
+      cliente => this.clientAuthEvent.emit(cliente)
+    );
   }
 }

@@ -10,7 +10,6 @@ import { ClienteService } from './services/cliente.service';
 import { CommercianteService } from './services/commerciante.service';
 import { LoaderService } from './services/loader.service';
 import { LocalStorageService } from './services/local-storage.service';
-import { PrezzoService } from './services/pagamento.service';
 import { RoutingService } from './services/routing.service';
 
 @NgModule({
@@ -36,7 +35,6 @@ export class CoreModule {
       providers: [
         CommercianteService,
         ClienteService,
-        PrezzoService,
         RoutingService,
         AuthGuard,
         NoLoginGuard,

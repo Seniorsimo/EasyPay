@@ -15,6 +15,6 @@ export interface Cliente {
   regSociale?: string;
   pIva?: string;
 
-  id_conto: string;
+  idConto: string;
 
 }

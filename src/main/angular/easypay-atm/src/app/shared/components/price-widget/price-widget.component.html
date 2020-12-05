@@ -1,4 +1,4 @@
-<h1 class="title">{{ title }}</h1>
+<h1 class="title" style="margin-top: 20px;">{{ title }}</h1>
 
 <form class="form" [formGroup]="formCrl">
   <div class="flex-container">
@@ -21,7 +21,7 @@
         <mat-checkbox formControlName="invoice">Fattura elettronica</mat-checkbox>
       </span>
       <span>
-        <button mat-raised-button color="primary" (click)="makeAction()">{{operationLabel}}</button>
+        <button #submit mat-raised-button color="primary" (click)="makeAction(); submit.disabled=true">{{operationLabel}}</button>
       </span>
     </div>
   </div>

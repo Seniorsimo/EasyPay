@@ -1,6 +1,6 @@
 <div class="flex-parent">
   <div class="flex widget-container shadow-border mb20 mr10">
-    <app-recognition class="relative recognition"></app-recognition>
+    <app-recognition class="relative recognition" (authClientStatus)="authClientStatus($event)"></app-recognition>
   </div>
   <div class="flex widget-container shadow-border mb20 ml10">
     <app-info-widget
@@ -16,7 +16,7 @@
 
 <div class="flex-parent">
   <div class="widget-container shadow-border flex mb20">
-    <app-price-widget title="Pagamento" operationLabel="Paga" [canInvoice]="true"></app-price-widget>
+    <app-price-widget title="Pagamento" operationLabel="Paga" [canInvoice]="true" (payStatus)="payStatus($event)"></app-price-widget>
   </div>
 </div>
 

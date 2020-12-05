@@ -14,7 +14,7 @@ export class PriceWidgetComponent implements OnInit {
   /** flag che fa apparire il tasto per la fattura elettronica */
   @Input() canInvoice: boolean;
 
-  @Output() submitAction = new EventEmitter<{price: string, date: string, invoice: string}>();
+  @Output() payStatus = new EventEmitter<{price: string, date: string, invoice: string}>();
 
   formCrl: FormGroup;
 
@@ -35,7 +35,8 @@ export class PriceWidgetComponent implements OnInit {
   /** effettua l'azione di submit del bottone */
   makeAction() {
     // NOTA: date non è incluso in formCtr perchè è disabilitato
-    this.submitAction.emit({...this.formCrl.value, date: this.getDateNow()});
+    this.payStatus.emit({...this.formCrl.value, date: this.getDateNow()});
+    this.formCrl.disable();
   }
 
 }
