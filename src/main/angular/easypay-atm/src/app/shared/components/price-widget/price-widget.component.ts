@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-price-widget',
@@ -33,10 +34,13 @@ export class PriceWidgetComponent implements OnInit {
   }
 
   /** effettua l'azione di submit del bottone */
-  makeAction() {
-    // NOTA: date non è incluso in formCtr perchè è disabilitato
-    this.payStatus.emit({...this.formCrl.value, date: this.getDateNow()});
-    this.formCrl.disable();
+  makeAction(submit: MatButton) {
+    if (!this.formCrl.invalid) {
+      // NOTA: date non è incluso in formCtr perchè è disabilitato
+      this.payStatus.emit({...this.formCrl.value, date: this.getDateNow()});
+      this.formCrl.disable();
+      submit.disabled = true;
+    }
   }
 
 }

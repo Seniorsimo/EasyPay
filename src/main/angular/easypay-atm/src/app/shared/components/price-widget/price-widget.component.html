@@ -21,7 +21,7 @@
         <mat-checkbox formControlName="invoice">Fattura elettronica</mat-checkbox>
       </span>
       <span>
-        <button #submit mat-raised-button color="primary" (click)="makeAction(); submit.disabled=true">{{operationLabel}}</button>
+        <button #submit mat-raised-button color="primary" (click)="makeAction(submit)">{{operationLabel}}</button>
       </span>
     </div>
   </div>

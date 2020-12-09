@@ -1,8 +1,17 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin, Subject } from 'rxjs';
 import { Cliente, ClienteService, MovimentoService } from 'src/app/core';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
+import { DialogPaymentComponent } from './components/dialog-payment/dialog-payment.component';
+
+
+export interface DialogData {
+  cliente: Cliente;
+  priceInfo: { price: string; date: string; invoice: string };
+}
+
 
 @Component({
   selector: 'app-payments',
@@ -17,7 +26,7 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
     private routingService: RoutingService,
     public selfStore: SelfStore,
     private clienteService: ClienteService,
-    private movimentoService: MovimentoService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -48,8 +57,9 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
   completePayment() {
     forkJoin({ cliente: this.a, priceInfo: this.b }).subscribe(
       ({ cliente, priceInfo }) => {
-        this.movimentoService.pay(cliente.idConto, this.selfStore.idConto, priceInfo.price).subscribe(() => {
-          console.error('TODO: messaggio di pagamento effettuato con successo');
+        this.dialog.open(DialogPaymentComponent, {
+          data: { cliente, priceInfo },
+          disableClose: true,
         });
       }
     );

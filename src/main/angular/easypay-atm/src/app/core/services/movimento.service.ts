@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { ApiRoute } from '../constants/routing.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class MovimentoService {
       idCliente,
       prezzo,
     };
-    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>('/api/pagamenti', params).pipe(
+    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>(ApiRoute.pagamenti, params).pipe(
       map(result => {
         console.error('TODO: gestire la risposta del pagamento');
       })
