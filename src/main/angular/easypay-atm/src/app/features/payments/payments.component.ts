@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, Subject } from 'rxjs';
-import { Cliente, ClienteService, MovimentoService } from 'src/app/core';
+import { Cliente, ClienteService } from 'src/app/core';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
+
 import { DialogPaymentComponent } from './components/dialog-payment/dialog-payment.component';
 
 
