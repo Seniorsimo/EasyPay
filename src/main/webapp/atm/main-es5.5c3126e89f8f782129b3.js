@@ -77,6 +77,30 @@
       var src_app_shared__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/app/shared */
       "M0ag");
+      /* harmony import */
+
+
+      var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @angular/material/dialog */
+      "0IaG");
+      /* harmony import */
+
+
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! @angular/material/button */
+      "bTqV");
+      /* harmony import */
+
+
+      var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @angular/material/snack-bar */
+      "dNgK");
+      /* harmony import */
+
+
+      var _components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! ./components/dialog-recharge/dialog-recharge.component */
+      "Aotw");
 
       var RechargeModule = function RechargeModule() {
         _classCallCheck(this, RechargeModule);
@@ -89,13 +113,13 @@
         factory: function RechargeModule_Factory(t) {
           return new (t || RechargeModule)();
         },
-        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], src_app_shared__WEBPACK_IMPORTED_MODULE_3__["SharedModule"]]]
+        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], src_app_shared__WEBPACK_IMPORTED_MODULE_3__["SharedModule"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialogModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_6__["MatSnackBarModule"]]]
       });
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](RechargeModule, {
-          declarations: [_recharge_component__WEBPACK_IMPORTED_MODULE_2__["RechargeComponent"]],
-          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], src_app_shared__WEBPACK_IMPORTED_MODULE_3__["SharedModule"]]
+          declarations: [_recharge_component__WEBPACK_IMPORTED_MODULE_2__["RechargeComponent"], _components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_7__["DialogRechargeComponent"]],
+          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], src_app_shared__WEBPACK_IMPORTED_MODULE_3__["SharedModule"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialogModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_6__["MatSnackBarModule"]]
         });
       })();
       /*@__PURE__*/
@@ -105,8 +129,8 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](RechargeModule, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
-            declarations: [_recharge_component__WEBPACK_IMPORTED_MODULE_2__["RechargeComponent"]],
-            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], src_app_shared__WEBPACK_IMPORTED_MODULE_3__["SharedModule"]]
+            declarations: [_recharge_component__WEBPACK_IMPORTED_MODULE_2__["RechargeComponent"], _components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_7__["DialogRechargeComponent"]],
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], src_app_shared__WEBPACK_IMPORTED_MODULE_3__["SharedModule"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__["MatDialogModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_6__["MatSnackBarModule"]]
           }]
         }], null, null);
       })();
@@ -1366,9 +1390,209 @@
         login: baseUrl + 'api/login',
         logout: baseUrl + 'api/logout',
         clienti: baseUrl + 'api/clienti',
-        pagamenti: baseUrl + 'api/pagamenti'
+        movimenti: baseUrl + 'api/movimenti'
       };
       /***/
+    },
+
+    /***/
+    "Aotw":
+    /*!*******************************************************************************************!*\
+      !*** ./src/app/features/recharge/components/dialog-recharge/dialog-recharge.component.ts ***!
+      \*******************************************************************************************/
+
+    /*! exports provided: DialogRechargeComponent */
+
+    /***/
+    function Aotw(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "DialogRechargeComponent", function () {
+        return DialogRechargeComponent;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/material/dialog */
+      "0IaG");
+      /* harmony import */
+
+
+      var src_app_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/core */
+      "ey9i");
+      /* harmony import */
+
+
+      var src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! src/app/core/store/self.store */
+      "qVhj");
+      /* harmony import */
+
+
+      var src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/core/services/routing.service */
+      "8QkR");
+      /* harmony import */
+
+
+      var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! @angular/material/snack-bar */
+      "dNgK");
+      /* harmony import */
+
+
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @angular/material/button */
+      "bTqV");
+
+      var DialogRechargeComponent = /*#__PURE__*/function () {
+        function DialogRechargeComponent(dialogRef, data, movimentoService, selfStore, routingService, snackBar) {
+          _classCallCheck(this, DialogRechargeComponent);
+
+          this.dialogRef = dialogRef;
+          this.data = data;
+          this.movimentoService = movimentoService;
+          this.selfStore = selfStore;
+          this.routingService = routingService;
+          this.snackBar = snackBar;
+          this.cliente = data.cliente;
+          this.priceInfo = data.priceInfo;
+        }
+
+        _createClass(DialogRechargeComponent, [{
+          key: "completeRecharge",
+          value: function completeRecharge() {
+            var _this5 = this;
+
+            this.movimentoService.recharge(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
+              // ricarica avvenuto con successo
+              _this5.openSnackBar('ricarica effettuata con successo', 'success');
+            }, function (error) {
+              // errore nel ricarica
+              _this5.openSnackBar('ricarica fallita', 'failure');
+
+              console.error(error);
+            }, // complete
+            function () {
+              _this5.dialogRef.close();
+
+              _this5.routingService.gotoHome();
+            });
+          }
+        }, {
+          key: "undo",
+          value: function undo() {
+            this.dialogRef.close();
+            window.location.reload();
+          }
+        }, {
+          key: "openSnackBar",
+          value: function openSnackBar(message, cssClass) {
+            this.snackBar.open(message, 'chiudi', {
+              // verticalPosition: MatSnackBarVerticalPosition,
+              // horizontalPosition: MatSnackBarHorizontalPosition,
+              panelClass: ['rechargetost', cssClass]
+            });
+          }
+        }]);
+
+        return DialogRechargeComponent;
+      }();
+
+      DialogRechargeComponent.ɵfac = function DialogRechargeComponent_Factory(t) {
+        return new (t || DialogRechargeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core__WEBPACK_IMPORTED_MODULE_2__["MovimentoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_3__["SelfStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_4__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_5__["MatSnackBar"]));
+      };
+
+      DialogRechargeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+        type: DialogRechargeComponent,
+        selectors: [["app-dialog-recharge"]],
+        decls: 8,
+        vars: 0,
+        consts: [[1, "container"], ["mat-raised-button", "", "color", "primary", 1, "marg", 3, "click"], ["mat-raised-button", "", "color", "secondary", 1, "marg", 3, "click"]],
+        template: function DialogRechargeComponent_Template(rf, ctx) {
+          if (rf & 1) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h2");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Confermi l'operazione?");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 0);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "button", 1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function DialogRechargeComponent_Template_button_click_4_listener() {
+              return ctx.completeRecharge();
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "PROSEGUI");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function DialogRechargeComponent_Template_button_click_6_listener() {
+              return ctx.undo();
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "INDIETRO");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          }
+        },
+        directives: [_angular_material_button__WEBPACK_IMPORTED_MODULE_6__["MatButton"]],
+        styles: [".container[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-around;\n}\n\n.marg[_ngcontent-%COMP%] {\n  margin: 5px;\n}\n\n .rechargetost.success {\n  background-color: #156402;\n}\n\n .rechargetost.success  .mat-button {\n  color: #000 !important;\n}\n\n .rechargetost.failure {\n  background-color: #990707;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZmVhdHVyZXMvcmVjaGFyZ2UvY29tcG9uZW50cy9kaWFsb2ctcmVjaGFyZ2UvZGlhbG9nLXJlY2hhcmdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBQTtFQUNBLDZCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxXQUFBO0FBQ0Y7O0FBRUE7RUFDRSx5QkFBQTtBQUNGOztBQUNFO0VBQ0Usc0JBQUE7QUFDSjs7QUFHQTtFQUNFLHlCQUFBO0FBQUYiLCJmaWxlIjoic3JjL2FwcC9mZWF0dXJlcy9yZWNoYXJnZS9jb21wb25lbnRzL2RpYWxvZy1yZWNoYXJnZS9kaWFsb2ctcmVjaGFyZ2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY29udGFpbmVyIHtcbiAgZGlzcGxheTogZmxleDtcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1hcm91bmQ7XG59XG5cbi5tYXJnIHtcbiAgbWFyZ2luOiA1cHg7XG59XG5cbjo6bmctZGVlcC5yZWNoYXJnZXRvc3Quc3VjY2VzcyB7XG4gIGJhY2tncm91bmQtY29sb3I6ICMxNTY0MDI7XG5cbiAgOjpuZy1kZWVwLm1hdC1idXR0b24ge1xuICAgIGNvbG9yOiAjMDAwICFpbXBvcnRhbnQ7XG4gIH1cbn1cblxuOjpuZy1kZWVwLnJlY2hhcmdldG9zdC5mYWlsdXJlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzk5MDcwNztcbn1cbiJdfQ== */"]
+      });
+      /*@__PURE__*/
+
+      (function () {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DialogRechargeComponent, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+          args: [{
+            selector: 'app-dialog-recharge',
+            templateUrl: './dialog-recharge.component.html',
+            styleUrls: ['./dialog-recharge.component.scss']
+          }]
+        }], function () {
+          return [{
+            type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"]
+          }, {
+            type: undefined,
+            decorators: [{
+              type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+              args: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"]]
+            }]
+          }, {
+            type: src_app_core__WEBPACK_IMPORTED_MODULE_2__["MovimentoService"]
+          }, {
+            type: src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_3__["SelfStore"]
+          }, {
+            type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_4__["RoutingService"]
+          }, {
+            type: _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_5__["MatSnackBar"]
+          }];
+        }, null);
+      })();
+      /***/
+
     },
 
     /***/
@@ -1550,23 +1774,23 @@
         }, {
           key: "login",
           value: function login() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.loginService.getToken(this.formCrl.value.username, this.formCrl.value.password).subscribe(function (token) {
-              if (_this5.errorToastRef) {
-                _this5.errorToastRef.dismiss();
+              if (_this6.errorToastRef) {
+                _this6.errorToastRef.dismiss();
               }
 
-              return _this5.router.navigate([src_app_core__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].home], {});
+              return _this6.router.navigate([src_app_core__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].home], {});
             }, function (error) {
               if (error && error.status) {
                 if (error.status === 401) {
-                  _this5.errorToastRef = _this5.snackBar.open('Dati per il login errati!', 'Undo', _this5.toastConfig);
+                  _this6.errorToastRef = _this6.snackBar.open('Dati per il login errati!', 'Undo', _this6.toastConfig);
                 }
               } else {
                 console.error(error);
 
-                _this5.snackBar.open('Errore generico durante il login!', 'Undo', _this5.toastConfig);
+                _this6.snackBar.open('Errore generico durante il login!', 'Undo', _this6.toastConfig);
               }
             });
           }
@@ -1813,12 +2037,12 @@
         _createClass(JoinPart3Component, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.http.post(src_app_core__WEBPACK_IMPORTED_MODULE_1__["ApiRoute"].clienti, this.data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (response) {
-              return _this6.status = StatusEnum.success;
+              return _this7.status = StatusEnum.success;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (error) {
-              return _this6.status = StatusEnum.failed;
+              return _this7.status = StatusEnum.failed;
             })).subscribe();
           }
         }]);
@@ -2280,7 +2504,7 @@
 
       var TemplateComponent = /*#__PURE__*/function () {
         function TemplateComponent(routingService, authStore, loginService) {
-          var _this7 = this;
+          var _this8 = this;
 
           _classCallCheck(this, TemplateComponent);
 
@@ -2291,46 +2515,46 @@
             label: 'Home',
             icon: 'more_vert',
             clickEvent: function clickEvent() {
-              return _this7.routingService.gotoHome();
+              return _this8.routingService.gotoHome();
             },
             isVisible: function isVisible() {
-              return _this7.isLogin();
+              return _this8.isLogin();
             }
           }, {
             label: 'Ricarica',
             icon: 'publish',
             clickEvent: function clickEvent() {
-              return _this7.routingService.gotoRecharge();
+              return _this8.routingService.gotoRecharge();
             },
             isVisible: function isVisible() {
-              return _this7.isLogin();
+              return _this8.isLogin();
             }
           }, {
             label: 'Pagamento',
             icon: 'euro',
             clickEvent: function clickEvent() {
-              return _this7.routingService.gotoPayment();
+              return _this8.routingService.gotoPayment();
             },
             isVisible: function isVisible() {
-              return _this7.isLogin();
+              return _this8.isLogin();
             }
           }, {
             label: 'Movimenti',
             icon: 'account_balance_wallet',
             clickEvent: function clickEvent() {
-              return _this7.routingService.gotoMovement();
+              return _this8.routingService.gotoMovement();
             },
             isVisible: function isVisible() {
-              return _this7.isLogin();
+              return _this8.isLogin();
             }
           }, {
             label: 'Logout',
             icon: 'lock',
             clickEvent: function clickEvent() {
-              return _this7.logout();
+              return _this8.logout();
             },
             isVisible: function isVisible() {
-              return _this7.isLogin();
+              return _this8.isLogin();
             }
           }];
           this.actSection = this.routingService.activeSection;
@@ -2340,11 +2564,11 @@
         _createClass(TemplateComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.subscriptions.push(this.routingService.activeSection$.subscribe(function (activeSection) {
               return setTimeout(function () {
-                return _this8.actSection = activeSection;
+                return _this9.actSection = activeSection;
               }, 0);
             }));
           }
@@ -2363,10 +2587,10 @@
         }, {
           key: "logout",
           value: function logout() {
-            var _this9 = this;
+            var _this10 = this;
 
             this.loginService.logout().subscribe(function () {
-              _this9.routingService.gotoLogin();
+              _this10.routingService.gotoLogin();
             });
           }
         }, {
@@ -3128,12 +3352,12 @@
         _createClass(PaymentsComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this10 = this;
+            var _this11 = this;
 
             if (!this.selfStore.id) {
               this.clienteService.getSelfClient().subscribe(function (cliente) {
                 if (cliente) {
-                  _this10.selfStore.update(cliente);
+                  _this11.selfStore.update(cliente);
                 }
               });
             }
@@ -3160,7 +3384,7 @@
         }, {
           key: "completePayment",
           value: function completePayment() {
-            var _this11 = this;
+            var _this12 = this;
 
             Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({
               cliente: this.a,
@@ -3169,7 +3393,7 @@
               var cliente = _ref.cliente,
                   priceInfo = _ref.priceInfo;
 
-              _this11.dialog.open(_components_dialog_payment_dialog_payment_component__WEBPACK_IMPORTED_MODULE_2__["DialogPaymentComponent"], {
+              _this12.dialog.open(_components_dialog_payment_dialog_payment_component__WEBPACK_IMPORTED_MODULE_2__["DialogPaymentComponent"], {
                 data: {
                   cliente: cliente,
                   priceInfo: priceInfo
@@ -3570,9 +3794,9 @@
             var params = {
               idCommerciante: idCommerciante,
               idCliente: idCliente,
-              prezzo: prezzo
+              prezzo: -prezzo
             };
-            return this.http.post(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].pagamenti, params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
+            return this.http.post(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].movimenti, params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
               console.error('TODO: gestire la risposta del pagamento');
             }));
           }
@@ -3580,7 +3804,16 @@
 
         }, {
           key: "recharge",
-          value: function recharge(idCliente, idCommerciante, prezzo) {}
+          value: function recharge(idCliente, idCommerciante, prezzo) {
+            var params = {
+              idCommerciante: idCommerciante,
+              idCliente: idCliente,
+              prezzo: prezzo
+            };
+            return this.http.post(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].movimenti, params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
+              console.error('TODO: gestire la risposta del pagamento');
+            }));
+          }
         }]);
 
         return MovimentoService;
@@ -4640,21 +4873,21 @@
         var _super = _createSuper(JoinPart1Component);
 
         function JoinPart1Component(fb) {
-          var _this12;
+          var _this13;
 
           _classCallCheck(this, JoinPart1Component);
 
-          _this12 = _super.call(this);
-          _this12.fb = fb;
-          _this12.formCrl = _this12.fb.group({
-            nome: _this12.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            cognome: _this12.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            cf: _this12.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            bornDate: _this12.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isOver18"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isBorn"]]),
-            phone: _this12.fb.control('', []),
-            address: _this12.fb.control('', [])
+          _this13 = _super.call(this);
+          _this13.fb = fb;
+          _this13.formCrl = _this13.fb.group({
+            nome: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            cognome: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            cf: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            bornDate: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isOver18"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isBorn"]]),
+            phone: _this13.fb.control('', []),
+            address: _this13.fb.control('', [])
           });
-          return _this12;
+          return _this13;
         }
 
         _createClass(JoinPart1Component, [{
@@ -5067,72 +5300,128 @@
       /* harmony import */
 
 
-      var src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! rxjs */
+      "qCKp");
+      /* harmony import */
+
+
+      var _components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./components/dialog-recharge/dialog-recharge.component */
+      "Aotw");
+      /* harmony import */
+
+
+      var src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/app/core/services/routing.service */
       "8QkR");
       /* harmony import */
 
 
-      var src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! src/app/core/store/self.store */
       "qVhj");
       /* harmony import */
 
 
-      var src_app_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var src_app_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! src/app/core */
       "ey9i");
       /* harmony import */
 
 
-      var _shared_components_recognition_recognition_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! @angular/material/dialog */
+      "0IaG");
+      /* harmony import */
+
+
+      var _shared_components_recognition_recognition_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ../../shared/components/recognition/recognition.component */
       "ls85");
       /* harmony import */
 
 
-      var _shared_components_info_widget_info_widget_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _shared_components_info_widget_info_widget_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ../../shared/components/info-widget/info-widget.component */
       "pO2f");
       /* harmony import */
 
 
-      var _shared_components_price_widget_price_widget_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _shared_components_price_widget_price_widget_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! ../../shared/components/price-widget/price-widget.component */
       "/i0I");
       /* harmony import */
 
 
-      var _shared_components_banner_banner_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _shared_components_banner_banner_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! ../../shared/components/banner/banner.component */
       "biqx");
 
       var RechargeComponent = /*#__PURE__*/function () {
-        function RechargeComponent(routingService, selfStore, clienteService) {
+        function RechargeComponent(routingService, selfStore, clienteService, dialog) {
           _classCallCheck(this, RechargeComponent);
 
           this.routingService = routingService;
           this.selfStore = selfStore;
           this.clienteService = clienteService;
+          this.dialog = dialog;
+          this.a = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+          this.b = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         }
 
         _createClass(RechargeComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this13 = this;
+            var _this14 = this;
 
             if (!this.selfStore.id) {
               this.clienteService.getSelfClient().subscribe(function (cliente) {
                 if (cliente) {
-                  _this13.selfStore.update(cliente);
+                  _this14.selfStore.update(cliente);
                 }
               });
             }
+
+            this.completeRecharge();
           }
         }, {
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
             this.routingService.updateHeader('Ricarica');
+          }
+        }, {
+          key: "authClientStatus",
+          value: function authClientStatus(cliente) {
+            this.a.next(cliente);
+            this.a.complete();
+          }
+        }, {
+          key: "payStatus",
+          value: function payStatus(status) {
+            this.b.next(status);
+            this.b.complete();
+          }
+        }, {
+          key: "completeRecharge",
+          value: function completeRecharge() {
+            var _this15 = this;
+
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({
+              cliente: this.a,
+              priceInfo: this.b
+            }).subscribe(function (_ref4) {
+              var cliente = _ref4.cliente,
+                  priceInfo = _ref4.priceInfo;
+
+              _this15.dialog.open(_components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_2__["DialogRechargeComponent"], {
+                data: {
+                  cliente: cliente,
+                  priceInfo: priceInfo
+                },
+                disableClose: true
+              });
+            });
           }
         }]);
 
@@ -5140,7 +5429,7 @@
       }();
 
       RechargeComponent.ɵfac = function RechargeComponent_Factory(t) {
-        return new (t || RechargeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_1__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_2__["SelfStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core__WEBPACK_IMPORTED_MODULE_3__["ClienteService"]));
+        return new (t || RechargeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_3__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_4__["SelfStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core__WEBPACK_IMPORTED_MODULE_5__["ClienteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_6__["MatDialog"]));
       };
 
       RechargeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -5148,14 +5437,20 @@
         selectors: [["app-recharge"]],
         decls: 11,
         vars: 5,
-        consts: [[1, "flex-parent"], [1, "flex", "widget-container", "shadow-border", "mb20", "mr10"], [1, "relative", "recognition"], [1, "flex", "widget-container", "shadow-border", "mb20", "ml10"], ["title", "Personale", 1, "info-table", 3, "numConto", "name", "regSocial", "address"], [1, "widget-container", "shadow-border", "flex", "mb20"], ["title", "Ricarica", "operationLabel", "Ricarica", 3, "canInvoice"], [1, "widget-container", "shadow-border", "spam-widget"]],
+        consts: [[1, "flex-parent"], [1, "flex", "widget-container", "shadow-border", "mb20", "mr10"], [1, "relative", "recognition", 3, "authClientStatus"], [1, "flex", "widget-container", "shadow-border", "mb20", "ml10"], ["title", "Personale", 1, "info-table", 3, "numConto", "name", "regSocial", "address"], [1, "widget-container", "shadow-border", "flex", "mb20"], ["title", "Ricarica", "operationLabel", "Ricarica", 3, "canInvoice", "payStatus"], [1, "widget-container", "shadow-border", "spam-widget"]],
         template: function RechargeComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "app-recognition", 2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "app-recognition", 2);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("authClientStatus", function RechargeComponent_Template_app_recognition_authClientStatus_2_listener($event) {
+              return ctx.authClientStatus($event);
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -5171,7 +5466,13 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 5);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "app-price-widget", 6);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "app-price-widget", 6);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("payStatus", function RechargeComponent_Template_app_price_widget_payStatus_7_listener($event) {
+              return ctx.payStatus($event);
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -5195,10 +5496,10 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("canInvoice", true);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("canInvoice", false);
           }
         },
-        directives: [_shared_components_recognition_recognition_component__WEBPACK_IMPORTED_MODULE_4__["RecognitionComponent"], _shared_components_info_widget_info_widget_component__WEBPACK_IMPORTED_MODULE_5__["InfoWidgetComponent"], _shared_components_price_widget_price_widget_component__WEBPACK_IMPORTED_MODULE_6__["PriceWidgetComponent"], _shared_components_banner_banner_component__WEBPACK_IMPORTED_MODULE_7__["BannerComponent"]],
+        directives: [_shared_components_recognition_recognition_component__WEBPACK_IMPORTED_MODULE_7__["RecognitionComponent"], _shared_components_info_widget_info_widget_component__WEBPACK_IMPORTED_MODULE_8__["InfoWidgetComponent"], _shared_components_price_widget_price_widget_component__WEBPACK_IMPORTED_MODULE_9__["PriceWidgetComponent"], _shared_components_banner_banner_component__WEBPACK_IMPORTED_MODULE_10__["BannerComponent"]],
         styles: [".flex-parent[_ngcontent-%COMP%] {\n  flex-direction: row;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n  align-items: stretch;\n}\n\n.flex[_ngcontent-%COMP%] {\n  position: relative;\n  flex-grow: 1;\n}\n\n.mb20[_ngcontent-%COMP%] {\n  margin-bottom: 20px;\n}\n\n.ml10[_ngcontent-%COMP%] {\n  margin-left: 10px;\n}\n\n.mr10[_ngcontent-%COMP%] {\n  margin-right: 10px;\n}\n\n\n\n@media all and (max-width: 600px) {\n  .ml10[_ngcontent-%COMP%] {\n    margin-left: 0px;\n  }\n\n  .mr10[_ngcontent-%COMP%] {\n    margin-right: 0px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZmVhdHVyZXMvcmVjaGFyZ2UvcmVjaGFyZ2UuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxtQkFBQTtFQUNBLGFBQUE7RUFDQSxlQUFBO0VBQ0EsOEJBQUE7RUFDQSxvQkFBQTtBQUNGOztBQUVBO0VBQ0Usa0JBQUE7RUFDQSxZQUFBO0FBQ0Y7O0FBRUE7RUFDRSxtQkFBQTtBQUNGOztBQUVBO0VBQ0UsaUJBQUE7QUFDRjs7QUFFQTtFQUNFLGtCQUFBO0FBQ0Y7O0FBRUEsa0JBQUE7O0FBQ0E7RUFDRTtJQUNFLGdCQUFBO0VBQ0Y7O0VBRUE7SUFDRSxpQkFBQTtFQUNGO0FBQ0YiLCJmaWxlIjoic3JjL2FwcC9mZWF0dXJlcy9yZWNoYXJnZS9yZWNoYXJnZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5mbGV4LXBhcmVudCB7XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtd3JhcDogd3JhcDtcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICBhbGlnbi1pdGVtczogc3RyZXRjaDtcbn1cblxuLmZsZXgge1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGZsZXgtZ3JvdzogMTtcbn1cblxuLm1iMjAge1xuICBtYXJnaW4tYm90dG9tOiAyMHB4XG59XG5cbi5tbDEwIHtcbiAgbWFyZ2luLWxlZnQ6IDEwcHg7XG59XG5cbi5tcjEwIHtcbiAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xufVxuXG4vKiBTbWFsbCBzY3JlZW5zICovXG5AbWVkaWEgYWxsIGFuZCAobWF4LXdpZHRoOiA2MDBweCkge1xuICAubWwxMCB7XG4gICAgbWFyZ2luLWxlZnQ6IDBweDtcbiAgfVxuXG4gIC5tcjEwIHtcbiAgICBtYXJnaW4tcmlnaHQ6IDBweDtcbiAgfVxufVxuIl19 */"]
       });
       /*@__PURE__*/
@@ -5213,11 +5514,13 @@
           }]
         }], function () {
           return [{
-            type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_1__["RoutingService"]
+            type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_3__["RoutingService"]
           }, {
-            type: src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_2__["SelfStore"]
+            type: src_app_core_store_self_store__WEBPACK_IMPORTED_MODULE_4__["SelfStore"]
           }, {
-            type: src_app_core__WEBPACK_IMPORTED_MODULE_3__["ClienteService"]
+            type: src_app_core__WEBPACK_IMPORTED_MODULE_5__["ClienteService"]
+          }, {
+            type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_6__["MatDialog"]
           }];
         }, null);
       })();
@@ -5348,10 +5651,10 @@
         }, {
           key: "login",
           value: function login() {
-            var _this14 = this;
+            var _this16 = this;
 
             this.clienteService.getClienteByPin(this.formCrl.value.userId, this.formCrl.value.pin).subscribe(function (cliente) {
-              return _this14.clientAuthEvent.emit(cliente);
+              return _this16.clientAuthEvent.emit(cliente);
             });
           }
         }]);
@@ -5611,10 +5914,10 @@
         }, {
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
-            var _this15 = this;
+            var _this17 = this;
 
             setTimeout(function () {
-              _this15.loadComponent();
+              _this17.loadComponent();
             }, 0);
           }
         }, {
@@ -5899,18 +6202,18 @@
         var _super2 = _createSuper(JoinPart0Component);
 
         function JoinPart0Component(fb) {
-          var _this16;
+          var _this18;
 
           _classCallCheck(this, JoinPart0Component);
 
-          _this16 = _super2.call(this);
-          _this16.fb = fb;
-          _this16.valuesOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-          _this16.formCrl = _this16.fb.group({
-            email: _this16.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
-            password: _this16.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16)])
+          _this18 = _super2.call(this);
+          _this18.fb = fb;
+          _this18.valuesOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+          _this18.formCrl = _this18.fb.group({
+            email: _this18.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
+            password: _this18.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16)])
           });
-          return _this16;
+          return _this18;
         }
 
         _createClass(JoinPart0Component, [{
@@ -6095,7 +6398,7 @@
         _createClass(CommercianteService, [{
           key: "getConto",
           value: function getConto(idConto) {
-            var _this17 = this;
+            var _this19 = this;
 
             // se già presente nello store non riscarica i dati del cliente:
             if (this.contoCommerciante$.value.idConto) {
@@ -6110,7 +6413,7 @@
                 type: _models_commerciante_model__WEBPACK_IMPORTED_MODULE_3__["COMMERCIANTE_TYPE"]
               }, result);
 
-              _this17.contoCommerciante$.next(commerciante);
+              _this19.contoCommerciante$.next(commerciante);
 
               return commerciante;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (error) {
@@ -7552,42 +7855,42 @@
         var _super3 = _createSuper(JoinPart2Component);
 
         function JoinPart2Component(fb) {
-          var _this18;
+          var _this20;
 
           _classCallCheck(this, JoinPart2Component);
 
-          _this18 = _super3.call(this);
-          _this18.fb = fb;
-          _this18.UserType = src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"];
-          _this18.subscriptions = [];
-          _this18.formCrl = _this18.fb.group({
-            type: _this18.fb.control(src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"].customer, []),
-            piva: _this18.fb.control({
+          _this20 = _super3.call(this);
+          _this20.fb = fb;
+          _this20.UserType = src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"];
+          _this20.subscriptions = [];
+          _this20.formCrl = _this20.fb.group({
+            type: _this20.fb.control(src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"].customer, []),
+            piva: _this20.fb.control({
               value: '',
               disabled: true
             }, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            ragSoc: _this18.fb.control({
+            ragSoc: _this20.fb.control({
               value: '',
               disabled: true
             }, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required])
           });
-          return _this18;
+          return _this20;
         }
 
         _createClass(JoinPart2Component, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this19 = this;
+            var _this21 = this;
 
             this.subscriptions.push(this.formCrl.get('type').valueChanges.subscribe(function (userType) {
               if (userType === src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"].customer) {
-                _this19.formCrl.get('piva').disable();
+                _this21.formCrl.get('piva').disable();
 
-                _this19.formCrl.get('ragSoc').disable();
+                _this21.formCrl.get('ragSoc').disable();
               } else {
-                _this19.formCrl.get('piva').enable();
+                _this21.formCrl.get('piva').enable();
 
-                _this19.formCrl.get('ragSoc').enable();
+                _this21.formCrl.get('ragSoc').enable();
               }
             }));
           }
@@ -8048,20 +8351,20 @@
         _createClass(ErrorPageComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this20 = this;
+            var _this22 = this;
 
             this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (params) {
               if (params.titleLabel) {
-                _this20.titleLabel$.next(params.titleLabel);
+                _this22.titleLabel$.next(params.titleLabel);
               }
 
               if (params.content) {
-                _this20.content$.next(params.content);
+                _this22.content$.next(params.content);
               }
 
               if (params.error) {
-                _this20.error$.next(JSON.parse(params.error));
+                _this22.error$.next(JSON.parse(params.error));
               }
 
               return [];
@@ -8226,21 +8529,21 @@
         _createClass(DialogPaymentComponent, [{
           key: "completePayment",
           value: function completePayment() {
-            var _this21 = this;
+            var _this23 = this;
 
             this.movimentoService.pay(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
               // pagamento avvenuto con successo
-              _this21.openSnackBar('pagamento effettuato con successo', 'success');
+              _this23.openSnackBar('pagamento effettuato con successo', 'success');
             }, function (error) {
               // errore nel pagamento
-              _this21.openSnackBar('pagamento fallito', 'failure');
+              _this23.openSnackBar('pagamento fallito', 'failure');
 
               console.error(error);
             }, // complete
             function () {
-              _this21.dialogRef.close();
+              _this23.dialogRef.close();
 
-              _this21.routingService.gotoHome();
+              _this23.routingService.gotoHome();
             });
           }
         }, {
@@ -8884,15 +9187,15 @@
         }, {
           key: "scanSuccessHandler",
           value: function scanSuccessHandler(token) {
-            var _this22 = this;
+            var _this24 = this;
 
             this.scanner.enable = false;
             this.clienteService.getClienteByTokenOtp(token).subscribe(function (cliente) {
               console.warn(cliente);
 
-              _this22.clientAuthEvent.emit(cliente);
+              _this24.clientAuthEvent.emit(cliente);
             }, function (error) {
-              return _this22.scanner.enable = true;
+              return _this24.scanner.enable = true;
             });
           }
         }, {
@@ -9022,4 +9325,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.eebf595328b379db9640.js.map
+//# sourceMappingURL=main-es5.5c3126e89f8f782129b3.js.map
