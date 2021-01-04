@@ -9,8 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
+import org.easypay.easypay.auth.UserAuthenticationService;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.dao.entity.Commerciante;
+import org.easypay.easypay.dao.exception.InvalidRequestException;
 import org.easypay.easypay.dao.exception.NotFoundException;
 import org.easypay.easypay.dao.exception.UsernameTakenException;
 import org.easypay.easypay.dao.repository.ClientRepository;
@@ -18,6 +20,7 @@ import org.easypay.easypay.dao.repository.CredenzialiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -103,9 +106,27 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         ,
         @ApiResponse(code = 403, message = "Accessing the client is forbidden")
     })
-    public ResponseEntity<Cliente> getById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(clientRepository.findById(getUserId(id))
-                .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id)));
+    public ResponseEntity<Cliente> getById(
+            @PathVariable("id") String id,
+            @RequestParam(name = "otp", required = false) String otp,
+            @RequestParam(name = "pin", required = false) String pin
+    ) {
+        UserAuthenticationService.MyUser user = (UserAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Cliente c = clientRepository.findById(getUserId(id))
+                .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id));
+        if ("self".equals(id) || Long.parseLong(id) == user.getId()) {
+            return ResponseEntity.ok(c);
+        }
+        if ((otp == null || otp.isEmpty()) && (pin == null || pin.isEmpty())) {
+            throw new InvalidRequestException(Cliente.class);
+        }
+        if (otp != null && !otp.isEmpty() && otp.equals(c.getOtp())) {
+            return ResponseEntity.ok(c);
+        }
+        if (pin != null && !pin.isEmpty() && pin.equals(c.getPin())) {
+            return ResponseEntity.ok(c);
+        }
+        throw new InvalidRequestException(Cliente.class);
     }
 
     @PostMapping(value = "/{id}",

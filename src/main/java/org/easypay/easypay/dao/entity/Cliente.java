@@ -56,6 +56,11 @@ public class Cliente implements Serializable {
     @NotBlank
     private String otp;
 
+    @Column
+    @NotBlank
+    @JsonIgnore
+    private String pin;
+
     @NotBlank
     @ApiModelProperty(
             position = 10,
@@ -179,7 +184,8 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.cognome = cognome;
         this.cf = cf;
-        this.otp = OtpGenerator.generate();
+        this.otp = OtpGenerator.generate(6);
+        this.pin = "1234";
         this.birthDate = birthDate;
         this.phone = phone;
         this.address = address;
@@ -193,12 +199,11 @@ public class Cliente implements Serializable {
     public static class OtpGenerator {
 
         private static final char[] CHARACTERS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        private static final int SIZE = 6;
         private static final Random randomizer = new Random();
 
-        public static String generate() throws HibernateException {
+        public static String generate(int size) throws HibernateException {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < SIZE; i++) {
+            for (int i = 0; i < size; i++) {
                 sb.append(CHARACTERS[randomizer.nextInt(CHARACTERS.length)]);
             }
             return sb.toString();
