@@ -70,6 +70,7 @@ public class Cliente implements Serializable {
             value = "Client lastname"
     )
     private String cognome;
+
     @NotBlank
     @ApiModelProperty(
             position = 12,
@@ -77,6 +78,32 @@ public class Cliente implements Serializable {
             value = "Client fiscal code"
     )
     private String cf;
+
+    @NotBlank
+    @JsonProperty("birth_date")
+    @ApiModelProperty(
+            position = 13,
+            required = true,
+            value = "Client birth date"
+    )
+    private String birthDate;
+
+    @NotBlank
+    @ApiModelProperty(
+            position = 14,
+            required = true,
+            value = "Client phone number"
+    )
+    private String phone;
+
+    @NotBlank
+    @ApiModelProperty(
+            position = 15,
+            required = true,
+            value = "Client address"
+    )
+    private String address;
+
     @NotNull
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -93,6 +120,13 @@ public class Cliente implements Serializable {
     @EqualsAndHashCode.Include
     private long getContoId() {
         return this.conto.getId();
+    }
+
+    @JsonProperty("email")
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    private String getEmail() {
+        return this.credenziali.getUsername();
     }
 
     @JsonProperty("type")
@@ -133,7 +167,7 @@ public class Cliente implements Serializable {
     private Date updatedAt;
 
     @Builder
-    public Cliente(String username, String password, String nome, String cognome, String cf) {
+    public Cliente(String username, String password, String nome, String cognome, String cf, String birthDate, String phone, String address) {
         Objects.requireNonNull(nome, "nome cannot be null");
         Objects.requireNonNull(cognome, "cognome cannot be null");
         Objects.requireNonNull(cf, "cf cannot be null");
@@ -146,6 +180,9 @@ public class Cliente implements Serializable {
         this.cognome = cognome;
         this.cf = cf;
         this.otp = OtpGenerator.generate();
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.address = address;
         this.conto = Conto.builder()
                 .cliente(this)
                 .budget(20)

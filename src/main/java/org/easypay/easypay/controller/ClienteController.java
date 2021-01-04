@@ -62,25 +62,31 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         @ApiResponse(code = 401, message = "You are not authorized to create client")
     })
     public ResponseEntity<Cliente> create(@Valid @RequestBody ClienteCreate cliente) {
-        if (credenzialiRepository.existsById(cliente.getUsername().toLowerCase())) {
-            throw new UsernameTakenException(cliente.getUsername());
+        if (credenzialiRepository.existsById(cliente.getEmail().toLowerCase())) {
+            throw new UsernameTakenException(cliente.getEmail());
         }
         switch (cliente.getType()) {
             case "cliente":
                 return ResponseEntity.ok(clientRepository.save(Cliente.builder()
-                        .username(cliente.getUsername())
+                        .username(cliente.getEmail())
                         .password(passwordEncoder.encode(cliente.getPassword()))
                         .nome(cliente.getNome())
                         .cognome(cliente.getCognome())
                         .cf(cliente.getCf())
+                        .birthDate(cliente.getBirth_date())
+                        .phone(cliente.getPhone())
+                        .address(cliente.getAddress())
                         .build()));
             case "commerciante":
                 return ResponseEntity.ok(clientRepository.save(Commerciante.builder()
-                        .username(cliente.getUsername())
+                        .username(cliente.getEmail())
                         .password(passwordEncoder.encode(cliente.getPassword()))
                         .nome(cliente.getNome())
                         .cognome(cliente.getCognome())
                         .cf(cliente.getCf())
+                        .birthDate(cliente.getBirth_date())
+                        .phone(cliente.getPhone())
+                        .address(cliente.getAddress())
                         .pIva(cliente.getPiva())
                         .ragSoc(cliente.getRagSoc())
                         .build()));
@@ -155,13 +161,13 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     public static class ClienteCreate extends ClienteEdit {
 
         @NotBlank
-        @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@](([a-zA-Z]+[.])+[a-zA-Z]{2,3})$", message = "Username must be a valid email address")
+        @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@](([a-zA-Z]+[.])+[a-zA-Z]{2,3})$", message = "Email must be a valid email address")
         @ApiModelProperty(
                 position = 1,
                 required = true,
-                value = "The login username"
+                value = "The login email"
         )
-        private String username;
+        private String email;
 
         @NotBlank
         @Pattern.List({
@@ -222,7 +228,32 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         )
         private String cf;
 
-//        @NotBlank
+        @NotBlank
+        @Pattern(regexp = "^[0-9]{2}[/][0-9]{2}[/](?:(?:[1][9][0-9]{2})|(?:[2][0][0-9]{2}))$", message = "Birth date must be in format 'dd/mm/yyyy'")
+        @ApiModelProperty(
+                position = 13,
+                required = true,
+                value = "Client birth date"
+        )
+        private String birth_date;
+
+        @NotBlank
+        @Pattern(regexp = "^([+][0-9]{1,2})?([0-9]{8,10})$", message = "Phone number must be a valid number '(+xx)xxxxxxxxxx'. Space are not allowed")
+        @ApiModelProperty(
+                position = 14,
+                required = true,
+                value = "Client phone number"
+        )
+        private String phone;
+
+        @NotBlank
+        @ApiModelProperty(
+                position = 15,
+                required = true,
+                value = "Client address"
+        )
+        private String address;
+
         @ApiModelProperty(
                 position = 20,
                 required = true,
@@ -230,7 +261,6 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         )
         private String piva;
 
-//        @NotBlank
         @ApiModelProperty(
                 position = 21,
                 required = true,
