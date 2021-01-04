@@ -139,7 +139,7 @@ public class Cliente implements Serializable {
         Objects.requireNonNull(cf, "cf cannot be null");
         this.credenziali = Credenziali.builder()
                 .cliente(this)
-                .username(username)
+                .username(username.toLowerCase())
                 .password(password)
                 .build();
         this.nome = nome;

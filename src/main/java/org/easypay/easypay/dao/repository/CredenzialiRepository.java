@@ -15,9 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author simo
  */
 @Repository
-public interface CredenzialiRepository extends JpaRepository<Credenziali, Long> {
-
-    public Optional<Credenziali> findByUsername(String username);
+public interface CredenzialiRepository extends JpaRepository<Credenziali, String> {
 
     public Optional<Credenziali> findByToken(String token);
 }

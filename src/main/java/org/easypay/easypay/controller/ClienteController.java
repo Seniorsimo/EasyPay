@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.exception.NotFoundException;
+import org.easypay.easypay.dao.exception.UsernameTakenException;
 import org.easypay.easypay.dao.repository.ClientRepository;
+import org.easypay.easypay.dao.repository.CredenzialiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private CredenzialiRepository credenzialiRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,6 +62,9 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         @ApiResponse(code = 401, message = "You are not authorized to create client")
     })
     public ResponseEntity<Cliente> create(@Valid @RequestBody ClienteCreate cliente) {
+        if (credenzialiRepository.existsById(cliente.getUsername().toLowerCase())) {
+            throw new UsernameTakenException(cliente.getUsername());
+        }
         switch (cliente.getType()) {
             case "cliente":
                 return ResponseEntity.ok(clientRepository.save(Cliente.builder()
