@@ -56,6 +56,11 @@ public class Cliente implements Serializable {
     @NotBlank
     private String otp;
 
+    @Column
+    @NotBlank
+    @JsonIgnore
+    private String pin;
+
     @NotBlank
     @ApiModelProperty(
             position = 10,
@@ -70,6 +75,7 @@ public class Cliente implements Serializable {
             value = "Client lastname"
     )
     private String cognome;
+
     @NotBlank
     @ApiModelProperty(
             position = 12,
@@ -77,6 +83,32 @@ public class Cliente implements Serializable {
             value = "Client fiscal code"
     )
     private String cf;
+
+    @NotBlank
+    @JsonProperty("birth_date")
+    @ApiModelProperty(
+            position = 13,
+            required = true,
+            value = "Client birth date"
+    )
+    private String birthDate;
+
+    @NotBlank
+    @ApiModelProperty(
+            position = 14,
+            required = true,
+            value = "Client phone number"
+    )
+    private String phone;
+
+    @NotBlank
+    @ApiModelProperty(
+            position = 15,
+            required = true,
+            value = "Client address"
+    )
+    private String address;
+
     @NotNull
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -93,6 +125,13 @@ public class Cliente implements Serializable {
     @EqualsAndHashCode.Include
     private long getContoId() {
         return this.conto.getId();
+    }
+
+    @JsonProperty("email")
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    private String getEmail() {
+        return this.credenziali.getUsername();
     }
 
     @JsonProperty("type")
@@ -133,19 +172,23 @@ public class Cliente implements Serializable {
     private Date updatedAt;
 
     @Builder
-    public Cliente(String username, String password, String nome, String cognome, String cf) {
+    public Cliente(String username, String password, String nome, String cognome, String cf, String birthDate, String phone, String address) {
         Objects.requireNonNull(nome, "nome cannot be null");
         Objects.requireNonNull(cognome, "cognome cannot be null");
         Objects.requireNonNull(cf, "cf cannot be null");
         this.credenziali = Credenziali.builder()
                 .cliente(this)
-                .username(username)
+                .username(username.toLowerCase())
                 .password(password)
                 .build();
         this.nome = nome;
         this.cognome = cognome;
         this.cf = cf;
-        this.otp = OtpGenerator.generate();
+        this.otp = OtpGenerator.generate(6);
+        this.pin = "1234";
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.address = address;
         this.conto = Conto.builder()
                 .cliente(this)
                 .budget(20)
@@ -156,12 +199,11 @@ public class Cliente implements Serializable {
     public static class OtpGenerator {
 
         private static final char[] CHARACTERS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        private static final int SIZE = 6;
         private static final Random randomizer = new Random();
 
-        public static String generate() throws HibernateException {
+        public static String generate(int size) throws HibernateException {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < SIZE; i++) {
+            for (int i = 0; i < size; i++) {
                 sb.append(CHARACTERS[randomizer.nextInt(CHARACTERS.length)]);
             }
             return sb.toString();

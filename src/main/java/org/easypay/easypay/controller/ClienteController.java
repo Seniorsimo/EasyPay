@@ -9,13 +9,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
+import org.easypay.easypay.auth.UserAuthenticationService;
 import org.easypay.easypay.dao.entity.Cliente;
 import org.easypay.easypay.dao.entity.Commerciante;
+import org.easypay.easypay.dao.exception.InvalidRequestException;
 import org.easypay.easypay.dao.exception.NotFoundException;
+import org.easypay.easypay.dao.exception.UsernameTakenException;
 import org.easypay.easypay.dao.repository.ClientRepository;
+import org.easypay.easypay.dao.repository.CredenzialiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +33,9 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private CredenzialiRepository credenzialiRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,22 +65,31 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         @ApiResponse(code = 401, message = "You are not authorized to create client")
     })
     public ResponseEntity<Cliente> create(@Valid @RequestBody ClienteCreate cliente) {
+        if (credenzialiRepository.existsById(cliente.getEmail().toLowerCase())) {
+            throw new UsernameTakenException(cliente.getEmail());
+        }
         switch (cliente.getType()) {
             case "cliente":
                 return ResponseEntity.ok(clientRepository.save(Cliente.builder()
-                        .username(cliente.getUsername())
+                        .username(cliente.getEmail())
                         .password(passwordEncoder.encode(cliente.getPassword()))
                         .nome(cliente.getNome())
                         .cognome(cliente.getCognome())
                         .cf(cliente.getCf())
+                        .birthDate(cliente.getBirth_date())
+                        .phone(cliente.getPhone())
+                        .address(cliente.getAddress())
                         .build()));
             case "commerciante":
                 return ResponseEntity.ok(clientRepository.save(Commerciante.builder()
-                        .username(cliente.getUsername())
+                        .username(cliente.getEmail())
                         .password(passwordEncoder.encode(cliente.getPassword()))
                         .nome(cliente.getNome())
                         .cognome(cliente.getCognome())
                         .cf(cliente.getCf())
+                        .birthDate(cliente.getBirth_date())
+                        .phone(cliente.getPhone())
+                        .address(cliente.getAddress())
                         .pIva(cliente.getPiva())
                         .ragSoc(cliente.getRagSoc())
                         .build()));
@@ -89,9 +106,27 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         ,
         @ApiResponse(code = 403, message = "Accessing the client is forbidden")
     })
-    public ResponseEntity<Cliente> getById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(clientRepository.findById(getUserId(id))
-                .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id)));
+    public ResponseEntity<Cliente> getById(
+            @PathVariable("id") String id,
+            @RequestParam(name = "otp", required = false) String otp,
+            @RequestParam(name = "pin", required = false) String pin
+    ) {
+        UserAuthenticationService.MyUser user = (UserAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Cliente c = clientRepository.findById(getUserId(id))
+                .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id));
+        if ("self".equals(id) || Long.parseLong(id) == user.getId()) {
+            return ResponseEntity.ok(c);
+        }
+        if ((otp == null || otp.isEmpty()) && (pin == null || pin.isEmpty())) {
+            throw new InvalidRequestException(Cliente.class);
+        }
+        if (otp != null && !otp.isEmpty() && otp.equals(c.getOtp())) {
+            return ResponseEntity.ok(c);
+        }
+        if (pin != null && !pin.isEmpty() && pin.equals(c.getPin())) {
+            return ResponseEntity.ok(c);
+        }
+        throw new InvalidRequestException(Cliente.class);
     }
 
     @PostMapping(value = "/{id}",
@@ -147,13 +182,13 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     public static class ClienteCreate extends ClienteEdit {
 
         @NotBlank
-        @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@](([a-zA-Z]+[.])+[a-zA-Z]{2,3})$", message = "Username must be a valid email address")
+        @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@](([a-zA-Z]+[.])+[a-zA-Z]{2,3})$", message = "Email must be a valid email address")
         @ApiModelProperty(
                 position = 1,
                 required = true,
-                value = "The login username"
+                value = "The login email"
         )
-        private String username;
+        private String email;
 
         @NotBlank
         @Pattern.List({
@@ -214,7 +249,32 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         )
         private String cf;
 
-//        @NotBlank
+        @NotBlank
+        @Pattern(regexp = "^[0-9]{2}[/][0-9]{2}[/](?:(?:[1][9][0-9]{2})|(?:[2][0][0-9]{2}))$", message = "Birth date must be in format 'dd/mm/yyyy'")
+        @ApiModelProperty(
+                position = 13,
+                required = true,
+                value = "Client birth date"
+        )
+        private String birth_date;
+
+        @NotBlank
+        @Pattern(regexp = "^([+][0-9]{1,2})?([0-9]{8,10})$", message = "Phone number must be a valid number '(+xx)xxxxxxxxxx'. Space are not allowed")
+        @ApiModelProperty(
+                position = 14,
+                required = true,
+                value = "Client phone number"
+        )
+        private String phone;
+
+        @NotBlank
+        @ApiModelProperty(
+                position = 15,
+                required = true,
+                value = "Client address"
+        )
+        private String address;
+
         @ApiModelProperty(
                 position = 20,
                 required = true,
@@ -222,7 +282,6 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         )
         private String piva;
 
-//        @NotBlank
         @ApiModelProperty(
                 position = 21,
                 required = true,

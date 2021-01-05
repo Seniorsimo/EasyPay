@@ -35,7 +35,7 @@ public class JWTAuthenticationService implements UserAuthenticationService {
     @Override
     public String login(String username, String password) throws BadCredentialsException {
         return credenzialiRepository
-                .findByUsername(username)
+                .findById(username)
                 .filter(c -> passwordEncoder.matches(password, c.getPassword()))
                 .map(c -> {
                     String token = jwtService.create(username);
@@ -51,7 +51,7 @@ public class JWTAuthenticationService implements UserAuthenticationService {
         try {
             Object username = jwtService.verify(token).get("username");
             return Optional.ofNullable(username)
-                    .flatMap(name -> credenzialiRepository.findByUsername(String.valueOf(name)))
+                    .flatMap(name -> credenzialiRepository.findById(String.valueOf(name)))
                     .filter(c -> token.equals(c.getToken()))
                     .map(c -> {
                         Collection<GrantedAuthority> authorities = new HashSet<>();
@@ -69,7 +69,7 @@ public class JWTAuthenticationService implements UserAuthenticationService {
 
     @Override
     public void logout(String username) {
-        credenzialiRepository.findByUsername(username)
+        credenzialiRepository.findById(username)
                 .ifPresent(c -> {
                     c.setToken(null);
                     credenzialiRepository.save(c);

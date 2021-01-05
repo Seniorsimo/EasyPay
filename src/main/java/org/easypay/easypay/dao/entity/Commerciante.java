@@ -44,8 +44,8 @@ public class Commerciante extends Cliente {
     }
 
     @Builder
-    public Commerciante(String username, String password, String nome, String cognome, String cf, String ragSoc, String pIva) {
-        super(username, password, nome, cognome, cf);
+    public Commerciante(String username, String password, String nome, String cognome, String cf, String birthDate, String phone, String address, String ragSoc, String pIva) {
+        super(username, password, nome, cognome, cf, birthDate, phone, address);
         this.ragSoc = ragSoc;
         this.pIva = pIva;
     }
