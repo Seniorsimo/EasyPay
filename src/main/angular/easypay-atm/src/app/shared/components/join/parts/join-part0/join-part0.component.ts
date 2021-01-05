@@ -11,14 +11,14 @@ import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-p
 export class JoinPart0Component extends AbstractJoinPartComponent
   implements OnInit {
   @Output() valuesOutput = new EventEmitter<{
-    username: string;
+    email: string;
     password: string;
   }>();
 
   constructor(private fb: FormBuilder) {
     super();
     this.formCrl = this.fb.group({
-      username: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
       password: this.fb.control('', [
         Validators.required,
         Validators.minLength(4),
@@ -31,7 +31,7 @@ export class JoinPart0Component extends AbstractJoinPartComponent
 
   getValue() {
     return {
-      username: this.formCrl.controls.username.value,
+      email: this.formCrl.controls.email.value,
       password: this.formCrl.controls.password.value,
     };
   }

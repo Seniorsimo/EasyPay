@@ -2,11 +2,19 @@ export interface Cliente {
   type: string;
 
   id: string;
-  pin: string;
-  token: string;
+  // pin: string;
+  otp: string;
   nome: string;
-  budget: number;
+  cognome: string;
+  createdAt: Date;
+  updatedAt: Date;
+  address: string;
+
+  cf?: string;
+
+  regSociale?: string;
+  pIva?: string;
+
+  idConto: string;
+
 }
-
-
-export const CLIENTE_TYPE = 'CLIENTE_TYPE';

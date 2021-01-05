@@ -1,0 +1,27 @@
+<div class="flex-parent">
+  <div class="flex widget-container shadow-border mb20 mr10">
+    <app-recognition class="relative recognition" (authClientStatus)="authClientStatus($event)"></app-recognition>
+  </div>
+  <div class="flex widget-container shadow-border mb20 ml10">
+    <app-info-widget
+      class=" info-table"
+      title="Personale"
+      [numConto]="this.selfStore.idConto"
+      [name]="this.selfStore.cognome +' '+ this.selfStore.nome"
+      [regSocial]="this.selfStore.regSociale"
+      [address]="this.selfStore.address"
+    ></app-info-widget>
+  </div>
+</div>
+
+<div class="flex-parent">
+  <div class="widget-container shadow-border flex mb20">
+    <app-price-widget title="Ricarica" operationLabel="Ricarica" [canInvoice]="false" (payStatus)="payStatus($event)"></app-price-widget>
+  </div>
+</div>
+
+<div class="flex-parent">
+  <div class="widget-container shadow-border spam-widget">
+    <app-banner></app-banner>
+  </div>
+</div>

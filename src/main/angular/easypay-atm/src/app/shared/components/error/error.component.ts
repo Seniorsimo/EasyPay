@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomError } from 'src/app/core';
 
 @Component({
   selector: 'app-error',
@@ -14,7 +13,7 @@ export class ErrorComponent implements OnInit {
   @Input() content: string;
 
   /** oggetto errore da stampare se presente */
-  @Input() error: CustomError;
+  @Input() error;
 
   constructor() { }
 

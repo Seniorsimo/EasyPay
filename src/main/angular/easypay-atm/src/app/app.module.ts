@@ -11,6 +11,7 @@ import { PaymentsModule } from './features/payments/payments.module';
 import { TemplateModule } from './features/template/template.module';
 import { httpInterceptorProviders } from './http-interceptors';
 import { SharedModule } from './shared';
+import { RechargeModule } from './features/recharge/recharge.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SharedModule } from './shared';
     LoginPageModule,
     HomeModule,
     PaymentsModule,
+    RechargeModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

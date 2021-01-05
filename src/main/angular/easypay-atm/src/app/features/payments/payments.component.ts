@@ -1,34 +1,68 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { forkJoin, Subject } from 'rxjs';
+import { Cliente, ClienteService } from 'src/app/core';
 import { RoutingService } from 'src/app/core/services/routing.service';
+import { SelfStore } from 'src/app/core/store/self.store';
+
+import { DialogPaymentComponent } from './components/dialog-payment/dialog-payment.component';
+
+
+export interface DialogData {
+  cliente: Cliente;
+  priceInfo: { price: string; date: string; invoice: string };
+}
 
 
 @Component({
   selector: 'app-payments',
   templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.scss']
+  styleUrls: ['./payments.component.scss'],
 })
 export class PaymentsComponent implements OnInit, AfterViewInit {
+  public a = new Subject<Cliente>();
+  public b = new Subject<{ price: string; date: string; invoice: string }>();
 
-
-
-  public breakpoint: number;
-  public  maxCol = 2;
-  public  minCol = 1;
-
-  private deviceSize = 1180;
-
-
-  constructor(private routingService: RoutingService) { }
+  constructor(
+    private routingService: RoutingService,
+    public selfStore: SelfStore,
+    private clienteService: ClienteService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.breakpoint = (window.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
+    if (!this.selfStore.id) {
+      this.clienteService.getSelfClient().subscribe((cliente) => {
+        if (cliente) {
+          this.selfStore.update(cliente);
+        }
+      });
+    }
+    this.completePayment();
   }
 
   ngAfterViewInit() {
     this.routingService.updateHeader('Pagamento');
   }
 
-  onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= this.deviceSize) ? this.minCol : this.maxCol;
+  authClientStatus(cliente: Cliente) {
+    this.a.next(cliente);
+    this.a.complete();
+  }
+
+  payStatus(status: { price: string; date: string; invoice: string }) {
+    this.b.next(status);
+    this.b.complete();
+  }
+
+  completePayment() {
+    forkJoin({ cliente: this.a, priceInfo: this.b }).subscribe(
+      ({ cliente, priceInfo }) => {
+        this.dialog.open(DialogPaymentComponent, {
+          data: { cliente, priceInfo },
+          disableClose: true,
+        });
+      }
+    );
   }
 }

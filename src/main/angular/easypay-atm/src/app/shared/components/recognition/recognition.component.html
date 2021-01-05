@@ -1,18 +1,46 @@
 <div class="buttons-container">
-  <button mat-icon-button (click)="changeLogin(LoginType.pin)" [ngClass]="{active: loginType === LoginType.pin}">
+  <button
+    mat-icon-button
+    (click)="changeLogin(LoginType.pin)"
+    [ngClass]="{ active: loginType === LoginType.pin }"
+  >
     <mat-icon svgIcon="textbox-password"></mat-icon>
   </button>
-  <button mat-icon-button (click)="changeLogin(LoginType.qr)" class="mr-2 ml-2" [ngClass]="{active: loginType === LoginType.qr}">
+  <button
+    mat-icon-button
+    (click)="changeLogin(LoginType.qr)"
+    class="mr-2 ml-2"
+    [ngClass]="{ active: loginType === LoginType.qr }"
+  >
     <mat-icon svgIcon="qrcode"></mat-icon>
   </button>
-  <button mat-icon-button (click)="changeLogin(LoginType.nfc)" [ngClass]="{active: loginType === LoginType.nfc}">
+  <button
+    mat-icon-button
+    (click)="changeLogin(LoginType.nfc)"
+    [ngClass]="{ active: loginType === LoginType.nfc }"
+  >
     <mat-icon svgIcon="nfc-variant"></mat-icon>
   </button>
 </div>
 <div class="content">
   <div class="login-body">
-    <div *ngIf="loginType === LoginType.pin"><app-pin></app-pin></div>
-    <div *ngIf="loginType === LoginType.qr"><app-qr-code></app-qr-code></div>
-    <div *ngIf="loginType === LoginType.nfc"><app-nfc></app-nfc></div>
+    <app-pin
+      *ngIf="loginType === LoginType.pin"
+      class="block"
+      (clientAuthEvent)="authSuccess($event)"
+    ></app-pin>
+    <app-qr-code
+      *ngIf="loginType === LoginType.qr"
+      class="block"
+      (clientAuthEvent)="authSuccess($event)"
+    ></app-qr-code>
+    <app-nfc *ngIf="loginType === LoginType.nfc" class="block"></app-nfc>
+    <app-info-widget
+      *ngIf="loginType === LoginType.success"
+      class="block"
+      title="CLIENTE"
+      [numConto]="this.cliente.idConto"
+      [name]="this.cliente.cognome + ' ' + this.cliente.nome"
+    ></app-info-widget>
   </div>
 </div>

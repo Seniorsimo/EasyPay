@@ -14,7 +14,7 @@ import { AuthStore } from '../features/login-page/store/auth.store';
 export class AuthInterceptor implements HttpInterceptor {
 
 
-  constructor(private authStore: AuthStore) {};
+  constructor(private authStore: AuthStore) {}
 
   intercept(
     req: HttpRequest<any>,

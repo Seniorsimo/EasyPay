@@ -1,17 +1,16 @@
 <form class="form" [formGroup]="formCrl">
 <div>
-  <mat-form-field class="full-width">
-    <input
-      matInput
-      placeholder="username*"
-      formControlName="username"
-    />
-    <mat-error
-      *ngIf="formCrl.controls['username'].hasError('required')"
-    >
-      Username <strong>obbligatorio</strong>
-    </mat-error>
-  </mat-form-field>
+  <div fxFlex>
+    <mat-form-field>
+      <input matInput placeholder="email*" formControlName="email" />
+      <mat-error *ngIf="formCrl.controls['email'].hasError('required')">
+        email <strong>obbligatoria</strong>
+      </mat-error>
+      <mat-error *ngIf="formCrl.controls['email'].hasError('email')">
+        deve essere una email: esempio@dominio.com
+      </mat-error>
+    </mat-form-field>
+  </div>
 </div>
 <div>
   <mat-form-field class="full-width">
