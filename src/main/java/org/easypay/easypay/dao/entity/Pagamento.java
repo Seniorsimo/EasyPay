@@ -5,6 +5,7 @@
  */
 package org.easypay.easypay.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
@@ -22,4 +23,11 @@ public class Pagamento extends Movimento {
     public Pagamento(@NotNull Conto from, @NotNull Conto to, float value) {
         super(from, to, value);
     }
+
+    @Override
+    @JsonProperty("type")
+    public String getType() {
+        return "pagamento";
+    }
+
 }
