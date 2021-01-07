@@ -2163,27 +2163,38 @@ BannerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthInterceptor", function() { return AuthInterceptor; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../features/login-page/store/auth.store */ "KlhY");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/login-page/store/auth.store */ "KlhY");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "tyNb");
+
+
 
 
 
 /** Pass untouched request through to the next request handler. */
 class AuthInterceptor {
-    constructor(authStore) {
+    constructor(authStore, router) {
         this.authStore = authStore;
+        this.router = router;
     }
     intercept(req, next) {
         const authReq = req.clone({
             headers: req.headers.set('Authorization', this.authStore.token || '')
         });
-        return next.handle(authReq);
+        return next.handle(authReq).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])((response) => {
+            if (response && response.status === 403) {
+                console.error('Token di accesso scaduto, logout!');
+                this.authStore.token = undefined;
+                this.router.navigate([]);
+            }
+        }));
     }
 }
-AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) { return new (t || AuthInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_1__["AuthStore"])); };
+AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) { return new (t || AuthInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_2__["AuthStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
 AuthInterceptor.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthInterceptor, factory: AuthInterceptor.ɵfac });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthInterceptor, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
-    }], function () { return [{ type: _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_1__["AuthStore"] }]; }, null); })();
+    }], function () { return [{ type: _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_2__["AuthStore"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }]; }, null); })();
 
 
 /***/ }),
@@ -4618,4 +4629,4 @@ QrCodeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.5c3126e89f8f782129b3.js.map
+//# sourceMappingURL=main-es2015.17af85e0efc6617fa4c6.js.map
