@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
@@ -84,14 +85,14 @@ public class Cliente implements Serializable {
     )
     private String cf;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("birth_date")
     @ApiModelProperty(
             position = 13,
             required = true,
             value = "Client birth date"
     )
-    private String birthDate;
+    private LocalDate birthDate;
 
     @NotBlank
     @ApiModelProperty(
@@ -172,7 +173,7 @@ public class Cliente implements Serializable {
     private Date updatedAt;
 
     @Builder
-    public Cliente(String username, String password, String nome, String cognome, String cf, String birthDate, String phone, String address) {
+    public Cliente(String username, String password, String nome, String cognome, String cf, LocalDate birthDate, String phone, String address) {
         Objects.requireNonNull(nome, "nome cannot be null");
         Objects.requireNonNull(cognome, "cognome cannot be null");
         Objects.requireNonNull(cf, "cf cannot be null");
