@@ -2,6 +2,7 @@ package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import lombok.Builder;
@@ -44,7 +45,7 @@ public class Commerciante extends Cliente {
     }
 
     @Builder
-    public Commerciante(String username, String password, String nome, String cognome, String cf, String birthDate, String phone, String address, String ragSoc, String pIva) {
+    public Commerciante(String username, String password, String nome, String cognome, String cf, LocalDate birthDate, String phone, String address, String ragSoc, String pIva) {
         super(username, password, nome, cognome, cf, birthDate, phone, address);
         this.ragSoc = ragSoc;
         this.pIva = pIva;

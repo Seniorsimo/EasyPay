@@ -7,6 +7,8 @@ package org.easypay.easypay;
 
 import com.google.common.collect.Lists;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -206,7 +208,7 @@ public class Application extends WebMvcConfigurerAdapter {
                     .nome("Paolo")
                     .cognome("Pioppo")
                     .cf("ASDFGHJKLPOIUYTRE")
-                    .birthDate("23/11/1983")
+                    .birthDate(LocalDate.of(1983, Month.NOVEMBER, 23))
                     .address("Via Rossi")
                     .phone("+390123456789")
                     .build());
@@ -216,7 +218,7 @@ public class Application extends WebMvcConfigurerAdapter {
                     .nome("Anna")
                     .cognome("Dico")
                     .cf("SNHFAIHCFIUHFCUHACUHND")
-                    .birthDate("23/11/1993")
+                    .birthDate(LocalDate.of(1993, Month.NOVEMBER, 23))
                     .address("Viale dei fiori")
                     .phone("+390123456789")
                     .build());
@@ -226,7 +228,7 @@ public class Application extends WebMvcConfigurerAdapter {
                     .nome("Ababua")
                     .cognome("Bau")
                     .cf("SNHFAIHCFIUHFHSYDCUHND")
-                    .birthDate("23/11/1989")
+                    .birthDate(LocalDate.of(1989, Month.NOVEMBER, 23))
                     .address("Strada grande")
                     .ragSoc("Pizzeria Mare Blu")
                     .phone("+390123456789")
@@ -238,7 +240,7 @@ public class Application extends WebMvcConfigurerAdapter {
                     .nome("Ciro")
                     .cognome("Blu")
                     .cf("SNHFDLKKLIUHFCUHACUHND")
-                    .birthDate("23/11/2001")
+                    .birthDate(LocalDate.of(2001, Month.NOVEMBER, 23))
                     .address("Corso Napoleone")
                     .phone("+390123456789")
                     .ragSoc("Osteria Bella Napoli")

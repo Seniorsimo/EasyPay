@@ -1,9 +1,11 @@
 package org.easypay.easypay.controller;
 
 import io.swagger.annotations.*;
+import java.time.LocalDate;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -249,14 +251,14 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         )
         private String cf;
 
-        @NotBlank
-        @Pattern(regexp = "^[0-9]{2}[/][0-9]{2}[/](?:(?:[1][9][0-9]{2})|(?:[2][0][0-9]{2}))$", message = "Birth date must be in format 'dd/mm/yyyy'")
+        @NotNull
+//        @Pattern(regexp = "^[0-9]{2}[/][0-9]{2}[/](?:(?:[1][9][0-9]{2})|(?:[2][0][0-9]{2}))$", message = "Birth date must be in format 'dd/mm/yyyy'")
         @ApiModelProperty(
                 position = 13,
                 required = true,
                 value = "Client birth date"
         )
-        private String birth_date;
+        private LocalDate birth_date;
 
         @NotBlank
         @Pattern(regexp = "^([+][0-9]{1,2})?([0-9]{8,10})$", message = "Phone number must be a valid number '(+xx)xxxxxxxxxx'. Space are not allowed")

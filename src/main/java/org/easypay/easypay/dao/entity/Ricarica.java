@@ -44,4 +44,10 @@ public class Ricarica extends Movimento {
         this.atm = atm;
         atm.addRicarica(this);
     }
+
+    @Override
+    @JsonProperty("type")
+    public String getType() {
+        return "ricarica";
+    }
 }

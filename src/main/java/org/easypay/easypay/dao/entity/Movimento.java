@@ -54,11 +54,7 @@ public abstract class Movimento implements Serializable {
         if (sameAsFrom(from)) {
             return;
         }
-//        Conto oldFrom = this.from;
         this.from = from;
-//        if (oldFrom != null) {
-//            oldFrom.removeMovimento(this, Conto.Direction.OUT);
-//        }
         if (this.from != null) {
             this.from.addMovimento(this, Conto.Direction.OUT);
         }
@@ -84,6 +80,9 @@ public abstract class Movimento implements Serializable {
     public String getToName() {
         return to != null ? to.getUtente().getMovementName() : null;
     }
+
+    @JsonProperty("type")
+    public abstract String getType();
 
     public void setTo(Conto to) {
         if (sameAsTo(to)) {
