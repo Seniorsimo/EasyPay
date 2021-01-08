@@ -14,8 +14,8 @@ export class LoginService {
   constructor(private http: HttpClient, private authStore: AuthStore) {}
 
 
-  getToken(username: string, password: string) {
-    const params = { username, password };
+  getToken(email: string, password: string) {
+    const params = { email, password };
     return this.http.post<{ token: string }>(ApiRoute.login, params).pipe(
       map((response) => {
         if (response && response.token) {

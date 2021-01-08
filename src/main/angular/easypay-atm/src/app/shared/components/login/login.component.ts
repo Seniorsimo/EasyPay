@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.formCrl = this.fb.group({
-      username: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
       password: this.fb.control('', [
         Validators.required,
         Validators.minLength(4),
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loginService
-      .getToken(this.formCrl.value.username, this.formCrl.value.password)
+      .getToken(this.formCrl.value.email, this.formCrl.value.password)
       .subscribe(
         (token) => {
           if (this.errorToastRef) {
