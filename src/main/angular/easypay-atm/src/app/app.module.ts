@@ -29,7 +29,9 @@ import { RechargeModule } from './features/recharge/recharge.module';
     PaymentsModule,
     RechargeModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

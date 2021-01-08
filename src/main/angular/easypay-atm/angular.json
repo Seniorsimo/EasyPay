@@ -47,7 +47,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -75,7 +74,6 @@
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
-              "extractCss": false,
               "namedChunks": true,
               "extractLicenses": true,
               "vendorChunk": true,
@@ -98,7 +96,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "easypay-atm:build"
+            "browserTarget": "easypay-atm:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
