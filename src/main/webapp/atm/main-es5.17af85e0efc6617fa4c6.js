@@ -4301,26 +4301,48 @@
       /* harmony import */
 
 
-      var _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! rxjs/operators */
+      "kU1M");
+      /* harmony import */
+
+
+      var _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! ../features/login-page/store/auth.store */
       "KlhY");
+      /* harmony import */
+
+
+      var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/router */
+      "tyNb");
       /** Pass untouched request through to the next request handler. */
 
 
       var AuthInterceptor = /*#__PURE__*/function () {
-        function AuthInterceptor(authStore) {
+        function AuthInterceptor(authStore, router) {
           _classCallCheck(this, AuthInterceptor);
 
           this.authStore = authStore;
+          this.router = router;
         }
 
         _createClass(AuthInterceptor, [{
           key: "intercept",
           value: function intercept(req, next) {
+            var _this13 = this;
+
             var authReq = req.clone({
               headers: req.headers.set('Authorization', this.authStore.token || '')
             });
-            return next.handle(authReq);
+            return next.handle(authReq).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(function (response) {
+              if (response && response.status === 403) {
+                console.error('Token di accesso scaduto, logout!');
+                _this13.authStore.token = undefined;
+
+                _this13.router.navigate([]);
+              }
+            }));
           }
         }]);
 
@@ -4328,7 +4350,7 @@
       }();
 
       AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) {
-        return new (t || AuthInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_1__["AuthStore"]));
+        return new (t || AuthInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_2__["AuthStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]));
       };
 
       AuthInterceptor.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -4342,7 +4364,9 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
         }], function () {
           return [{
-            type: _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_1__["AuthStore"]
+            type: _features_login_page_store_auth_store__WEBPACK_IMPORTED_MODULE_2__["AuthStore"]
+          }, {
+            type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
           }];
         }, null);
       })();
@@ -4873,21 +4897,21 @@
         var _super = _createSuper(JoinPart1Component);
 
         function JoinPart1Component(fb) {
-          var _this13;
+          var _this14;
 
           _classCallCheck(this, JoinPart1Component);
 
-          _this13 = _super.call(this);
-          _this13.fb = fb;
-          _this13.formCrl = _this13.fb.group({
-            nome: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            cognome: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            cf: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            bornDate: _this13.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isOver18"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isBorn"]]),
-            phone: _this13.fb.control('', []),
-            address: _this13.fb.control('', [])
+          _this14 = _super.call(this);
+          _this14.fb = fb;
+          _this14.formCrl = _this14.fb.group({
+            nome: _this14.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            cognome: _this14.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            cf: _this14.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+            bornDate: _this14.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isOver18"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isBorn"]]),
+            phone: _this14.fb.control('', []),
+            address: _this14.fb.control('', [])
           });
-          return _this13;
+          return _this14;
         }
 
         _createClass(JoinPart1Component, [{
@@ -5373,12 +5397,12 @@
         _createClass(RechargeComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this14 = this;
+            var _this15 = this;
 
             if (!this.selfStore.id) {
               this.clienteService.getSelfClient().subscribe(function (cliente) {
                 if (cliente) {
-                  _this14.selfStore.update(cliente);
+                  _this15.selfStore.update(cliente);
                 }
               });
             }
@@ -5405,7 +5429,7 @@
         }, {
           key: "completeRecharge",
           value: function completeRecharge() {
-            var _this15 = this;
+            var _this16 = this;
 
             Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({
               cliente: this.a,
@@ -5414,7 +5438,7 @@
               var cliente = _ref4.cliente,
                   priceInfo = _ref4.priceInfo;
 
-              _this15.dialog.open(_components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_2__["DialogRechargeComponent"], {
+              _this16.dialog.open(_components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_2__["DialogRechargeComponent"], {
                 data: {
                   cliente: cliente,
                   priceInfo: priceInfo
@@ -5651,10 +5675,10 @@
         }, {
           key: "login",
           value: function login() {
-            var _this16 = this;
+            var _this17 = this;
 
             this.clienteService.getClienteByPin(this.formCrl.value.userId, this.formCrl.value.pin).subscribe(function (cliente) {
-              return _this16.clientAuthEvent.emit(cliente);
+              return _this17.clientAuthEvent.emit(cliente);
             });
           }
         }]);
@@ -5914,10 +5938,10 @@
         }, {
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
-            var _this17 = this;
+            var _this18 = this;
 
             setTimeout(function () {
-              _this17.loadComponent();
+              _this18.loadComponent();
             }, 0);
           }
         }, {
@@ -6202,18 +6226,18 @@
         var _super2 = _createSuper(JoinPart0Component);
 
         function JoinPart0Component(fb) {
-          var _this18;
+          var _this19;
 
           _classCallCheck(this, JoinPart0Component);
 
-          _this18 = _super2.call(this);
-          _this18.fb = fb;
-          _this18.valuesOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-          _this18.formCrl = _this18.fb.group({
-            email: _this18.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
-            password: _this18.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16)])
+          _this19 = _super2.call(this);
+          _this19.fb = fb;
+          _this19.valuesOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+          _this19.formCrl = _this19.fb.group({
+            email: _this19.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
+            password: _this19.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16)])
           });
-          return _this18;
+          return _this19;
         }
 
         _createClass(JoinPart0Component, [{
@@ -6398,7 +6422,7 @@
         _createClass(CommercianteService, [{
           key: "getConto",
           value: function getConto(idConto) {
-            var _this19 = this;
+            var _this20 = this;
 
             // se già presente nello store non riscarica i dati del cliente:
             if (this.contoCommerciante$.value.idConto) {
@@ -6413,7 +6437,7 @@
                 type: _models_commerciante_model__WEBPACK_IMPORTED_MODULE_3__["COMMERCIANTE_TYPE"]
               }, result);
 
-              _this19.contoCommerciante$.next(commerciante);
+              _this20.contoCommerciante$.next(commerciante);
 
               return commerciante;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (error) {
@@ -7855,42 +7879,42 @@
         var _super3 = _createSuper(JoinPart2Component);
 
         function JoinPart2Component(fb) {
-          var _this20;
+          var _this21;
 
           _classCallCheck(this, JoinPart2Component);
 
-          _this20 = _super3.call(this);
-          _this20.fb = fb;
-          _this20.UserType = src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"];
-          _this20.subscriptions = [];
-          _this20.formCrl = _this20.fb.group({
-            type: _this20.fb.control(src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"].customer, []),
-            piva: _this20.fb.control({
+          _this21 = _super3.call(this);
+          _this21.fb = fb;
+          _this21.UserType = src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"];
+          _this21.subscriptions = [];
+          _this21.formCrl = _this21.fb.group({
+            type: _this21.fb.control(src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"].customer, []),
+            piva: _this21.fb.control({
               value: '',
               disabled: true
             }, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
-            ragSoc: _this20.fb.control({
+            ragSoc: _this21.fb.control({
               value: '',
               disabled: true
             }, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required])
           });
-          return _this20;
+          return _this21;
         }
 
         _createClass(JoinPart2Component, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this21 = this;
+            var _this22 = this;
 
             this.subscriptions.push(this.formCrl.get('type').valueChanges.subscribe(function (userType) {
               if (userType === src_app_core_constants_user_type_enum__WEBPACK_IMPORTED_MODULE_3__["UserType"].customer) {
-                _this21.formCrl.get('piva').disable();
+                _this22.formCrl.get('piva').disable();
 
-                _this21.formCrl.get('ragSoc').disable();
+                _this22.formCrl.get('ragSoc').disable();
               } else {
-                _this21.formCrl.get('piva').enable();
+                _this22.formCrl.get('piva').enable();
 
-                _this21.formCrl.get('ragSoc').enable();
+                _this22.formCrl.get('ragSoc').enable();
               }
             }));
           }
@@ -8351,20 +8375,20 @@
         _createClass(ErrorPageComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this22 = this;
+            var _this23 = this;
 
             this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (params) {
               if (params.titleLabel) {
-                _this22.titleLabel$.next(params.titleLabel);
+                _this23.titleLabel$.next(params.titleLabel);
               }
 
               if (params.content) {
-                _this22.content$.next(params.content);
+                _this23.content$.next(params.content);
               }
 
               if (params.error) {
-                _this22.error$.next(JSON.parse(params.error));
+                _this23.error$.next(JSON.parse(params.error));
               }
 
               return [];
@@ -8529,21 +8553,21 @@
         _createClass(DialogPaymentComponent, [{
           key: "completePayment",
           value: function completePayment() {
-            var _this23 = this;
+            var _this24 = this;
 
             this.movimentoService.pay(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
               // pagamento avvenuto con successo
-              _this23.openSnackBar('pagamento effettuato con successo', 'success');
+              _this24.openSnackBar('pagamento effettuato con successo', 'success');
             }, function (error) {
               // errore nel pagamento
-              _this23.openSnackBar('pagamento fallito', 'failure');
+              _this24.openSnackBar('pagamento fallito', 'failure');
 
               console.error(error);
             }, // complete
             function () {
-              _this23.dialogRef.close();
+              _this24.dialogRef.close();
 
-              _this23.routingService.gotoHome();
+              _this24.routingService.gotoHome();
             });
           }
         }, {
@@ -9187,15 +9211,15 @@
         }, {
           key: "scanSuccessHandler",
           value: function scanSuccessHandler(token) {
-            var _this24 = this;
+            var _this25 = this;
 
             this.scanner.enable = false;
             this.clienteService.getClienteByTokenOtp(token).subscribe(function (cliente) {
               console.warn(cliente);
 
-              _this24.clientAuthEvent.emit(cliente);
+              _this25.clientAuthEvent.emit(cliente);
             }, function (error) {
-              return _this24.scanner.enable = true;
+              return _this25.scanner.enable = true;
             });
           }
         }, {
@@ -9325,4 +9349,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.5c3126e89f8f782129b3.js.map
+//# sourceMappingURL=main-es5.17af85e0efc6617fa4c6.js.map
