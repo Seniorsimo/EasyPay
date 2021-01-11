@@ -36,3 +36,10 @@ mat-form-field {
 .toast-error .mat-button {
   color: yellow;
 }
+.toast-warning {
+  background-color: #d2d248;
+  color: #000;
+}
+.toast-warning .mat-button {
+  color: #f00000;
+}
