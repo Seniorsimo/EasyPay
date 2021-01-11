@@ -14,6 +14,7 @@ app.listen(8082, () => {
 
 require('./api/login')(app);
 require('./api/cliente')(app);
+require('./api/conto')(app);
 require('./api/movimento')(app);
 
 app.get("/", (req, res, next) => {

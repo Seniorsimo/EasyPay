@@ -1,7 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin, Subject } from 'rxjs';
+import { asyncScheduler, forkJoin, scheduled, Subject } from 'rxjs';
+import { map, mergeAll } from 'rxjs/operators';
 import { Cliente, ClienteService } from 'src/app/core';
+import { UserType } from 'src/app/core/constants/user-type.enum';
+import { Conto } from 'src/app/core/models/conto.model';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
 
@@ -31,12 +34,23 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    if (!this.selfStore.id) {
-      this.clienteService.getSelfClient().subscribe((cliente) => {
-        if (cliente) {
-          this.selfStore.update(cliente);
-        }
-      });
+    if (!this.selfStore.email || !this.selfStore.budget) {
+      scheduled([
+        this.clienteService.getSelfClient(),
+        this.clienteService.getSelfConto(),
+      ], asyncScheduler).pipe(
+        mergeAll(),
+        map((element) => {
+          if (this.isSelfCliente(element)) {
+            this.selfStore.updateCliente(element as Cliente);
+          } else if (this.isSelfConto(element)) {
+            this.selfStore.updateConto(element as Conto);
+          }
+        })
+      )
+      .subscribe(() => this.handleCustomerPermission());
+    } else {
+      this.handleCustomerPermission();
     }
     this.completePayment();
   }
@@ -64,5 +78,30 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
         });
       }
     );
+  }
+
+  /** verifica che il cliente sia un mercante */
+  isMercant(): boolean {
+    return this.selfStore.type === UserType.merchant;
+  }
+
+
+  /**
+   * verifica che il login abbia restituito un commerciante, altrimenti blocca l'atm chiedendo un upgrade
+   */
+  private handleCustomerPermission() {
+    if (!this.isMercant()) {
+      this.routingService.gotoHome();
+    }
+  }
+
+  /** verifica se l'oggetto passato è un cliente */
+  private isSelfCliente(cliente): boolean {
+    return cliente && cliente.email;
+  }
+
+  /** verifica se l'oggetto passato è un conto */
+  private isSelfConto(conto): boolean {
+    return conto && conto.budget;
   }
 }

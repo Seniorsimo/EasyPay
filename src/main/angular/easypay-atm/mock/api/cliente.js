@@ -77,7 +77,8 @@ module.exports = function (app) {
   });
 
   app.get("/api/clienti/self", (req, res, next) => {
-    res.json(users[0]);
+    // users[3] è un commerciante, users[0] è un cliente
+    res.json(users.find(user => user.id === 4 ));
   });
 
   app.get("/api/clienti/:id", (req, res, next) => {

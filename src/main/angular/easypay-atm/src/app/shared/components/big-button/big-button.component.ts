@@ -12,6 +12,7 @@ export class BigButtonComponent implements OnInit {
 
   @Input() label: string;
   @Input() icon: string;
+  @Input() disabled: boolean;
 
   @Output() clickEmitter: EventEmitter<void> = new  EventEmitter();
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { UserType } from '../constants/user-type.enum';
 import { Cliente } from '../models/cliente.model';
+import { Conto } from '../models/conto.model';
 
 /** Store che memorizza i dati dell' utente collegato (api/clienti/self) */
 @Injectable({
@@ -11,6 +12,7 @@ export class SelfStore {
 
   readonly localStoreVariable = {
     id: 'clienti.id',
+    email: 'clienti.email',
     nome: 'clienti.nome',
     cognome: 'clienti.cognome',
     cf: 'clienti.cf',
@@ -21,9 +23,18 @@ export class SelfStore {
     address: 'clienti.address',
     regSociale: 'commercianti.regSociale',
     pIva: 'commercianti.pIva',
+
+    budget: 'conto.budget',
+    saldo: 'conto.saldo',
+    // uscite: 'conto.uscite',
+    // entrate: 'conto.entrate',
+    // movimenti: 'conto.movimenti',
+    avariableBadget: 'conto.avBadget',
+
   };
 
   private pId: string;
+  private pEmail: string;
   private pNome: string;
   private pCognome: string;
   private pCf: string;
@@ -34,6 +45,13 @@ export class SelfStore {
   private pAddress: string;
   private pRegSociale: string;
   private pPIva: string;
+
+  private pBudget: number;
+  private pSaldo: number;
+  // private pUscite: any[];
+  // private pEntrate: any[];
+  // private pMovimenti: any[];
+  private pAvariableBadget: number;
 
 
   public get id() {
@@ -47,6 +65,20 @@ export class SelfStore {
     this.pId = value;
     this.localStorageService.setItem(this.localStoreVariable.id, value);
   }
+
+
+  public get email() {
+    if (!this.pEmail) {
+      this.pEmail = this.localStorageService.getItem(this.localStoreVariable.email);
+    }
+    return this.pEmail;
+  }
+
+  public set email(value) {
+    this.pEmail = value;
+    this.localStorageService.setItem(this.localStoreVariable.email, value);
+  }
+
 
   public get cognome() {
     if (!this.pCognome) {
@@ -170,11 +202,47 @@ export class SelfStore {
     this.localStorageService.setItem(this.localStoreVariable.pIva, value);
   }
 
+  public get budget() {
+    if (!this.pBudget) {
+      this.pBudget = this.localStorageService.getItem(this.localStoreVariable.budget);
+    }
+    return this.pBudget;
+  }
+
+  public set budget(value) {
+    this.pBudget = value;
+    this.localStorageService.setItem(this.localStoreVariable.budget, value);
+  }
+
+  public get saldo() {
+    if (!this.pSaldo) {
+      this.pSaldo = this.localStorageService.getItem(this.localStoreVariable.saldo);
+    }
+    return this.pSaldo;
+  }
+
+  public set saldo(value) {
+    this.pSaldo = value;
+    this.localStorageService.setItem(this.localStoreVariable.saldo, value);
+  }
+
+  public get avariableBadget() {
+    if (!this.pAvariableBadget) {
+      this.pAvariableBadget = this.localStorageService.getItem(this.localStoreVariable.avariableBadget);
+    }
+    return this.pAvariableBadget;
+  }
+
+  public set avariableBadget(value) {
+    this.pAvariableBadget = value;
+    this.localStorageService.setItem(this.localStoreVariable.avariableBadget, value);
+  }
+
 
   constructor(private localStorageService: LocalStorageService) { }
 
   /** Aggiorna il selfStore salvando le informazioni ottenute  */
-  public update(cliente: Cliente) {
+  public updateCliente(cliente: Cliente) {
     this.id = cliente.id;
     this.type = cliente.type;
     this.nome = cliente.nome;
@@ -187,5 +255,24 @@ export class SelfStore {
       this.regSociale = cliente.regSociale;
       this.pIva = cliente.pIva;
     }
+  }
+
+  public updateConto(conto: Conto) {
+    this.saldo = conto.saldo;
+    this.budget = conto.budget;
+  }
+
+  /** resetta lo store (e il local store). Ideale dopo un logout */
+  public reset() {
+    this.id = undefined;
+    this.type = undefined;
+    this.nome = undefined;
+    this.cognome = undefined;
+    this.cf = undefined;
+    this.createdAt = undefined;
+    this.updatedAt = undefined;
+    this.address = undefined;
+    this.regSociale = undefined;
+    this.pIva = undefined;
   }
 }

@@ -9,6 +9,7 @@
           mat-menu-item
           *ngIf="item.isVisible()"
           (click)="item.clickEvent()"
+          [disabled]="!item.isEnable()"
         >
           <mat-icon>{{ item.icon }}</mat-icon>
           <span>{{ item.label }}</span>

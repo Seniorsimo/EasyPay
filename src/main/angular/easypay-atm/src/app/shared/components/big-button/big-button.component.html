@@ -1,4 +1,4 @@
-<div class="button-container widget-container shadow-border" (click)="clickEvent()">
+<div class="button-container widget-container shadow-border" [ngClass]="{'disabled': disabled}" (click)="clickEvent()">
   <div class="icon-content">
     <mat-icon class="icon fix-top" aria-hidden="false" [inline]="true">{{icon}}</mat-icon>
   </div>

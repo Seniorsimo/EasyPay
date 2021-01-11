@@ -7,7 +7,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AuthGuard } from './guards/auth-guard.service';
 import { NoLoginGuard } from './guards/no-login-guard.service';
 import { ClienteService } from './services/cliente.service';
-import { CommercianteService } from './services/commerciante.service';
 import { LoaderService } from './services/loader.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { RoutingService } from './services/routing.service';
@@ -33,7 +32,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        CommercianteService,
         ClienteService,
         RoutingService,
         AuthGuard,
