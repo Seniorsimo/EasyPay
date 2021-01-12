@@ -9,11 +9,15 @@ export interface Cliente {
   createdAt: Date;
   updatedAt: Date;
   address: string;
+  birth_date: string;
+  phone: string;
 
+  // solo per il cliente semplice
   cf?: string;
 
-  regSociale?: string;
-  pIva?: string;
+  // solo per il commerciante
+  ragSoc?: string;
+  piva?: string;
 
   idConto: string;
 

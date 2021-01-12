@@ -21,7 +21,9 @@ export class SelfStore {
     idConto: 'clienti.idConto',
     type: 'clienti.type',
     address: 'clienti.address',
-    regSociale: 'commercianti.regSociale',
+    birthDate: 'clienti.birthDate',
+    phone: 'clienti.phone',
+    regSociale: 'commercianti.ragSociale',
     pIva: 'commercianti.pIva',
 
     budget: 'conto.budget',
@@ -43,7 +45,9 @@ export class SelfStore {
   private pIdConto: string;
   private pType: string;
   private pAddress: string;
-  private pRegSociale: string;
+  private pPhone: string;
+  private pBirthDate: string;
+  private pRagSociale: string;
   private pPIva: string;
 
   private pBudget: number;
@@ -177,16 +181,41 @@ export class SelfStore {
     this.localStorageService.setItem(this.localStoreVariable.address, value);
   }
 
-
-  public get regSociale() {
-    if (!this.pRegSociale) {
-      this.pRegSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+  public get phone() {
+    if (!this.pPhone) {
+      this.pPhone = this.localStorageService.getItem(this.localStoreVariable.phone);
     }
-    return this.pRegSociale;
+    return this.pPhone;
   }
 
-  public set regSociale(value) {
-    this.pRegSociale = value;
+  public set phone(value) {
+    this.pPhone = value;
+    this.localStorageService.setItem(this.localStoreVariable.phone, value);
+  }
+
+  public get birthDate() {
+    if (!this.pBirthDate) {
+      this.pBirthDate = this.localStorageService.getItem(this.localStoreVariable.birthDate);
+    }
+    return this.pBirthDate;
+  }
+
+  public set birthDate(value) {
+    this.pBirthDate = value;
+    this.localStorageService.setItem(this.localStoreVariable.birthDate, value);
+  }
+
+
+
+  public get ragSociale() {
+    if (!this.pRagSociale) {
+      this.pRagSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+    }
+    return this.pRagSociale;
+  }
+
+  public set ragSociale(value) {
+    this.pRagSociale = value;
     this.localStorageService.setItem(this.localStoreVariable.regSociale, value);
   }
 
@@ -251,13 +280,17 @@ export class SelfStore {
     this.createdAt = cliente.createdAt;
     this.updatedAt = cliente.updatedAt;
     this.address = cliente.address;
+    this.phone = cliente.phone;
+    this.birthDate = cliente.birth_date;
+    this.idConto = cliente.idConto;
     if (cliente.type === UserType.merchant) {
-      this.regSociale = cliente.regSociale;
-      this.pIva = cliente.pIva;
+      this.ragSociale = cliente.ragSoc;
+      this.pIva = cliente.piva;
     }
   }
 
   public updateConto(conto: Conto) {
+    this.idConto = conto.id;
     this.saldo = conto.saldo;
     this.budget = conto.budget;
   }
@@ -272,7 +305,14 @@ export class SelfStore {
     this.createdAt = undefined;
     this.updatedAt = undefined;
     this.address = undefined;
-    this.regSociale = undefined;
+    this.phone = undefined;
+    this.birthDate = undefined;
+    this.idConto = undefined;
+    this.ragSociale = undefined;
     this.pIva = undefined;
+
+    // this.idConto = undefined;
+    this.saldo = undefined;
+    this.budget = undefined;
   }
 }
