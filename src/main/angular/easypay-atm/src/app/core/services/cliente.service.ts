@@ -70,6 +70,8 @@ export class ClienteService {
   private _getClient(id: string, params: {pin?: string; otp?: string}): Observable<Cliente> {
     return this.httpClient.get<Cliente>(`${ApiRoute.clienti}/${id}`, {params}).pipe(
         map(result => ({ type: UserType.customer, ...result })),
+        // workaround per adattare la struttura cliente con quella ricevuta dal server
+        map((cliente: any) => ({...cliente, idConto: cliente.id_conto})),
         catchError(error => { throw(error); })
       );
   }

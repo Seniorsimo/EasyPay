@@ -16,6 +16,8 @@ require('./api/login')(app);
 require('./api/cliente')(app);
 require('./api/conto')(app);
 require('./api/movimento')(app);
+require('./api/pagamento')(app);
+require('./api/ricarica')(app);
 
 app.get("/", (req, res, next) => {
   res.json('Server mock in funzione',)

@@ -1,10 +1,10 @@
 module.exports = function (app) {
 
   app.get("/api/movimenti", (req, res, next) => {
-    res.json({});
+    res.json([]);
   });
 
-  app.get("/api/movimenti/self", (req, res, next) => {
+  app.get("/api/movimenti/:id", (req, res, next) => {
     res.json({});
   });
 

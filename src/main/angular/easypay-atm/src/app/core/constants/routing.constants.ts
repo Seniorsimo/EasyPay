@@ -17,6 +17,8 @@ export const ApiRoute = {
   logout: baseUrl + 'api/logout',
   clienti: baseUrl + 'api/clienti',
   movimenti: baseUrl + 'api/movimenti',
+  pagamenti: baseUrl + 'api/pagamenti',
+  ricariche: baseUrl + 'api/ricariche',
   conti: baseUrl + 'api/conti',
 
 };

@@ -19,6 +19,7 @@ export interface Cliente {
   ragSoc?: string;
   piva?: string;
 
+  /** WARNING, dal server arriva id_conto */
   idConto: string;
 
 }

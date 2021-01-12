@@ -14,11 +14,11 @@ export class MovimentoService {
   /** effettua un movimento di pagamento sul cliente */
   pay(idCliente: string, idCommerciante: string, prezzo: string) {
     const params = {
-      idCommerciante,
-      idCliente,
-      prezzo: -prezzo,
+      from: idCliente,
+      to: idCommerciante,
+      value: prezzo,
     };
-    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>(ApiRoute.movimenti, params).pipe(
+    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>(ApiRoute.pagamenti, params).pipe(
       map(result => {
         console.error('TODO: gestire la risposta del pagamento');
       })
@@ -28,11 +28,11 @@ export class MovimentoService {
   /** effettua un movimento di caricamento sul cliente */
   recharge(idCliente: string, idCommerciante: string, prezzo: string) {
     const params = {
-      idCommerciante,
-      idCliente,
-      prezzo,
+      from: idCommerciante,
+      to: idCliente,
+      value: prezzo,
     };
-    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>(ApiRoute.movimenti, params).pipe(
+    return this.http.post<{ success: boolean; error?: { id: string; message: string } }>(ApiRoute.ricariche, params).pipe(
       map(result => {
         console.error('TODO: gestire la risposta del pagamento');
       })

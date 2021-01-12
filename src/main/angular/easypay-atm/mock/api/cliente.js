@@ -84,9 +84,8 @@ module.exports = function (app) {
   app.get("/api/clienti/:id", (req, res, next) => {
     const otp = req.query.opt;
     const pin = req.query.pin;
-
     const validUsers = users.filter(user => user.id+"" === req.params.id && ( user.otp === otp || user.pin === pin));
-    if(validUsers.length > 1) {
+    if(validUsers.length >= 1) {
       res.json(validUsers[0]);
     } else {
       res.status(400);
