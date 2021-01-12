@@ -1866,7 +1866,7 @@ PaymentsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.regSociale)("address", ctx.selfStore.address);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.ragSociale)("address", ctx.selfStore.address);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("canInvoice", true);
     } }, directives: [_shared_components_recognition_recognition_component__WEBPACK_IMPORTED_MODULE_9__["RecognitionComponent"], _shared_components_info_widget_info_widget_component__WEBPACK_IMPORTED_MODULE_10__["InfoWidgetComponent"], _shared_components_price_widget_price_widget_component__WEBPACK_IMPORTED_MODULE_11__["PriceWidgetComponent"], _shared_components_banner_banner_component__WEBPACK_IMPORTED_MODULE_12__["BannerComponent"]], styles: [".flex-parent[_ngcontent-%COMP%] {\n  flex-direction: row;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n  align-items: stretch;\n}\n\n.flex[_ngcontent-%COMP%] {\n  position: relative;\n  flex-grow: 1;\n}\n\n.mb20[_ngcontent-%COMP%] {\n  margin-bottom: 20px;\n}\n\n.ml10[_ngcontent-%COMP%] {\n  margin-left: 10px;\n}\n\n.mr10[_ngcontent-%COMP%] {\n  margin-right: 10px;\n}\n\n\n\n@media all and (max-width: 600px) {\n  .ml10[_ngcontent-%COMP%] {\n    margin-left: 0px;\n  }\n\n  .mr10[_ngcontent-%COMP%] {\n    margin-right: 0px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3BheW1lbnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUJBQUE7RUFDQSxhQUFBO0VBQ0EsZUFBQTtFQUNBLDhCQUFBO0VBQ0Esb0JBQUE7QUFDRjs7QUFFQTtFQUNFLGtCQUFBO0VBQ0EsWUFBQTtBQUNGOztBQUVBO0VBQ0UsbUJBQUE7QUFDRjs7QUFFQTtFQUNFLGlCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxrQkFBQTtBQUNGOztBQUVBLGtCQUFBOztBQUNBO0VBQ0U7SUFDRSxnQkFBQTtFQUNGOztFQUVBO0lBQ0UsaUJBQUE7RUFDRjtBQUNGIiwiZmlsZSI6InBheW1lbnRzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZsZXgtcGFyZW50IHtcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gIGFsaWduLWl0ZW1zOiBzdHJldGNoO1xufVxuXG4uZmxleCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZmxleC1ncm93OiAxO1xufVxuXG4ubWIyMCB7XG4gIG1hcmdpbi1ib3R0b206IDIwcHhcbn1cblxuLm1sMTAge1xuICBtYXJnaW4tbGVmdDogMTBweDtcbn1cblxuLm1yMTAge1xuICBtYXJnaW4tcmlnaHQ6IDEwcHg7XG59XG5cbi8qIFNtYWxsIHNjcmVlbnMgKi9cbkBtZWRpYSBhbGwgYW5kIChtYXgtd2lkdGg6IDYwMHB4KSB7XG4gIC5tbDEwIHtcbiAgICBtYXJnaW4tbGVmdDogMHB4O1xuICB9XG5cbiAgLm1yMTAge1xuICAgIG1hcmdpbi1yaWdodDogMHB4O1xuICB9XG59XG4iXX0= */"] });
@@ -2900,7 +2900,7 @@ RechargeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.regSociale)("address", ctx.selfStore.address);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.ragSociale)("address", ctx.selfStore.address);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("canInvoice", false);
     } }, directives: [_shared_components_recognition_recognition_component__WEBPACK_IMPORTED_MODULE_9__["RecognitionComponent"], _shared_components_info_widget_info_widget_component__WEBPACK_IMPORTED_MODULE_10__["InfoWidgetComponent"], _shared_components_price_widget_price_widget_component__WEBPACK_IMPORTED_MODULE_11__["PriceWidgetComponent"], _shared_components_banner_banner_component__WEBPACK_IMPORTED_MODULE_12__["BannerComponent"]], styles: [".flex-parent[_ngcontent-%COMP%] {\n  flex-direction: row;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n  align-items: stretch;\n}\n\n.flex[_ngcontent-%COMP%] {\n  position: relative;\n  flex-grow: 1;\n}\n\n.mb20[_ngcontent-%COMP%] {\n  margin-bottom: 20px;\n}\n\n.ml10[_ngcontent-%COMP%] {\n  margin-left: 10px;\n}\n\n.mr10[_ngcontent-%COMP%] {\n  margin-right: 10px;\n}\n\n\n\n@media all and (max-width: 600px) {\n  .ml10[_ngcontent-%COMP%] {\n    margin-left: 0px;\n  }\n\n  .mr10[_ngcontent-%COMP%] {\n    margin-right: 0px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3JlY2hhcmdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUJBQUE7RUFDQSxhQUFBO0VBQ0EsZUFBQTtFQUNBLDhCQUFBO0VBQ0Esb0JBQUE7QUFDRjs7QUFFQTtFQUNFLGtCQUFBO0VBQ0EsWUFBQTtBQUNGOztBQUVBO0VBQ0UsbUJBQUE7QUFDRjs7QUFFQTtFQUNFLGlCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxrQkFBQTtBQUNGOztBQUVBLGtCQUFBOztBQUNBO0VBQ0U7SUFDRSxnQkFBQTtFQUNGOztFQUVBO0lBQ0UsaUJBQUE7RUFDRjtBQUNGIiwiZmlsZSI6InJlY2hhcmdlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZsZXgtcGFyZW50IHtcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gIGFsaWduLWl0ZW1zOiBzdHJldGNoO1xufVxuXG4uZmxleCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZmxleC1ncm93OiAxO1xufVxuXG4ubWIyMCB7XG4gIG1hcmdpbi1ib3R0b206IDIwcHhcbn1cblxuLm1sMTAge1xuICBtYXJnaW4tbGVmdDogMTBweDtcbn1cblxuLm1yMTAge1xuICBtYXJnaW4tcmlnaHQ6IDEwcHg7XG59XG5cbi8qIFNtYWxsIHNjcmVlbnMgKi9cbkBtZWRpYSBhbGwgYW5kIChtYXgtd2lkdGg6IDYwMHB4KSB7XG4gIC5tbDEwIHtcbiAgICBtYXJnaW4tbGVmdDogMHB4O1xuICB9XG5cbiAgLm1yMTAge1xuICAgIG1hcmdpbi1yaWdodDogMHB4O1xuICB9XG59XG4iXX0= */"] });
@@ -4068,7 +4068,9 @@ class SelfStore {
             idConto: 'clienti.idConto',
             type: 'clienti.type',
             address: 'clienti.address',
-            regSociale: 'commercianti.regSociale',
+            birthDate: 'clienti.birthDate',
+            phone: 'clienti.phone',
+            regSociale: 'commercianti.ragSociale',
             pIva: 'commercianti.pIva',
             budget: 'conto.budget',
             saldo: 'conto.saldo',
@@ -4178,14 +4180,34 @@ class SelfStore {
         this.pAddress = value;
         this.localStorageService.setItem(this.localStoreVariable.address, value);
     }
-    get regSociale() {
-        if (!this.pRegSociale) {
-            this.pRegSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+    get phone() {
+        if (!this.pPhone) {
+            this.pPhone = this.localStorageService.getItem(this.localStoreVariable.phone);
         }
-        return this.pRegSociale;
+        return this.pPhone;
     }
-    set regSociale(value) {
-        this.pRegSociale = value;
+    set phone(value) {
+        this.pPhone = value;
+        this.localStorageService.setItem(this.localStoreVariable.phone, value);
+    }
+    get birthDate() {
+        if (!this.pBirthDate) {
+            this.pBirthDate = this.localStorageService.getItem(this.localStoreVariable.birthDate);
+        }
+        return this.pBirthDate;
+    }
+    set birthDate(value) {
+        this.pBirthDate = value;
+        this.localStorageService.setItem(this.localStoreVariable.birthDate, value);
+    }
+    get ragSociale() {
+        if (!this.pRagSociale) {
+            this.pRagSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+        }
+        return this.pRagSociale;
+    }
+    set ragSociale(value) {
+        this.pRagSociale = value;
         this.localStorageService.setItem(this.localStoreVariable.regSociale, value);
     }
     get pIva() {
@@ -4238,12 +4260,16 @@ class SelfStore {
         this.createdAt = cliente.createdAt;
         this.updatedAt = cliente.updatedAt;
         this.address = cliente.address;
+        this.phone = cliente.phone;
+        this.birthDate = cliente.birth_date;
+        this.idConto = cliente.idConto;
         if (cliente.type === _constants_user_type_enum__WEBPACK_IMPORTED_MODULE_1__["UserType"].merchant) {
-            this.regSociale = cliente.regSociale;
-            this.pIva = cliente.pIva;
+            this.ragSociale = cliente.ragSoc;
+            this.pIva = cliente.piva;
         }
     }
     updateConto(conto) {
+        this.idConto = conto.id;
         this.saldo = conto.saldo;
         this.budget = conto.budget;
     }
@@ -4257,8 +4283,14 @@ class SelfStore {
         this.createdAt = undefined;
         this.updatedAt = undefined;
         this.address = undefined;
-        this.regSociale = undefined;
+        this.phone = undefined;
+        this.birthDate = undefined;
+        this.idConto = undefined;
+        this.ragSociale = undefined;
         this.pIva = undefined;
+        // this.idConto = undefined;
+        this.saldo = undefined;
+        this.budget = undefined;
     }
 }
 SelfStore.ɵfac = function SelfStore_Factory(t) { return new (t || SelfStore)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](src_app_core_services_local_storage_service__WEBPACK_IMPORTED_MODULE_2__["LocalStorageService"])); };
@@ -4778,4 +4810,4 @@ QrCodeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.9dfc1d7ab404cf76af16.js.map
+//# sourceMappingURL=main-es2015.778fda8e4ca8c7a8f5d1.js.map

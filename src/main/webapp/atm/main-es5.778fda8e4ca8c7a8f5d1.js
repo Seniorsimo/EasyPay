@@ -3672,7 +3672,7 @@
           if (rf & 2) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.regSociale)("address", ctx.selfStore.address);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.ragSociale)("address", ctx.selfStore.address);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
@@ -5746,7 +5746,7 @@
           if (rf & 2) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.regSociale)("address", ctx.selfStore.address);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("numConto", ctx.selfStore.idConto)("name", ctx.selfStore.cognome + " " + ctx.selfStore.nome)("regSocial", ctx.selfStore.ragSociale)("address", ctx.selfStore.address);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
@@ -8222,7 +8222,9 @@
             idConto: 'clienti.idConto',
             type: 'clienti.type',
             address: 'clienti.address',
-            regSociale: 'commercianti.regSociale',
+            birthDate: 'clienti.birthDate',
+            phone: 'clienti.phone',
+            regSociale: 'commercianti.ragSociale',
             pIva: 'commercianti.pIva',
             budget: 'conto.budget',
             saldo: 'conto.saldo',
@@ -8246,15 +8248,19 @@
             this.createdAt = cliente.createdAt;
             this.updatedAt = cliente.updatedAt;
             this.address = cliente.address;
+            this.phone = cliente.phone;
+            this.birthDate = cliente.birth_date;
+            this.idConto = cliente.idConto;
 
             if (cliente.type === _constants_user_type_enum__WEBPACK_IMPORTED_MODULE_1__["UserType"].merchant) {
-              this.regSociale = cliente.regSociale;
-              this.pIva = cliente.pIva;
+              this.ragSociale = cliente.ragSoc;
+              this.pIva = cliente.piva;
             }
           }
         }, {
           key: "updateConto",
           value: function updateConto(conto) {
+            this.idConto = conto.id;
             this.saldo = conto.saldo;
             this.budget = conto.budget;
           }
@@ -8271,8 +8277,14 @@
             this.createdAt = undefined;
             this.updatedAt = undefined;
             this.address = undefined;
-            this.regSociale = undefined;
-            this.pIva = undefined;
+            this.phone = undefined;
+            this.birthDate = undefined;
+            this.idConto = undefined;
+            this.ragSociale = undefined;
+            this.pIva = undefined; // this.idConto = undefined;
+
+            this.saldo = undefined;
+            this.budget = undefined;
           }
         }, {
           key: "id",
@@ -8405,16 +8417,42 @@
             this.localStorageService.setItem(this.localStoreVariable.address, value);
           }
         }, {
-          key: "regSociale",
+          key: "phone",
           get: function get() {
-            if (!this.pRegSociale) {
-              this.pRegSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+            if (!this.pPhone) {
+              this.pPhone = this.localStorageService.getItem(this.localStoreVariable.phone);
             }
 
-            return this.pRegSociale;
+            return this.pPhone;
           },
           set: function set(value) {
-            this.pRegSociale = value;
+            this.pPhone = value;
+            this.localStorageService.setItem(this.localStoreVariable.phone, value);
+          }
+        }, {
+          key: "birthDate",
+          get: function get() {
+            if (!this.pBirthDate) {
+              this.pBirthDate = this.localStorageService.getItem(this.localStoreVariable.birthDate);
+            }
+
+            return this.pBirthDate;
+          },
+          set: function set(value) {
+            this.pBirthDate = value;
+            this.localStorageService.setItem(this.localStoreVariable.birthDate, value);
+          }
+        }, {
+          key: "ragSociale",
+          get: function get() {
+            if (!this.pRagSociale) {
+              this.pRagSociale = this.localStorageService.getItem(this.localStoreVariable.regSociale);
+            }
+
+            return this.pRagSociale;
+          },
+          set: function set(value) {
+            this.pRagSociale = value;
             this.localStorageService.setItem(this.localStoreVariable.regSociale, value);
           }
         }, {
@@ -9528,4 +9566,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.9dfc1d7ab404cf76af16.js.map
+//# sourceMappingURL=main-es5.778fda8e4ca8c7a8f5d1.js.map
