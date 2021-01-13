@@ -195,147 +195,69 @@ public class Application extends WebMvcConfigurerAdapter {
         @Autowired
         private RicaricaRepository ricaricaRepository;
         @Autowired
-        private CredenzialiRepository utenteRepository;
+        private CredenzialiRepository credenzialiRepository;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
 
         @PostConstruct
         public void init() {
-            Cliente cliente1 = clientRepository.save(Cliente.builder()
-                    .username("user1@gmail.com")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Paolo")
-                    .cognome("Pioppo")
-                    .cf("ASDFGHJKLPOIUYTRE")
-                    .birthDate(LocalDate.of(1983, Month.NOVEMBER, 23))
-                    .address("Via Rossi")
-                    .phone("+390123456789")
-                    .build());
-            Cliente cliente2 = clientRepository.save(Cliente.builder()
-                    .username("user2@gmail.com")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Anna")
-                    .cognome("Dico")
-                    .cf("SNHFAIHCFIUHFCUHACUHND")
-                    .birthDate(LocalDate.of(1993, Month.NOVEMBER, 23))
-                    .address("Viale dei fiori")
-                    .phone("+390123456789")
-                    .build());
-            Commerciante comm1 = clientRepository.save(Commerciante.builder()
-                    .username("user3@gmail.com")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Ababua")
-                    .cognome("Bau")
-                    .cf("SNHFAIHCFIUHFHSYDCUHND")
-                    .birthDate(LocalDate.of(1989, Month.NOVEMBER, 23))
-                    .address("Strada grande")
-                    .ragSoc("Pizzeria Mare Blu")
-                    .phone("+390123456789")
-                    .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
-                    .build());
-            Commerciante comm2 = clientRepository.save(Commerciante.builder()
-                    .username("user4@gmail.com")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Ciro")
-                    .cognome("Blu")
-                    .cf("SNHFDLKKLIUHFCUHACUHND")
-                    .birthDate(LocalDate.of(2001, Month.NOVEMBER, 23))
-                    .address("Corso Napoleone")
-                    .phone("+390123456789")
-                    .ragSoc("Osteria Bella Napoli")
-                    .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
-                    .build());
-            Atm atm1 = atmRepository.save(Atm.builder().build());
-//
-//            System.out.println(atm1);
-//
-//            ricaricaRepository.save(Ricarica.builder()
-//                    .atm(atm1)
-//                    .destinatario(cliente1.getConto())
-//                    .valore(100)
-//                    .build());
-//            ricaricaRepository.save(Ricarica.builder()
-//                    .atm(atm1)
-//                    .destinatario(comm1.getConto())
-//                    .valore(200)
-//                    .build());
-//
-//            LOG.warning("PrePagamento");
-//            LOG.warning("Cliente 1");
-//            List<Movimento> movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//            LOG.warning("Cliente 2");
-//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//
-//            Pagamento p = new Pagamento(cliente1.getConto(), cliente2.getConto(), 10);
-//
-//            LOG.warning("Pagamento creato");
-//            LOG.warning("Cliente 1");
-//            movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//            LOG.warning("Cliente 2");
-//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//
-//            contoRepository.save(cliente1.getConto());
-//
-//            LOG.warning("Conto cliente 1 salvato");
-//            LOG.warning("Cliente 1");
-//            movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//            LOG.warning("Cliente 2");
-//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//
-//            contoRepository.save(cliente2.getConto());
-//
-//            LOG.warning("Conto cliente 2 salvato");
-//            LOG.warning("Cliente 1");
-//            movimenti = clientRepository.getOne(1L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
-//            LOG.warning("Cliente 2");
-//            movimenti = clientRepository.getOne(3L).getConto().getMovimenti();
-//            movimenti.forEach(m -> LOG.warning(m.toString()));
+            if (!credenzialiRepository.findById("user1@gmail.com").isPresent()) {
+                clientRepository.save(Cliente.builder()
+                        .username("user1@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Paolo")
+                        .cognome("Pioppo")
+                        .cf("ASDFGHJKLPOIUYTRE")
+                        .birthDate(LocalDate.of(1983, Month.NOVEMBER, 23))
+                        .address("Via Rossi")
+                        .phone("+390123456789")
+                        .build());
+            }
+            if (!credenzialiRepository.findById("user2@gmail.com").isPresent()) {
+                clientRepository.save(Cliente.builder()
+                        .username("user2@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Anna")
+                        .cognome("Dico")
+                        .cf("SNHFAIHCFIUHFCUHACUHND")
+                        .birthDate(LocalDate.of(1993, Month.NOVEMBER, 23))
+                        .address("Viale dei fiori")
+                        .phone("+390123456789")
+                        .build());
+            }
+            if (!credenzialiRepository.findById("user3@gmail.com").isPresent()) {
+                clientRepository.save(Commerciante.builder()
+                        .username("user3@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Ababua")
+                        .cognome("Bau")
+                        .cf("SNHFAIHCFIUHFHSYDCUHND")
+                        .birthDate(LocalDate.of(1989, Month.NOVEMBER, 23))
+                        .address("Strada grande")
+                        .ragSoc("Pizzeria Mare Blu")
+                        .phone("+390123456789")
+                        .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
+                        .build());
+            }
+            if (!credenzialiRepository.findById("user4@gmail.com").isPresent()) {
+                clientRepository.save(Commerciante.builder()
+                        .username("user4@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Ciro")
+                        .cognome("Blu")
+                        .cf("SNHFDLKKLIUHFCUHACUHND")
+                        .birthDate(LocalDate.of(2001, Month.NOVEMBER, 23))
+                        .address("Corso Napoleone")
+                        .phone("+390123456789")
+                        .ragSoc("Osteria Bella Napoli")
+                        .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
+                        .build());
+            }
+            if (atmRepository.findAll().isEmpty()) {
+                atmRepository.save(Atm.builder().build());
+            }
 
-//            LOG.warning("Conto1: " + ((Object) cliente1.getConto()).toString());
-//            cliente1.getConto().getMovimenti().forEach(m -> LOG.warning("Movimento: " + ((Object) m).toString()));
-//            LOG.warning("Conto2: " + ((Object) cliente2.getConto()).toString());
-//            cliente2.getConto().getMovimenti().forEach(m -> LOG.warning("Movimento: " + ((Object) m).toString()));
-//            LOG.warning("Movimento: " + ((Object) p).toString());
-//            LOG.warning("From: " + ((Object) p.getFrom()).toString());
-//            LOG.warning("To: " + ((Object) p.getTo()).toString());
-//            p.setFrom(cliente1.getConto());
-//            p.setTo(cliente2.getConto());
-//            contoRepository.save(cliente1.getConto());
-//            contoRepository.save(cliente2.getConto());
-//            pagamentoRepository.save(p);
-//            pagamentoRepository.save(Pagamento.builder()
-//                    .from(cliente1.getConto())
-//                    .to(cliente2.getConto())
-//                    .value(10)
-//                    .build());
-//            pagamentoRepository.save(Pagamento.builder()
-//                    .from(cliente1.getConto())
-//                    .to(comm1.getConto())
-//                    .value(20)
-//                    .build());
-//            pagamentoRepository.save(Pagamento.builder()
-//                    .from(cliente2.getConto())
-//                    .to(comm1.getConto())
-//                    .value(5)
-//                    .build());
-//            pagamentoRepository.save(Pagamento.builder()
-//                    .from(cliente1.getConto())
-//                    .to(comm2.getConto())
-//                    .value(14)
-//                    .build());
-//            pagamentoRepository.save(Pagamento.builder()
-//                    .from(comm1.getConto())
-//                    .to(comm2.getConto())
-//                    .value(8)
-//                    .build());
         }
 
     }
