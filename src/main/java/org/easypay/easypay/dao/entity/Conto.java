@@ -79,6 +79,7 @@ public class Conto implements Serializable {
             fetch = FetchType.LAZY
     )
     @OrderBy(value = "timestamp desc")
+    @JsonIgnore
     @ToString.Exclude
     private List<Movimento> uscite = new ArrayList<>();
 
@@ -92,6 +93,7 @@ public class Conto implements Serializable {
             fetch = FetchType.LAZY
     )
     @OrderBy(value = "timestamp desc")
+    @JsonIgnore
     @ToString.Exclude
     private List<Movimento> entrate = new ArrayList<>();
 
@@ -99,6 +101,7 @@ public class Conto implements Serializable {
         return new ArrayList<>(entrate);
     }
 
+    @JsonIgnore
     @Transient
     public List<Movimento> getMovimenti() {
         return Stream.concat(entrate.stream(), uscite.stream())
@@ -140,24 +143,6 @@ public class Conto implements Serializable {
         }
     }
 
-//    public void removeMovimento(Movimento movimento, Direction direction) {
-//        switch (direction) {
-//            case IN:
-//                if (!this.entrate.contains(movimento)) {
-//                    return;
-//                }
-//                this.entrate.remove(movimento);
-//                movimento.setTo(null);
-//                break;
-//            case OUT:
-//                if (!this.uscite.contains(movimento)) {
-//                    return;
-//                }
-//                this.uscite.remove(movimento);
-//                movimento.setFrom(null);
-//                break;
-//        }
-//    }
     @Builder
     public Conto(int budget, int saldo, Cliente cliente) {
         Objects.requireNonNull(cliente, "cliente cannot be null");

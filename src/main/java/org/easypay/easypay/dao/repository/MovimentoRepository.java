@@ -5,6 +5,8 @@
  */
 package org.easypay.easypay.dao.repository;
 
+import java.util.List;
+import org.easypay.easypay.dao.entity.Conto;
 import org.easypay.easypay.dao.entity.Movimento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovimentoRepository extends JpaRepository<Movimento, Long> {
 
+    public List<Movimento> findAllByFrom(Conto conto);
 //    public List<Utente> findAllByToken(String token);
 }
