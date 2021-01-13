@@ -21,6 +21,7 @@ import lombok.*;
  */
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
 public class Ricarica extends Movimento {
 
