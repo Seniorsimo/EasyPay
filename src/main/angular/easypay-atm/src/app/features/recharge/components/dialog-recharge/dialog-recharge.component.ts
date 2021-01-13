@@ -31,7 +31,7 @@ export class DialogRechargeComponent {
 
   completeRecharge() {
     this.movimentoService
-      .recharge(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price)
+      .ricarica(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price)
       .subscribe(() => {
         // ricarica avvenuto con successo
         this.openSnackBar('ricarica effettuata con successo', 'success');

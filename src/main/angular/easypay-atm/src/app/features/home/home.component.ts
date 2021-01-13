@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -11,6 +12,7 @@ import { UserType } from 'src/app/core/constants/user-type.enum';
 import { Conto } from 'src/app/core/models/conto.model';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
+import { InfoDialogComponent } from 'src/app/shared/components/info-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +33,7 @@ export class HomeComponent implements OnInit {
     private routingService: RoutingService,
     private selfStore: SelfStore,
     private clienteService: ClienteService,
-
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
 
@@ -70,6 +72,14 @@ export class HomeComponent implements OnInit {
   /** verifica che il cliente sia un mercante */
   isMercant(): boolean {
     return this.selfStore.type === UserType.merchant;
+  }
+
+  getInfoDialog() {
+    const dialogRef = this.dialog.open(InfoDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   /**

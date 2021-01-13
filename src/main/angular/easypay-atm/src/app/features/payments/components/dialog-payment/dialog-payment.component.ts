@@ -32,7 +32,7 @@ export class DialogPaymentComponent {
 
   completePayment() {
     this.movimentoService
-      .pay(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price)
+      .pagamento(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price)
       .subscribe(() => {
         // pagamento avvenuto con successo
         this.openSnackBar('pagamento effettuato con successo', 'success');

@@ -11,6 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { CoreModule } from '../core/core.module';
 import { BannerComponent } from './components/banner/banner.component';
@@ -35,6 +36,7 @@ import { MinPipe } from './pipes/min.pipe';
 import { SwitchNumberPipe } from './pipes/switch-number.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PriceWidgetComponent } from './components/price-widget/price-widget.component';
+import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { PriceWidgetComponent } from './components/price-widget/price-widget.com
     JoinDashboardComponent,
     JoinPart3Component,
     PriceWidgetComponent,
+    InfoDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -75,6 +78,7 @@ import { PriceWidgetComponent } from './components/price-widget/price-widget.com
     MatNativeDateModule,
     MatDatepickerModule,
     MatCheckboxModule,
+    MatDialogModule,
   ],
   exports: [
     LoaderComponent,
@@ -90,6 +94,6 @@ import { PriceWidgetComponent } from './components/price-widget/price-widget.com
     JoinComponent,
     PriceWidgetComponent,
   ],
-  entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component],
+  entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component, InfoDialogComponent],
 })
 export class SharedModule {}
