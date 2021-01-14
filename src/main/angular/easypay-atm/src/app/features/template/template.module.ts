@@ -6,8 +6,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 
 import { TemplateComponent } from './template.component';
-import { HomeModule } from '../home/home.module';
 import { RouterModule } from '@angular/router';
+import { HomeModule } from '../home/home.module';
 
 @NgModule({
   declarations: [TemplateComponent],

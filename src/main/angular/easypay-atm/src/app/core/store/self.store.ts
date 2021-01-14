@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { UserType } from '../constants/user-type.enum';
-import { Cliente } from '../models/cliente.model';
-import { Conto } from '../models/conto.model';
+import { Cliente } from '../../shared/models/cliente.model';
+import { Conto } from '../../shared/models/conto.model';
 
 /** Store che memorizza i dati dell' utente collegato (api/clienti/self) */
 @Injectable({

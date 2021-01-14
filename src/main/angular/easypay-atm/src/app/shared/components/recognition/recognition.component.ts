@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { LoginType } from '../../constants/login-type.enum';
 import { RoutingService } from 'src/app/core/services/routing.service';
-import { Cliente } from 'src/app/core';
+
+import { LoginType } from '../../constants/login-type.enum';
+import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'app-recognition',

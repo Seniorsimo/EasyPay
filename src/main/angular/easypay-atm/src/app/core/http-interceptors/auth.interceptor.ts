@@ -1,16 +1,10 @@
+import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpEvent,
-  HttpInterceptor,
-  HttpHandler,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
-
-import { Observable } from 'rxjs';
-import { AuthStore } from '../features/login-page/store/auth.store';
-import { filter, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { AuthStore } from '../../features/login-page/store/auth.store';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
@@ -40,3 +34,8 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 }
+
+/** Http interceptor providers in outside-in order */
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+];

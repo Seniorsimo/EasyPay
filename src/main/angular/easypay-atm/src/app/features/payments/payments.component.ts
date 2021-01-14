@@ -2,11 +2,12 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncScheduler, forkJoin, scheduled, Subject } from 'rxjs';
 import { map, mergeAll } from 'rxjs/operators';
-import { Cliente, ClienteService } from 'src/app/core';
+import { ClienteService } from 'src/app/core';
 import { UserType } from 'src/app/core/constants/user-type.enum';
-import { Conto } from 'src/app/core/models/conto.model';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
+import { Cliente } from 'src/app/shared/models/cliente.model';
+import { Conto } from 'src/app/shared/models/conto.model';
 
 import { DialogPaymentComponent } from './components/dialog-payment/dialog-payment.component';
 
