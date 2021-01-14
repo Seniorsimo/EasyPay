@@ -4,7 +4,7 @@ import { RoutingService } from 'src/app/core/services/routing.service';
 import { AuthStore } from '../login-page/store/auth.store';
 import { LoginService } from '../login-page/services/login.service';
 import { SelfStore } from 'src/app/core/store/self.store';
-import { UserType } from 'src/app/core/constants/user-type.enum';
+import { UtenteType } from 'src/app/core/constants/utente-type.enum';
 
 @Component({
   selector: 'app-template',
@@ -86,6 +86,6 @@ export class TemplateComponent implements OnInit, OnDestroy {
   }
 
   isMercant(): boolean {
-    return this.selfStore.type === UserType.merchant;
+    return this.selfStore.type === UtenteType.commerciante;
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
-import { UserType } from 'src/app/core/constants/user-type.enum';
+import { UtenteType } from 'src/app/core/constants/utente-type.enum';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,14 +11,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./join-part2.component.scss']
 })
 export class JoinPart2Component extends AbstractJoinPartComponent implements OnInit, OnDestroy {
-  readonly UserType = UserType;
+  readonly UserType = UtenteType;
 
   private subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder) {
     super();
     this.formCrl = this.fb.group({
-      type: this.fb.control(UserType.customer, []),
+      type: this.fb.control(UtenteType.cliente, []),
       piva: this.fb.control({ value: '', disabled: true }, [Validators.required]),
       ragSoc: this.fb.control({ value: '', disabled: true }, [Validators.required]),
     });
@@ -26,7 +26,7 @@ export class JoinPart2Component extends AbstractJoinPartComponent implements OnI
 
   ngOnInit() {
     this.subscriptions.push(this.formCrl.get('type').valueChanges.subscribe(userType => {
-        if ( userType === UserType.customer  ) {
+        if ( userType === UtenteType.cliente  ) {
           this.formCrl.get('piva').disable();
           this.formCrl.get('ragSoc').disable();
         } else {

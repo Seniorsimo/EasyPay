@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { UserType } from '../constants/user-type.enum';
+import { UtenteType } from '../constants/utente-type.enum';
 import { Cliente } from '../../shared/models/cliente.model';
 import { Conto } from '../../shared/models/conto.model';
 
@@ -284,7 +284,7 @@ export class SelfStore {
     this.phone = cliente.phone;
     this.birthDate = cliente.birthDate;
     this.idConto = cliente.idConto;
-    if (cliente.type === UserType.merchant) {
+    if (cliente.type === UtenteType.commerciante) {
       this.ragSociale = cliente.ragSoc;
       this.pIva = cliente.piva;
     }

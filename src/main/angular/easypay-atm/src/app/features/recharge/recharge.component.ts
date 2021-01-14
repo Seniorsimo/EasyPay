@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { asyncScheduler, forkJoin, scheduled, Subject } from 'rxjs';
 import { map, mergeAll } from 'rxjs/operators';
 import { ClienteService } from 'src/app/core';
-import { UserType } from 'src/app/core/constants/user-type.enum';
+import { UtenteType } from 'src/app/core/constants/utente-type.enum';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
 import { Cliente } from 'src/app/shared/models/cliente.model';
@@ -77,7 +77,7 @@ export class RechargeComponent implements OnInit, AfterViewInit {
 
   /** verifica che il cliente sia un mercante */
   isMercant(): boolean {
-    return this.selfStore.type === UserType.merchant;
+    return this.selfStore.type === UtenteType.commerciante;
   }
 
 

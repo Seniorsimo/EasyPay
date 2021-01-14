@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { Cliente } from '../../shared/models/cliente.model';
-import { UserType } from '../constants/user-type.enum';
+import { UtenteType } from '../constants/utente-type.enum';
 import { SelfStore } from '../store/self.store';
 import { ApiRoute } from '../constants/routing.constants';
 import { Conto } from '../../shared/models/conto.model';
@@ -34,7 +34,7 @@ export class ClienteService {
   getSelfClient(): Observable<Cliente> {
     return this.httpClient.get<ApiCliente>(`${ApiRoute.clienti}/self`).pipe(
       map(apiCliente => ({
-        type: UserType.customer,
+        type: UtenteType.cliente,
         ...apiCliente,
         id: apiCliente.id + '',
         idConto: apiCliente.id_conto + '',
@@ -52,7 +52,7 @@ export class ClienteService {
   /** effettua la richiesta HTTP per verificare se il login del cliente va a buon fine */
   private _getClient(id: string, params: {pin?: string; otp?: string}): Observable<Cliente> {
     return this.httpClient.get<Cliente>(`${ApiRoute.clienti}/${id}`, {params}).pipe(
-        map(result => ({ type: UserType.customer, ...result })),
+        map(result => ({ type: UtenteType.cliente, ...result })),
         // workaround per adattare la struttura cliente con quella ricevuta dal server
         map((cliente: any) => ({...cliente, idConto: cliente.id_conto})),
         catchError(error => { throw(error); })

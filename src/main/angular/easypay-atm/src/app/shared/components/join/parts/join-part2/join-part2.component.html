@@ -1,7 +1,7 @@
 <form class="form" [formGroup]="formCrl">
   <mat-radio-group formControlName="type">
-    <mat-radio-button [value]="UserType.customer" >Sono solo un cliente</mat-radio-button>
-    <mat-radio-button [value]="UserType.merchant" >Dati del commerciante</mat-radio-button>
+    <mat-radio-button [value]="UserType.cliente" >Sono solo un cliente</mat-radio-button>
+    <mat-radio-button [value]="UserType.commerciante" >Dati del commerciante</mat-radio-button>
   </mat-radio-group>
   <div #merchantInfo>
     <div>
