@@ -276,6 +276,7 @@ export class SelfStore {
     this.type = cliente.type;
     this.nome = cliente.nome;
     this.cognome = cliente.cognome;
+    this.email = cliente.email;
     this.cf = cliente.cf;
     this.createdAt = cliente.createdAt;
     this.updatedAt = cliente.updatedAt;
@@ -301,6 +302,7 @@ export class SelfStore {
     this.type = undefined;
     this.nome = undefined;
     this.cognome = undefined;
+    this.email = undefined;
     this.cf = undefined;
     this.createdAt = undefined;
     this.updatedAt = undefined;
