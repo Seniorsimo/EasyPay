@@ -29,10 +29,6 @@ export class RoutingService {
     this.router.navigate([RoutersPath.login]);
   }
 
-  // gotoReload() {
-  //   this.router.navigate([RoutersPath.reload]);
-  // }
-
   gotoPayment() {
     this.router.navigate([RoutersPath.payment]);
   }
@@ -41,7 +37,7 @@ export class RoutingService {
     this.router.navigate([RoutersPath.recharge]);
   }
 
-  gotoMovement() {
-    this.router.navigate([RoutersPath.movement]);
+  gotoMovements() {
+    this.router.navigate([RoutersPath.movements]);
   }
 }

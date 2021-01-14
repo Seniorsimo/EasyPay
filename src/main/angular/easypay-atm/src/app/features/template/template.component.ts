@@ -38,7 +38,7 @@ export class TemplateComponent implements OnInit, OnDestroy {
     {
       label: 'Movimenti',
       icon: 'account_balance_wallet',
-      clickEvent: () => this.routingService.gotoMovement(),
+      clickEvent: () => this.routingService.gotoMovements(),
       isVisible: () => this.isLogin(),
       isEnable: () => this.isMercant(),
     },

@@ -6,7 +6,7 @@ export const RoutersPath = {
   login: 'login',
   payment: 'payments',
   recharge: 'recharges',
-  movement: 'movements',
+  movements: 'movements',
   // reload: 'reload'
 };
 

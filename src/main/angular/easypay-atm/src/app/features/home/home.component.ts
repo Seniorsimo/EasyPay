@@ -68,7 +68,9 @@ export class HomeComponent implements OnInit {
     this.routingService.gotoRecharge();
   }
 
-  gotoMovements() {}
+  gotoMovements() {
+    this.routingService.gotoMovements();
+  }
 
   /** verifica che il cliente sia un mercante */
   isMercant(): boolean {

@@ -11,6 +11,7 @@ import { TemplateModule } from './features/template/template.module';
 import { SharedModule } from './shared';
 import { RechargeModule } from './features/recharge/recharge.module';
 import { HomeModule } from './features/home/home.module';
+import { MovementsModule } from './features/movements/movements.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HomeModule } from './features/home/home.module';
     HomeModule,
     PaymentsModule,
     RechargeModule,
+    MovementsModule,
   ],
   providers: [
   ],

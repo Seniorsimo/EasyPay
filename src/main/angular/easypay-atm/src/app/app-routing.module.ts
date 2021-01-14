@@ -6,6 +6,7 @@ import { AuthGuard } from './core/guards/auth-guard.service';
 import { NoLoginGuard } from './core/guards/no-login-guard.service';
 import { HomeComponent } from './features/home/home.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
+import { MovementsComponent } from './features/movements/movements.component';
 import { PaymentsComponent } from './features/payments/payments.component';
 import { RechargeComponent } from './features/recharge/recharge.component';
 import { TemplateComponent } from './features/template/template.component';
@@ -38,6 +39,11 @@ const routes: Routes = [
       {
         path: RoutersPath.recharge,
         component: RechargeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: RoutersPath.movements,
+        component: MovementsComponent,
         canActivate: [AuthGuard],
       },
     ]

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiRoute } from '../constants/routing.constants';
 import { Conto } from '../../shared/models/conto.model';
+import { ApiMovimento } from '../api-models/api-movimento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,18 +42,24 @@ export class MovimentoService {
     );
   }
 
-  /** restituisce i movimenti del conto identificato */
-  getMovimenti(idContoCliente: string): Observable<any[]> {
-    return this.getConti(idContoCliente).pipe(
-      map((conto: Conto) => {
-        if (conto && conto.id) {
-          return []; //conto.movimenti;
-        }
-        return [];
-      })
-    );
+  /**
+   * restituisce i movimenti del conto identificato
+   * @param conto id del conto che si vuole ricercare (può essere self)
+   * @param direction tipo di ordinamento
+   * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
+   * @param to data di fine periodo di ricerca (AAAA-MM-GG)
+   */
+  getMovimenti(conto: string, direction?: string, from?: string, to?: string): Observable<any[]> {
+    return this.http.get<ApiMovimento[]>(ApiRoute.movimenti, {params: {conto, direction, from, to}});
   }
 
+  /**
+   * restituisce solo le ricariche del conto identificato
+   * @param conto id del conto che si vuole ricercare (può essere self)
+   * @param direction tipo di ordinamento
+   * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
+   * @param to data di fine periodo di ricerca (AAAA-MM-GG)
+   */
   getRicariche(idContoCliente: string) {
     return this.getConti(idContoCliente).pipe(
       map((conto: Conto) => {
@@ -64,6 +71,13 @@ export class MovimentoService {
     );
   }
 
+  /**
+   * restituisce solo i pagamenti del conto identificato
+   * @param conto id del conto che si vuole ricercare (può essere self)
+   * @param direction tipo di ordinamento
+   * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
+   * @param to data di fine periodo di ricerca (AAAA-MM-GG)
+   */
   getPagamenti(idContoCliente: string) {
     return this.getConti(idContoCliente).pipe(
       map((conto: Conto) => {
