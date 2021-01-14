@@ -7,12 +7,13 @@ import {
 } from '@angular/material/snack-bar';
 import { asyncScheduler, scheduled } from 'rxjs';
 import { mergeAll, map } from 'rxjs/operators';
-import { Cliente, ClienteService } from 'src/app/core';
+import { ClienteService } from 'src/app/core';
 import { UserType } from 'src/app/core/constants/user-type.enum';
-import { Conto } from 'src/app/core/models/conto.model';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { SelfStore } from 'src/app/core/store/self.store';
 import { InfoDialogComponent } from 'src/app/shared/components/info-dialog/info-dialog.component';
+import { Cliente } from 'src/app/shared/models/cliente.model';
+import { Conto } from 'src/app/shared/models/conto.model';
 
 @Component({
   selector: 'app-home',

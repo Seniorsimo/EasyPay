@@ -37,6 +37,10 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PriceWidgetComponent } from './components/price-widget/price-widget.component';
 import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -66,12 +70,12 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
   imports: [
     CommonModule,
     CoreModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
     ReactiveFormsModule,
     ZXingScannerModule,
+    MatInputModule,
     MatGridListModule,
+    MatButtonModule,
+    MatCardModule,
     MatSliderModule,
     MatRadioModule,
     MatDividerModule,
@@ -79,13 +83,16 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
     MatDatepickerModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   exports: [
     LoaderComponent,
     ErrorComponent,
     LoginComponent,
     BigButtonComponent,
-    MatGridListModule,
     BannerComponent,
     RecognitionComponent,
     MinPipe,
@@ -93,6 +100,21 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
     InfoWidgetComponent,
     JoinComponent,
     PriceWidgetComponent,
+    MatInputModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSliderModule,
+    MatRadioModule,
+    MatDividerModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component, InfoDialogComponent],
 })

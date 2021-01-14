@@ -2,7 +2,9 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { BarcodeFormat } from '@zxing/library';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 import { BehaviorSubject } from 'rxjs';
-import { Cliente, ClienteService } from 'src/app/core';
+import { ClienteService } from 'src/app/core';
+
+import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'app-qr-code',

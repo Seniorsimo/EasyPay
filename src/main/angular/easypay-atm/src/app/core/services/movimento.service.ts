@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiRoute } from '../constants/routing.constants';
-import { Conto } from '../models/conto.model';
+import { Conto } from '../../shared/models/conto.model';
 
 @Injectable({
   providedIn: 'root'

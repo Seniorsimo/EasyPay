@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Cliente, ClienteService } from 'src/app/core';
+import { ClienteService } from 'src/app/core';
+import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'app-pin',

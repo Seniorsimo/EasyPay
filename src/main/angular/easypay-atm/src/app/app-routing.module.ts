@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './features/home/home.component';
-import { LoginPageComponent } from './features/login-page/login-page.component';
-import { TemplateComponent } from './features/template/template.component';
+import { RoutersPath } from './core';
 import { AuthGuard } from './core/guards/auth-guard.service';
 import { NoLoginGuard } from './core/guards/no-login-guard.service';
+import { HomeComponent } from './features/home/home.component';
+import { LoginPageComponent } from './features/login-page/login-page.component';
 import { PaymentsComponent } from './features/payments/payments.component';
-import { RoutersPath } from './core';
 import { RechargeComponent } from './features/recharge/recharge.component';
+import { TemplateComponent } from './features/template/template.component';
 
 const routes: Routes = [
   {
