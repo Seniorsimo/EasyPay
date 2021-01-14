@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ApiRoute } from '../constants/routing.constants';
 import { Conto } from '../../shared/models/conto.model';
 import { ApiMovimento } from '../api-models/api-movimento.model';
+import { Movimento } from 'src/app/shared/models/movimento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class MovimentoService {
    * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
    * @param to data di fine periodo di ricerca (AAAA-MM-GG)
    */
-  getMovimenti(conto: string, direction?: string, from?: string, to?: string): Observable<any[]> {
+  getMovimenti(conto: string, direction: string= '', from: string= '', to: string= ''): Observable<Movimento[]> {
     return this.http.get<ApiMovimento[]>(ApiRoute.movimenti, {params: {conto, direction, from, to}});
   }
 
@@ -60,15 +61,8 @@ export class MovimentoService {
    * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
    * @param to data di fine periodo di ricerca (AAAA-MM-GG)
    */
-  getRicariche(idContoCliente: string) {
-    return this.getConti(idContoCliente).pipe(
-      map((conto: Conto) => {
-        if (conto && conto.id) {
-          return []; //conto.entrate;
-        }
-        return [];
-      })
-    );
+  getRicariche(conto: string, direction: string= '', from: string= '', to: string= ''): Observable<Movimento[]> {
+    return this.http.get<ApiMovimento[]>(ApiRoute.ricariche, {params: {conto, direction, from, to}});
   }
 
   /**
@@ -78,19 +72,7 @@ export class MovimentoService {
    * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
    * @param to data di fine periodo di ricerca (AAAA-MM-GG)
    */
-  getPagamenti(idContoCliente: string) {
-    return this.getConti(idContoCliente).pipe(
-      map((conto: Conto) => {
-        if (conto && conto.id) {
-          return []; //conto.uscite;
-        }
-        return [];
-      })
-    );
-  }
-
-  /** workaround per ottenere le liste dei movimenti che sono state posizionate sul conto */
-  private getConti(idContoCliente: string): Observable<Conto> {
-    return this.http.get<Conto>(`${ApiRoute.conti}/${idContoCliente}`);
+  getPagamenti(conto: string, direction: string= '', from: string= '', to: string= ''): Observable<Movimento[]> {
+    return this.http.get<ApiMovimento[]>(ApiRoute.pagamenti, {params: {conto, direction, from, to}});
   }
 }
