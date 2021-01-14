@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -14,8 +15,8 @@ import { RoutingService } from './services/routing.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule, MatIconModule],
-  exports: [MatIconModule],
+  imports: [CommonModule, HttpClientModule, MatIconModule, FlexLayoutModule],
+  exports: [MatIconModule, FlexLayoutModule],
   providers: [
     /* No providers */
   ]
