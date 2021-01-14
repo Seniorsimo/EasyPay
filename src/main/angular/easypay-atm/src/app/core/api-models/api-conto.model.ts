@@ -1,7 +1,7 @@
-export interface Conto {
-  id: string;
+export interface ApiConto {
+  id: number;
   budget: number;
   saldo: number;
   availableBudget: number;
-  idCliente: string;
+  id_cliente: number;
 }

@@ -8,6 +8,8 @@ import { UserType } from '../constants/user-type.enum';
 import { SelfStore } from '../store/self.store';
 import { ApiRoute } from '../constants/routing.constants';
 import { Conto } from '../../shared/models/conto.model';
+import { ApiCliente } from '../api-models/api-cliente.model';
+import { ApiConto } from '../api-models/api-conto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,41 +32,22 @@ export class ClienteService {
 
   /** restituisce  */
   getSelfClient(): Observable<Cliente> {
-    return this.httpClient.get<Cliente>(`${ApiRoute.clienti}/self`).pipe(
-      map(result => {
-        return (result) ? { type: UserType.customer, ...result } : null;
-      })
+    return this.httpClient.get<ApiCliente>(`${ApiRoute.clienti}/self`).pipe(
+      map(apiCliente => ({
+        type: UserType.customer,
+        ...apiCliente,
+        id: apiCliente.id + '',
+        idConto: apiCliente.id_conto + '',
+        birthDate: apiCliente.birth_date,
+      }))
     );
   }
 
   getSelfConto(): Observable<Conto> {
-    return this.httpClient.get<Conto>(`${ApiRoute.conti}/self`);
+    return this.httpClient.get<ApiConto>(`${ApiRoute.conti}/self`).pipe(
+      map(apiConto => ({...apiConto, id: apiConto.id + '', idCliente: apiConto.id_cliente + '' } as Conto)),
+    );
   }
-
-
-  // getConto(idConto: string): Observable<Commerciante> {
-  //   // se già presente nello store non riscarica i dati del cliente:
-  //   if (this.contoCommerciante$.value.idConto) {
-  //     return this.contoCommerciante$;
-  //   }
-
-  //   // if (!idConto) {
-  //   //   return of(new WrongParamError(idConto));
-  //   // }
-
-  //   return this.httpClient
-  //     .get<Conto>(`/api/commercianti/${idConto}`)
-  //     .pipe(
-  //       map(result => {
-  //           const commerciante = { type: COMMERCIANTE_TYPE, ...result };
-  //           this.contoCommerciante$.next(commerciante);
-  //           return commerciante;
-  //       }),
-  //       catchError(error => {
-  //         throw error;
-  //       })
-  //     );
-  // }
 
   /** effettua la richiesta HTTP per verificare se il login del cliente va a buon fine */
   private _getClient(id: string, params: {pin?: string; otp?: string}): Observable<Cliente> {

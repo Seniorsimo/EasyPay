@@ -46,7 +46,7 @@ export class MovimentoService {
     return this.getConti(idContoCliente).pipe(
       map((conto: Conto) => {
         if (conto && conto.id) {
-          return conto.movimenti;
+          return []; //conto.movimenti;
         }
         return [];
       })
@@ -57,7 +57,7 @@ export class MovimentoService {
     return this.getConti(idContoCliente).pipe(
       map((conto: Conto) => {
         if (conto && conto.id) {
-          return conto.entrate;
+          return []; //conto.entrate;
         }
         return [];
       })
@@ -68,7 +68,7 @@ export class MovimentoService {
     return this.getConti(idContoCliente).pipe(
       map((conto: Conto) => {
         if (conto && conto.id) {
-          return conto.uscite;
+          return []; //conto.uscite;
         }
         return [];
       })

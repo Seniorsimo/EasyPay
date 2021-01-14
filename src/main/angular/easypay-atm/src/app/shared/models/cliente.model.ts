@@ -10,7 +10,7 @@ export interface Cliente {
   createdAt: Date;
   updatedAt: Date;
   address: string;
-  birth_date: string;
+  birthDate: string;
   phone: string;
 
   // solo per il cliente semplice

@@ -282,7 +282,7 @@ export class SelfStore {
     this.updatedAt = cliente.updatedAt;
     this.address = cliente.address;
     this.phone = cliente.phone;
-    this.birthDate = cliente.birth_date;
+    this.birthDate = cliente.birthDate;
     this.idConto = cliente.idConto;
     if (cliente.type === UserType.merchant) {
       this.ragSociale = cliente.ragSoc;
