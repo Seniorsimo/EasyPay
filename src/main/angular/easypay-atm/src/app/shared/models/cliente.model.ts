@@ -6,6 +6,7 @@ export interface Cliente {
   otp: string;
   nome: string;
   cognome: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date;
   address: string;
