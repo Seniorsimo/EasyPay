@@ -4559,7 +4559,10 @@
 
         }, {
           key: "getMovimenti",
-          value: function getMovimenti(conto, direction, from, to) {
+          value: function getMovimenti(conto) {
+            var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+            var from = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+            var to = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
             return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].movimenti, {
               params: {
                 conto: conto,
@@ -4579,14 +4582,18 @@
 
         }, {
           key: "getRicariche",
-          value: function getRicariche(idContoCliente) {
-            return this.getConti(idContoCliente).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (conto) {
-              if (conto && conto.id) {
-                return []; //conto.entrate;
+          value: function getRicariche(conto) {
+            var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+            var from = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+            var to = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+            return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].ricariche, {
+              params: {
+                conto: conto,
+                direction: direction,
+                from: from,
+                to: to
               }
-
-              return [];
-            }));
+            });
           }
           /**
            * restituisce solo i pagamenti del conto identificato
@@ -4598,21 +4605,18 @@
 
         }, {
           key: "getPagamenti",
-          value: function getPagamenti(idContoCliente) {
-            return this.getConti(idContoCliente).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (conto) {
-              if (conto && conto.id) {
-                return []; //conto.uscite;
+          value: function getPagamenti(conto) {
+            var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+            var from = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+            var to = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+            return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].pagamenti, {
+              params: {
+                conto: conto,
+                direction: direction,
+                from: from,
+                to: to
               }
-
-              return [];
-            }));
-          }
-          /** workaround per ottenere le liste dei movimenti che sono state posizionate sul conto */
-
-        }, {
-          key: "getConti",
-          value: function getConti(idContoCliente) {
-            return this.http.get("".concat(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].conti, "/").concat(idContoCliente));
+            });
           }
         }]);
 
@@ -10533,4 +10537,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.32382450d62eddd27236.js.map
+//# sourceMappingURL=main-es5.45845e7fa3b27fe67277.js.map

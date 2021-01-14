@@ -2331,7 +2331,7 @@ class MovimentoService {
      * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
      * @param to data di fine periodo di ricerca (AAAA-MM-GG)
      */
-    getMovimenti(conto, direction, from, to) {
+    getMovimenti(conto, direction = '', from = '', to = '') {
         return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].movimenti, { params: { conto, direction, from, to } });
     }
     /**
@@ -2341,13 +2341,8 @@ class MovimentoService {
      * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
      * @param to data di fine periodo di ricerca (AAAA-MM-GG)
      */
-    getRicariche(idContoCliente) {
-        return this.getConti(idContoCliente).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((conto) => {
-            if (conto && conto.id) {
-                return []; //conto.entrate;
-            }
-            return [];
-        }));
+    getRicariche(conto, direction = '', from = '', to = '') {
+        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].ricariche, { params: { conto, direction, from, to } });
     }
     /**
      * restituisce solo i pagamenti del conto identificato
@@ -2356,17 +2351,8 @@ class MovimentoService {
      * @param from data di inizio periodo di ricerca (AAAA-MM-GG)
      * @param to data di fine periodo di ricerca (AAAA-MM-GG)
      */
-    getPagamenti(idContoCliente) {
-        return this.getConti(idContoCliente).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((conto) => {
-            if (conto && conto.id) {
-                return []; //conto.uscite;
-            }
-            return [];
-        }));
-    }
-    /** workaround per ottenere le liste dei movimenti che sono state posizionate sul conto */
-    getConti(idContoCliente) {
-        return this.http.get(`${_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].conti}/${idContoCliente}`);
+    getPagamenti(conto, direction = '', from = '', to = '') {
+        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].pagamenti, { params: { conto, direction, from, to } });
     }
 }
 MovimentoService.ɵfac = function MovimentoService_Factory(t) { return new (t || MovimentoService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
@@ -5315,4 +5301,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.32382450d62eddd27236.js.map
+//# sourceMappingURL=main-es2015.45845e7fa3b27fe67277.js.map
