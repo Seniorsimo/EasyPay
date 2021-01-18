@@ -26,13 +26,13 @@
     <mat-error *ngIf="formCrl.controls['password'].hasError('required')">
       Password obbligatoria (ovviamente)
     </mat-error>
-    <mat-error *ngIf="formCrl.controls['password'].hasError('haveUppercase')">
+    <mat-error *ngIf="formCrl.controls['password'].hasError('notHaveUppercase')">
       E' necessario aggiungere almeno un carattere maiuscolo
     </mat-error>
-    <mat-error *ngIf="formCrl.controls['password'].hasError('haveLowercase')">
+    <mat-error *ngIf="formCrl.controls['password'].hasError('notHaveLowercase')">
       E' necessario aggiungere almeno un carattere minuscolo
     </mat-error>
-    <mat-error *ngIf="formCrl.controls['password'].hasError('haveDigit')">
+    <mat-error *ngIf="formCrl.controls['password'].hasError('notHaveDigit')">
       E' necessario aggiungere almeno un carattere numerico
     </mat-error>
   </mat-form-field>

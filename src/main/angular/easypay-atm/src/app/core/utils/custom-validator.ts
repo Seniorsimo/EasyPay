@@ -38,33 +38,33 @@ export function isPhone(control: AbstractControl): { [key: string]: boolean } {
 
 /** Verifica se è presente almeno un valore uppercase */
 export function haveUppercase(control: AbstractControl): { [key: string]: boolean } {
-  const errorCode = 'haveUppercase';
+  const errorCode = 'notHaveUppercase';
   if (control && control.value) {
     const password = control.value;
     const test = new RegExp('[A-Z]+', 'g').test(password);
-    return test ? { [errorCode]: true }  : null;
+    return !test ? { [errorCode]: true }  : null;
   }
   return null;
 }
 
 /** Verifica se è presente almeno un valore Lowercase */
 export function haveLowercase(control: AbstractControl): { [key: string]: boolean } {
-  const errorCode = 'haveLowercase';
+  const errorCode = 'notHaveLowercase';
   if (control && control.value) {
     const password = control.value;
     const test = new RegExp('[a-z]+', 'g').test(password);
-    return test ? { [errorCode]: true }  : null;
+    return !test ? { [errorCode]: true }  : null;
   }
   return null;
 }
 
 /** Verifica se è presente almeno un valore numerico */
 export function haveDigit(control: AbstractControl): { [key: string]: boolean } {
-  const errorCode = 'haveUppercase';
+  const errorCode = 'notHaveUppercase';
   if (control && control.value) {
     const password = control.value;
     const test = new RegExp('\d+', 'g').test(password);
-    return test ? { [errorCode]: true }  : null;
+    return !test ? { [errorCode]: true }  : null;
   }
   return null;
 }
