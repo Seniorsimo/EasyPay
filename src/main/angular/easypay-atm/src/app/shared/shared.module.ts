@@ -42,6 +42,7 @@ import { RecognitionComponent } from './components/recognition/recognition.compo
 import { NumericDirective } from './directives/numeric.directive';
 import { MinPipe } from './pipes/min.pipe';
 import { SwitchNumberPipe } from './pipes/switch-number.pipe';
+import { InfoAtmComponent } from './info-atm/info-atm.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     JoinPart3Component,
     PriceWidgetComponent,
     InfoDialogComponent,
+    InfoAtmComponent,
   ],
   imports: [
     CommonModule,
@@ -96,6 +98,7 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     LoginComponent,
     BigButtonComponent,
     BannerComponent,
+    InfoAtmComponent,
     RecognitionComponent,
     MinPipe,
     SwitchNumberPipe,
@@ -119,6 +122,6 @@ import { SwitchNumberPipe } from './pipes/switch-number.pipe';
     MatIconModule,
     MatTableModule,
   ],
-  entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component, InfoDialogComponent],
+  entryComponents: [JoinPart0Component, JoinPart1Component, JoinPart2Component, JoinPart3Component, InfoDialogComponent, InfoAtmComponent],
 })
 export class SharedModule {}
