@@ -24,16 +24,4 @@ export class JoinDashboardComponent implements OnInit {
   nextPage() {
     this.changePage.emit(this.page + 1);
   }
-
-  // private setPage(pg: number) {
-  //   if (pg < 0) {
-  //     this.page = 0;
-  //   } else if (pg > this.maxPage ) {
-  //     this.page = this.maxPage;
-  //   } else {
-  //     this.page = pg;
-  //   }
-  //   this.changePage.emit(this.page);
-  // }
-
 }

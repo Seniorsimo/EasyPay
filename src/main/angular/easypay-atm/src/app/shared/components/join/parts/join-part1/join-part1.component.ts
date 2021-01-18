@@ -26,11 +26,12 @@ export class JoinPart1Component extends AbstractJoinPartComponent
   ngOnInit(): void {}
 
   getValue() {
+    const data = new Date(this.formCrl.controls.bornDate.value);
     return {
       nome: this.formCrl.controls.nome.value,
       cognome: this.formCrl.controls.cognome.value,
       cf: this.formCrl.controls.cf.value,
-      bornDate: this.formCrl.controls.bornDate.value,
+      birth_date: `${data.getDay()}/${data.getMonth()}/${data.getFullYear()}`,
       phone: this.formCrl.controls.phone.value,
       address: this.formCrl.controls.address.value,
     };

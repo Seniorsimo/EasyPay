@@ -1,6 +1,6 @@
-<div fxLayout="column" fxLayoutAlign="start stretch">
+<div class="container" fxLayout="column" fxLayoutAlign="start stretch">
   <form class="form" [formGroup]="formCrl">
-    <div fxFlex>
+    <div class="flex-element">
       <mat-form-field>
         <input matInput placeholder="nome*" formControlName="nome" />
         <mat-error *ngIf="formCrl.controls['nome'].hasError('required')">
@@ -9,7 +9,7 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex>
+    <div class="flex-element">
       <mat-form-field>
         <input matInput placeholder="cognome*" formControlName="cognome" />
         <mat-error *ngIf="formCrl.controls['cognome'].hasError('required')">
@@ -18,7 +18,7 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex>
+    <div class="flex-element">
       <mat-form-field>
         <input matInput placeholder="codice fiscale*" formControlName="cf" />
         <mat-error *ngIf="formCrl.controls['cf'].hasError('required')">
@@ -27,7 +27,7 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex>
+    <div class="flex-element">
       <mat-form-field>
         <input
           matInput
@@ -54,7 +54,7 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div fxFlex>
+    <div class="flex-element">
       <mat-form-field>
         <input matInput placeholder="telefono" formControlName="phone" />
         <mat-error *ngIf="formCrl.controls['phone'].hasError('required')">
@@ -63,7 +63,7 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex>
+    <div class="flex-element">
       <mat-form-field>
         <input matInput placeholder="indirizzo" formControlName="address" />
         <mat-error *ngIf="formCrl.controls['address'].hasError('required')">

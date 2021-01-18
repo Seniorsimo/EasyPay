@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { Cliente } from '../../shared/models/cliente.model';
@@ -10,13 +10,14 @@ import { ApiRoute } from '../constants/routing.constants';
 import { Conto } from '../../shared/models/conto.model';
 import { ApiCliente } from '../api-models/api-cliente.model';
 import { ApiConto } from '../api-models/api-conto.model';
+import { ApiPostClienti } from '../api-models/api-post-cliente.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
-  constructor(private httpClient: HttpClient, private selfStore: SelfStore) {
+  constructor(private http: HttpClient, private selfStore: SelfStore) {
   }
 
   getClienteByPin(id: string, pin: string): Observable<Cliente>  {
@@ -32,7 +33,7 @@ export class ClienteService {
 
   /** restituisce  */
   getSelfClient(): Observable<Cliente> {
-    return this.httpClient.get<ApiCliente>(`${ApiRoute.clienti}/self`).pipe(
+    return this.http.get<ApiCliente>(`${ApiRoute.clienti}/self`).pipe(
       map(apiCliente => ({
         type: UtenteType.cliente,
         ...apiCliente,
@@ -44,14 +45,19 @@ export class ClienteService {
   }
 
   getSelfConto(): Observable<Conto> {
-    return this.httpClient.get<ApiConto>(`${ApiRoute.conti}/self`).pipe(
+    return this.http.get<ApiConto>(`${ApiRoute.conti}/self`).pipe(
       map(apiConto => ({...apiConto, id: apiConto.id + '', idCliente: apiConto.id_cliente + '' } as Conto)),
     );
   }
 
+
+  register(data: ApiPostClienti): Observable<any> {
+    return this.http.post(ApiRoute.clienti, data);
+  }
+
   /** effettua la richiesta HTTP per verificare se il login del cliente va a buon fine */
   private _getClient(id: string, params: {pin?: string; otp?: string}): Observable<Cliente> {
-    return this.httpClient.get<Cliente>(`${ApiRoute.clienti}/${id}`, {params}).pipe(
+    return this.http.get<Cliente>(`${ApiRoute.clienti}/${id}`, {params}).pipe(
         map(result => ({ type: UtenteType.cliente, ...result })),
         // workaround per adattare la struttura cliente con quella ricevuta dal server
         map((cliente: any) => ({...cliente, idConto: cliente.id_conto})),
