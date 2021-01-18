@@ -1,3 +1,6 @@
+@import 'include-media';
+$breakpoints: (phone: 525px, tablet: 1000px, desktop: 1024px);
+
 .button-container {
   width: 100%;
   min-width: 60px;
@@ -16,11 +19,18 @@
 }
 
 .icon {
-   font-size: 7vw;
-   position: absolute;
-   top: 40%;
-   left: 50%;
-   transform: translateX(-50%);
+  // font-size: 5vw;
+  // transform: translateY(0.5vw);
+
+  transform: translateY(2.5vw) scale(3);
+
+  @include media(">phone","<tablet") {
+    transform: translateY(1vw) scale(1.5);
+  }
+
+  @include media("<phone") {
+    transform: translateY(-0.5vw) scale(0.5);
+  }
 }
 
 
