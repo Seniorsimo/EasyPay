@@ -3024,12 +3024,11 @@ class JoinPart1Component extends _abstract_join_part_abstract_join_part_componen
     }
     ngOnInit() { }
     getValue() {
-        const data = new Date(this.formCrl.controls.bornDate.value);
         return {
             nome: this.formCrl.controls.nome.value,
             cognome: this.formCrl.controls.cognome.value,
             cf: this.formCrl.controls.cf.value,
-            birth_date: `${data.getDay()}/${data.getMonth()}/${data.getFullYear()}`,
+            birth_date: this.formCrl.controls.bornDate.value,
             phone: this.formCrl.controls.phone.value,
             address: this.formCrl.controls.address.value,
         };
@@ -5374,4 +5373,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.c317e5bb72db43a7d2f2.js.map
+//# sourceMappingURL=main-es2015.e677c665031173c023a0.js.map

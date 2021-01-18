@@ -5968,12 +5968,11 @@
         }, {
           key: "getValue",
           value: function getValue() {
-            var data = new Date(this.formCrl.controls.bornDate.value);
             return {
               nome: this.formCrl.controls.nome.value,
               cognome: this.formCrl.controls.cognome.value,
               cf: this.formCrl.controls.cf.value,
-              birth_date: "".concat(data.getDay(), "/").concat(data.getMonth(), "/").concat(data.getFullYear()),
+              birth_date: this.formCrl.controls.bornDate.value,
               phone: this.formCrl.controls.phone.value,
               address: this.formCrl.controls.address.value
             };
@@ -10676,4 +10675,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.c317e5bb72db43a7d2f2.js.map
+//# sourceMappingURL=main-es5.e677c665031173c023a0.js.map
