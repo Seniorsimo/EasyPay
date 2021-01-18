@@ -20,19 +20,20 @@
       placeholder="Password*"
       formControlName="password"
     />
-    <mat-error
-      *ngIf="
-        formCrl.controls['password'].hasError('minLength') ||
-        formCrl.controls['password'].hasError('maxLength') ||
-        formCrl.controls['password'].hasError('numeric')
-      "
-    >
-      il pin è composto da 4-16 cifre <strong>numeriche</strong>
+    <mat-error *ngIf="formCrl.controls['password'].hasError('minLength') || formCrl.controls['password'].hasError('maxLength')">
+      la password è composta da 4-16 cifre <strong>numeriche</strong>
     </mat-error>
-    <mat-error
-      *ngIf="formCrl.controls['password'].hasError('required')"
-    >
-      pin obbligatorio per il login
+    <mat-error *ngIf="formCrl.controls['password'].hasError('required')">
+      Password obbligatoria (ovviamente)
+    </mat-error>
+    <mat-error *ngIf="formCrl.controls['password'].hasError('haveUppercase')">
+      E' necessario aggiungere almeno un carattere maiuscolo
+    </mat-error>
+    <mat-error *ngIf="formCrl.controls['password'].hasError('haveLowercase')">
+      E' necessario aggiungere almeno un carattere minuscolo
+    </mat-error>
+    <mat-error *ngIf="formCrl.controls['password'].hasError('haveDigit')">
+      E' necessario aggiungere almeno un carattere numerico
     </mat-error>
   </mat-form-field>
 </div>

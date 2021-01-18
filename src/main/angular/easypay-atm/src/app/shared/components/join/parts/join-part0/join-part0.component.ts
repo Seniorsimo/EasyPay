@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-
+import { haveUppercase, haveLowercase, haveDigit } from 'src/app/core/utils/custom-validator';
 import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
 
 @Component({
@@ -23,6 +23,9 @@ export class JoinPart0Component extends AbstractJoinPartComponent
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(16),
+        haveUppercase,
+        haveLowercase,
+        haveDigit,
       ]),
     });
   }

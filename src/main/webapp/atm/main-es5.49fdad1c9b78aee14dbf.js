@@ -2582,7 +2582,13 @@
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/core/services/routing.service */
+      "8QkR");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
@@ -2625,10 +2631,11 @@
       })(StatusEnum || (StatusEnum = {}));
 
       var JoinPart3Component = /*#__PURE__*/function () {
-        function JoinPart3Component(clienteService) {
+        function JoinPart3Component(clienteService, routingService) {
           _classCallCheck(this, JoinPart3Component);
 
           this.clienteService = clienteService;
+          this.routingService = routingService;
           this.StatusEnum = StatusEnum;
           this.status = StatusEnum.waiting;
         }
@@ -2640,7 +2647,10 @@
 
             this.clienteService.register(this.data).subscribe({
               next: function next() {
-                return _this9.status = StatusEnum.success;
+                _this9.status = StatusEnum.success;
+                setInterval(function () {
+                  return _this9.routingService.gotoHome();
+                }, 2000);
               },
               error: function error() {
                 return _this9.status = StatusEnum.failed;
@@ -2653,7 +2663,7 @@
       }();
 
       JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) {
-        return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core__WEBPACK_IMPORTED_MODULE_1__["ClienteService"]));
+        return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core__WEBPACK_IMPORTED_MODULE_1__["ClienteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]));
       };
 
       JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -2686,7 +2696,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.status === ctx.StatusEnum.failed);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]],
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJqb2luLXBhcnQzLmNvbXBvbmVudC5zY3NzIn0= */"]
       });
       /*@__PURE__*/
@@ -2702,6 +2712,8 @@
         }], function () {
           return [{
             type: src_app_core__WEBPACK_IMPORTED_MODULE_1__["ClienteService"]
+          }, {
+            type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]
           }];
         }, {
           data: [{
@@ -5923,7 +5935,17 @@
         }
       }
 
-      function JoinPart1Component_mat_error_31_Template(rf, ctx) {
+      function JoinPart1Component_mat_error_28_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Il telefono accetta un formato +390000000000 ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      }
+
+      function JoinPart1Component_mat_error_32_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
 
@@ -5956,7 +5978,7 @@
             cognome: _this15.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
             cf: _this15.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
             bornDate: _this15.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isOver18"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isBorn"]]),
-            phone: _this15.fb.control('', []),
+            phone: _this15.fb.control('', [src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["isPhone"]]),
             address: _this15.fb.control('', [])
           });
           return _this15;
@@ -5990,8 +6012,8 @@
         type: JoinPart1Component,
         selectors: [["app-join-part1"]],
         features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵInheritDefinitionFeature"]],
-        decls: 32,
-        vars: 12,
+        decls: 33,
+        vars: 13,
         consts: [["fxLayout", "column", "fxLayoutAlign", "start stretch", 1, "container"], [1, "form", 3, "formGroup"], [1, "flex-element"], ["matInput", "", "placeholder", "nome*", "formControlName", "nome"], [4, "ngIf"], ["matInput", "", "placeholder", "cognome*", "formControlName", "cognome"], ["matInput", "", "placeholder", "codice fiscale*", "formControlName", "cf"], ["matInput", "", "placeholder", "data di nascita*", "formControlName", "bornDate", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["bornDatePicker", ""], ["matInput", "", "placeholder", "telefono", "formControlName", "phone"], ["matInput", "", "placeholder", "indirizzo", "formControlName", "address"]],
         template: function JoinPart1Component_Template(rf, ctx) {
           if (rf & 1) {
@@ -6065,17 +6087,19 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](27, JoinPart1Component_mat_error_27_Template, 4, 0, "mat-error", 4);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](28, JoinPart1Component_mat_error_28_Template, 2, 0, "mat-error", 4);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div", 2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "mat-form-field");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "div", 2);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](30, "input", 11);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "mat-form-field");
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](31, JoinPart1Component_mat_error_31_Template, 4, 0, "mat-error", 4);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](31, "input", 11);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](32, JoinPart1Component_mat_error_32_Template, 4, 0, "mat-error", 4);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -6132,6 +6156,10 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["phone"].hasError("required"));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["phone"].hasError("isPhone"));
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
@@ -6269,7 +6297,7 @@
       !*** ./src/app/core/utils/custom-validator.ts ***!
       \************************************************/
 
-    /*! exports provided: isOver18, isBorn */
+    /*! exports provided: isOver18, isBorn, isPhone, haveUppercase, haveLowercase, haveDigit */
 
     /***/
     function hUH(module, __webpack_exports__, __webpack_require__) {
@@ -6287,6 +6315,30 @@
 
       __webpack_require__.d(__webpack_exports__, "isBorn", function () {
         return isBorn;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "isPhone", function () {
+        return isPhone;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "haveUppercase", function () {
+        return haveUppercase;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "haveLowercase", function () {
+        return haveLowercase;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "haveDigit", function () {
+        return haveDigit;
       }); // NOTA: apparentemente la risposta { [errorName]: false } viene cmq bloccata dal validatore.
       // Trick Solution: in caso di validatore corretto passo null.
 
@@ -6312,6 +6364,62 @@
         if (control && control.value) {
           var bornDate = control.value;
           return Date.now() - bornDate.getTime() < 0 ? _defineProperty({}, errorCode, true) : null;
+        }
+
+        return null;
+      }
+      /** verifica che il formato del numero sia corretto  */
+
+
+      function isPhone(control) {
+        var errorCode = 'isPhone';
+
+        if (control && control.value) {
+          var phone = control.value;
+          var test = new RegExp('\+\d{12}').test(phone);
+          return test ? _defineProperty({}, errorCode, true) : null;
+        }
+
+        return null;
+      }
+      /** Verifica se è presente almeno un valore uppercase */
+
+
+      function haveUppercase(control) {
+        var errorCode = 'haveUppercase';
+
+        if (control && control.value) {
+          var password = control.value;
+          var test = new RegExp('[A-Z]+', 'g').test(password);
+          return test ? _defineProperty({}, errorCode, true) : null;
+        }
+
+        return null;
+      }
+      /** Verifica se è presente almeno un valore Lowercase */
+
+
+      function haveLowercase(control) {
+        var errorCode = 'haveLowercase';
+
+        if (control && control.value) {
+          var password = control.value;
+          var test = new RegExp('[a-z]+', 'g').test(password);
+          return test ? _defineProperty({}, errorCode, true) : null;
+        }
+
+        return null;
+      }
+      /** Verifica se è presente almeno un valore numerico */
+
+
+      function haveDigit(control) {
+        var errorCode = 'haveUppercase';
+
+        if (control && control.value) {
+          var password = control.value;
+          var test = new RegExp('\d+', 'g').test(password);
+          return test ? _defineProperty({}, errorCode, true) : null;
         }
 
         return null;
@@ -6494,9 +6602,9 @@
             Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({
               cliente: this.a,
               priceInfo: this.b
-            }).subscribe(function (_ref4) {
-              var cliente = _ref4.cliente,
-                  priceInfo = _ref4.priceInfo;
+            }).subscribe(function (_ref8) {
+              var cliente = _ref8.cliente,
+                  priceInfo = _ref8.priceInfo;
 
               _this17.dialog.open(_components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_4__["DialogRechargeComponent"], {
                 data: {
@@ -7238,31 +7346,37 @@
       /* harmony import */
 
 
-      var _abstract_join_part_abstract_join_part_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! src/app/core/utils/custom-validator */
+      "hUH/");
+      /* harmony import */
+
+
+      var _abstract_join_part_abstract_join_part_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ../abstract-join-part/abstract-join-part.component */
       "4OZk");
       /* harmony import */
 
 
-      var _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @angular/flex-layout/flex */
       "XiUz");
       /* harmony import */
 
 
-      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/material/form-field */
       "kmnG");
       /* harmony import */
 
 
-      var _angular_material_input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_material_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/material/input */
       "qFsG");
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
@@ -7296,7 +7410,7 @@
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " il pin \xE8 composto da 4-16 cifre ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " la password \xE8 composta da 4-16 cifre ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "strong");
 
@@ -7312,7 +7426,37 @@
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " pin obbligatorio per il login ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Password obbligatoria (ovviamente) ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      }
+
+      function JoinPart0Component_mat_error_12_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " E' necessario aggiungere almeno un carattere maiuscolo ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      }
+
+      function JoinPart0Component_mat_error_13_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " E' necessario aggiungere almeno un carattere minuscolo ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      }
+
+      function JoinPart0Component_mat_error_14_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " E' necessario aggiungere almeno un carattere numerico ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
@@ -7333,7 +7477,7 @@
           _this20.valuesOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
           _this20.formCrl = _this20.fb.group({
             email: _this20.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
-            password: _this20.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16)])
+            password: _this20.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(16), src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["haveUppercase"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["haveLowercase"], src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["haveDigit"]])
           });
           return _this20;
         }
@@ -7352,7 +7496,7 @@
         }]);
 
         return JoinPart0Component;
-      }(_abstract_join_part_abstract_join_part_component__WEBPACK_IMPORTED_MODULE_2__["AbstractJoinPartComponent"]);
+      }(_abstract_join_part_abstract_join_part_component__WEBPACK_IMPORTED_MODULE_3__["AbstractJoinPartComponent"]);
 
       JoinPart0Component.ɵfac = function JoinPart0Component_Factory(t) {
         return new (t || JoinPart0Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]));
@@ -7365,8 +7509,8 @@
           valuesOutput: "valuesOutput"
         },
         features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵInheritDefinitionFeature"]],
-        decls: 12,
-        vars: 5,
+        decls: 15,
+        vars: 8,
         consts: [[1, "form", 3, "formGroup"], ["fxFlex", ""], ["matInput", "", "placeholder", "email*", "formControlName", "email"], [4, "ngIf"], [1, "full-width"], ["matInput", "", "type", "password", "placeholder", "Password*", "formControlName", "password"]],
         template: function JoinPart0Component_Template(rf, ctx) {
           if (rf & 1) {
@@ -7400,6 +7544,12 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, JoinPart0Component_mat_error_11_Template, 2, 0, "mat-error", 3);
 
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, JoinPart0Component_mat_error_12_Template, 2, 0, "mat-error", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](13, JoinPart0Component_mat_error_13_Template, 2, 0, "mat-error", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](14, JoinPart0Component_mat_error_14_Template, 2, 0, "mat-error", 3);
+
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -7420,14 +7570,26 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("minLength") || ctx.formCrl.controls["password"].hasError("maxLength") || ctx.formCrl.controls["password"].hasError("numeric"));
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("minLength") || ctx.formCrl.controls["password"].hasError("maxLength"));
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("required"));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("haveUppercase"));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("haveLowercase"));
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("haveDigit"));
           }
         },
-        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_3__["DefaultFlexDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_4__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_5__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_4__["MatError"]],
+        directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_4__["DefaultFlexDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_6__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatError"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJqb2luLXBhcnQwLmNvbXBvbmVudC5zY3NzIn0= */"]
       });
       /*@__PURE__*/
@@ -10675,4 +10837,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.e677c665031173c023a0.js.map
+//# sourceMappingURL=main-es5.49fdad1c9b78aee14dbf.js.map

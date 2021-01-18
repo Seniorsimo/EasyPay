@@ -60,6 +60,10 @@
         <mat-error *ngIf="formCrl.controls['phone'].hasError('required')">
           telefono <strong>obbligatorio</strong>
         </mat-error>
+        <mat-error *ngIf="formCrl.controls['phone'].hasError('isPhone')">
+          Il telefono accetta un formato +390000000000
+        </mat-error>
+
       </mat-form-field>
     </div>
 
