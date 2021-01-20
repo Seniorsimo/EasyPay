@@ -1,75 +1,67 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-import { ApiResponse } from '../models/api.response';
-import { CUSTOM_ERROR, CustomError, WrongParamError } from '../models/error.model';
-import { Cliente, CLIENTE_TYPE } from '../models/cliente.model';
+import { Cliente } from '../../shared/models/cliente.model';
+import { UtenteType } from '../constants/utente-type.enum';
+import { SelfStore } from '../store/self.store';
+import { ApiRoute } from '../constants/routing.constants';
+import { Conto } from '../../shared/models/conto.model';
+import { ApiCliente } from '../api-models/api-cliente.model';
+import { ApiConto } from '../api-models/api-conto.model';
+import { ApiPostClienti } from '../api-models/api-post-cliente.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  cliente$: BehaviorSubject<Cliente>;
 
-  constructor(private httpClient: HttpClient) {
-    this.cliente$ = new BehaviorSubject({
-      type: CLIENTE_TYPE,
-      id: '',
-      pin: '',
-      token: '',
-      nome: '',
-      budget: 0,
-    });
+  constructor(private http: HttpClient, private selfStore: SelfStore) {
   }
 
-  getClienteByPin(id: string, pin: string): Observable<Cliente | CustomError>  {
-    // se già presente nello store non riscarica i dati del cliente:
-    if (this.cliente$.value.id) {
-      return this.cliente$;
-    }
-
-    if (!id || !pin) {
-      return throwError(new WrongParamError({id, pin}));
-    }
-
-    const params: {id: string, pin: string} =  { id, pin } ;
-    return this._getClient(params);
+  getClienteByPin(id: string, pin: string): Observable<Cliente>  {
+    const params: {pin: string} =  { pin } ;
+    return this._getClient(id, params);
   }
 
-  getClienteByToken(token: string): Observable<Cliente | CustomError> {
-    // se già presente nello store non riscarica i dati del cliente:
-    if (this.cliente$.value.id) {
-      return this.cliente$;
-    }
+  getClienteByTokenOtp(otp: string): Observable<Cliente> {
+    const id = '0'; // TODO: ottenere l'id dall' OTP
+    const params: {otp: string} = { otp };
+    return this._getClient(id, params);
+  }
 
-    if (!token) {
-      return throwError(new WrongParamError(token));
-    }
+  /** restituisce  */
+  getSelfClient(): Observable<Cliente> {
+    return this.http.get<ApiCliente>(`${ApiRoute.clienti}/self`).pipe(
+      map(apiCliente => ({
+        type: UtenteType.cliente,
+        ...apiCliente,
+        id: apiCliente.id + '',
+        idConto: apiCliente.id_conto + '',
+        birthDate: apiCliente.birth_date,
+      }))
+    );
+  }
 
-    const params: {token: string} = { token };
-    return this._getClient(params);
+  getSelfConto(): Observable<Conto> {
+    return this.http.get<ApiConto>(`${ApiRoute.conti}/self`).pipe(
+      map(apiConto => ({...apiConto, id: apiConto.id + '', idCliente: apiConto.id_cliente + '' } as Conto)),
+    );
+  }
+
+
+  register(data: ApiPostClienti): Observable<any> {
+    return this.http.post(ApiRoute.clienti, data);
   }
 
   /** effettua la richiesta HTTP per verificare se il login del cliente va a buon fine */
-  private _getClient(params: {id?: string, pin?: string; token?: string}): Observable<Cliente | CustomError> {
-    const formData = new FormData();
-    formData.append('id', params.id);
-    formData.append('pin', params.pin);
-    formData.append('token', params.token);
-    return this.httpClient
-      .post<ApiResponse<Cliente>>('/api/clienti', formData)
-      .pipe(
-        map(result => {
-          if (result && result.success) {
-            const cliente = { type: CLIENTE_TYPE, ...result.body };
-            this.cliente$.next(cliente);
-            return cliente;
-          } else {
-            throw { type: CUSTOM_ERROR, name: 'account not found', message: `non è stato possibile trovare l'account` };
-          }
-        })
+  private _getClient(id: string, params: {pin?: string; otp?: string}): Observable<Cliente> {
+    return this.http.get<Cliente>(`${ApiRoute.clienti}/${id}`, {params}).pipe(
+        map(result => ({ type: UtenteType.cliente, ...result })),
+        // workaround per adattare la struttura cliente con quella ricevuta dal server
+        map((cliente: any) => ({...cliente, idConto: cliente.id_conto})),
+        catchError(error => { throw(error); })
       );
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { isBorn, isOver18 } from 'src/app/core/utils/custom-validator';
+import { isBorn, isOver18, isPhone } from 'src/app/core/utils/custom-validator';
 
 import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
 
@@ -18,8 +18,7 @@ export class JoinPart1Component extends AbstractJoinPartComponent
       cognome: this.fb.control('', [Validators.required]),
       cf: this.fb.control('', [Validators.required]),
       bornDate: this.fb.control('', [Validators.required, isOver18, isBorn]),
-      email: this.fb.control('', [Validators.required, Validators.email]),
-      phone: this.fb.control('', []),
+      phone: this.fb.control('', [isPhone]),
       address: this.fb.control('', []),
     });
   }
@@ -31,8 +30,7 @@ export class JoinPart1Component extends AbstractJoinPartComponent
       nome: this.formCrl.controls.nome.value,
       cognome: this.formCrl.controls.cognome.value,
       cf: this.formCrl.controls.cf.value,
-      bornDate: this.formCrl.controls.bornDate.value,
-      email: this.formCrl.controls.email.value,
+      birth_date: this.formCrl.controls.bornDate.value,
       phone: this.formCrl.controls.phone.value,
       address: this.formCrl.controls.address.value,
     };

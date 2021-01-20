@@ -1,0 +1,25 @@
+.banner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #3f51b5;
+}
+
+.title {
+  color: #d0d238;
+  font-family: 'Lobster', cursive;
+  font-size: 3vw;
+  line-height: 1.1;
+  padding: 10px;
+}
+
+.message {
+  color: #FFF;
+  font-size: 1vw;
+  margin-top: 2vw;
+  margin-bottom: 0;
+  margin-right: 5px;
+  margin-left: 5px;
+  line-height: 1;
+  text-align: left;
+}

@@ -1,6 +1,6 @@
-<div class="button-container widget-container shadow-border" (click)="clickEvent()">
+<div class="button-container widget-container shadow-border" [ngClass]="{'disabled': disabled}" (click)="clickEvent()">
   <div class="icon-content">
-    <mat-icon class="icon fix-top" aria-hidden="false" [inline]="true">{{icon}}</mat-icon>
+    <mat-icon class="icon fix-top" aria-hidden="false" [inline]="false">{{icon}}</mat-icon>
   </div>
   <div class="label-body">
     <span class="label centralize" >{{label}}</span>

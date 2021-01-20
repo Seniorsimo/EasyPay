@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+}
+
+
+.info {
+  text-align: left;
+  margin-left: 4em;
+  margin-right: 4em;
+  width: auto;
+  margin-bottom: 50px;
+}
+
+.labels, .values {
+  display: inline-block;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.value {
+  margin-left: 1em;
+}

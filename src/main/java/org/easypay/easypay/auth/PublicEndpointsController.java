@@ -5,6 +5,7 @@
  */
 package org.easypay.easypay.auth;
 
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class PublicEndpointsController {
     public ResponseEntity<String> login(
             @RequestBody LoginForm form) {
         try {
-            return ResponseEntity.ok(authenticationService.login(form.username, form.password));
+            return ResponseEntity.ok(authenticationService.login(form.email, form.password));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(e.getMessage());
@@ -73,6 +74,10 @@ public class PublicEndpointsController {
     @RequiredArgsConstructor
     public static class LoginForm {
 
-        private String username, password;
+        @NotBlank
+        private String email;
+
+        @NotBlank
+        private String password;
     }
 }

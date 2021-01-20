@@ -6,8 +6,8 @@
 package org.easypay.easypay.dao.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -23,7 +23,14 @@ import lombok.*;
 public class Atm implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "atm_id_sequence"
+    )
+    @SequenceGenerator(
+            name = "atm_id_sequence",
+            allocationSize = 1
+    )
     @EqualsAndHashCode.Include
     private long id;
 
@@ -32,15 +39,20 @@ public class Atm implements Serializable {
             fetch = FetchType.LAZY
     )
     @ToString.Exclude
-    private Set<Ricarica> ricariche;
+    @OrderBy(value = "timestamp desc")
+    private List<Ricarica> ricariche;
 
     void addRicarica(Ricarica ricarica) {
-        Set<Ricarica> ricariche = this.getRicariche();
+        List<Ricarica> ricariche = this.getRicariche();
         if (ricariche == null) {
-            ricariche = new HashSet<>();
+            ricariche = new ArrayList<>();
             this.setRicariche(ricariche);
         }
+        if (ricariche.contains(ricarica)) {
+            return;
+        }
         this.getRicariche().add(ricarica);
+        ricarica.setAtm(this);
     }
 
 }

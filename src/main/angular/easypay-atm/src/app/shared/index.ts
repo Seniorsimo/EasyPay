@@ -8,6 +8,7 @@ export { PinComponent } from './components/pin/pin.component';
 export { LoginComponent } from './components/login/login.component';
 export { BigButtonComponent } from './components/big-button/big-button.component';
 export { InfoWidgetComponent } from './components/info-widget/info-widget.component';
+export { PriceWidgetComponent } from './components/price-widget/price-widget.component';
 
 export { MinPipe } from './pipes/min.pipe';
 export { SwitchNumberPipe } from './pipes/switch-number.pipe';

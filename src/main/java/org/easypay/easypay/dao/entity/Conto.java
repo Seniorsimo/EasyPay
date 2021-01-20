@@ -5,38 +5,63 @@
  */
 package org.easypay.easypay.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.*;
+import org.easypay.easypay.dao.exception.InsufficientFundsException;
+import org.easypay.easypay.dao.exception.OutOfBudgetException;
 
 /**
  *
  * @author simo
  */
-@Data
 @Entity
+@ToString
 @RequiredArgsConstructor
 public class Conto implements Serializable {
 
+    public static enum Direction {
+        IN,
+        OUT
+    };
+
     @Id
-    @GeneratedValue
+    @Getter
+    @Setter
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "conti_id_sequence"
+    )
+    @SequenceGenerator(
+            name = "conti_id_sequence",
+            allocationSize = 1
+    )
     private long id;
 
     @Min(0)
-    private int budget;
+    @Getter
+    @Setter
+    private float budget;
 
     @Min(0)
-    private int saldo;
+    @Getter
+    @Setter
+    private float saldo;
 
     @NotNull
+    @Getter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
+    @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Cliente utente;
@@ -48,25 +73,74 @@ public class Conto implements Serializable {
         return utente.getId();
     }
 
-    @ManyToMany(
+    @OneToMany(
+            mappedBy = "from",
             cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             fetch = FetchType.LAZY
     )
-    @JoinTable(
-            name = "conto_movimento",
-            joinColumns = @JoinColumn(name = "conto_id"),
-            inverseJoinColumns = @JoinColumn(name = "movimento_id")
-    )
+    @OrderBy(value = "timestamp desc")
+    @JsonIgnore
     @ToString.Exclude
-    private Set<Movimento> movimenti;
+    private List<Movimento> uscite = new ArrayList<>();
 
-    void addMovimento(Movimento movimento) {
-        Set<Movimento> movimenti = this.getMovimenti();
-        if (movimenti == null) {
-            movimenti = new HashSet<>();
-            this.setMovimenti(movimenti);
+    public List<Movimento> getUscite() {
+        return new ArrayList<>(uscite);
+    }
+
+    @OneToMany(
+            mappedBy = "to",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.LAZY
+    )
+    @OrderBy(value = "timestamp desc")
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Movimento> entrate = new ArrayList<>();
+
+    public List<Movimento> getEntrate() {
+        return new ArrayList<>(entrate);
+    }
+
+    @JsonIgnore
+    @Transient
+    public List<Movimento> getMovimenti() {
+        return Stream.concat(entrate.stream(), uscite.stream())
+                .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
+                .collect(Collectors.toList());
+    }
+
+    @Transient
+    public float getAvailableBudget() {
+        return (float) (this.budget - this.getUscite().stream()
+                .mapToDouble(u -> u.getValore())
+                .sum());
+    }
+
+    public void addMovimento(@NotNull Movimento movimento, @NotNull Direction direction) {
+        switch (direction) {
+            case IN:
+                if (this.entrate.contains(movimento)) {
+                    return;
+                }
+                this.saldo += movimento.getValore();
+                this.entrate.add(0, movimento);
+                movimento.setTo(this);
+                break;
+            case OUT:
+                if (this.uscite.contains(movimento)) {
+                    return;
+                }
+                if (saldo < movimento.getValore()) {
+                    throw new InsufficientFundsException(utente.getId());
+                }
+                if (getAvailableBudget() < movimento.getValore()) {
+                    throw new OutOfBudgetException(utente.getId());
+                }
+                this.saldo -= movimento.getValore();
+                this.uscite.add(0, movimento);
+                movimento.setFrom(this);
+                break;
         }
-        movimenti.add(movimento);
     }
 
     @Builder

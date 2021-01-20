@@ -5,12 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.HibernateException;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,7 +27,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "client_id_sequence"
+    )
+    @SequenceGenerator(
+            name = "client_id_sequence",
+            allocationSize = 1
+    )
     @ApiModelProperty(
             position = 0,
             required = true,
@@ -43,6 +53,15 @@ public class Cliente implements Serializable {
     @ToString.Exclude
     private Credenziali credenziali;
 
+    @Column
+    @NotBlank
+    private String otp;
+
+    @Column
+    @NotBlank
+    @JsonIgnore
+    private String pin;
+
     @NotBlank
     @ApiModelProperty(
             position = 10,
@@ -57,6 +76,7 @@ public class Cliente implements Serializable {
             value = "Client lastname"
     )
     private String cognome;
+
     @NotBlank
     @ApiModelProperty(
             position = 12,
@@ -64,6 +84,32 @@ public class Cliente implements Serializable {
             value = "Client fiscal code"
     )
     private String cf;
+
+    @NotNull
+    @JsonProperty("birth_date")
+    @ApiModelProperty(
+            position = 13,
+            required = true,
+            value = "Client birth date"
+    )
+    private LocalDate birthDate;
+
+    @NotBlank
+    @ApiModelProperty(
+            position = 14,
+            required = true,
+            value = "Client phone number"
+    )
+    private String phone;
+
+    @NotBlank
+    @ApiModelProperty(
+            position = 15,
+            required = true,
+            value = "Client address"
+    )
+    private String address;
+
     @NotNull
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -82,6 +128,13 @@ public class Cliente implements Serializable {
         return this.conto.getId();
     }
 
+    @JsonProperty("email")
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    private String getEmail() {
+        return this.credenziali.getUsername();
+    }
+
     @JsonProperty("type")
     @ApiModelProperty(
             position = 99,
@@ -90,6 +143,12 @@ public class Cliente implements Serializable {
     )
     public String type() {
         return "cliente";
+    }
+
+    @Transient
+    @JsonIgnore
+    public String getMovementName() {
+        return this.cognome + ' ' + this.nome;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -101,6 +160,7 @@ public class Cliente implements Serializable {
             value = "The creation date"
     )
     private Date createdAt;
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
@@ -113,23 +173,42 @@ public class Cliente implements Serializable {
     private Date updatedAt;
 
     @Builder
-    public Cliente(String username, String password, String nome, String cognome, String cf) {
+    public Cliente(String username, String password, String nome, String cognome, String cf, LocalDate birthDate, String phone, String address) {
         Objects.requireNonNull(nome, "nome cannot be null");
         Objects.requireNonNull(cognome, "cognome cannot be null");
         Objects.requireNonNull(cf, "cf cannot be null");
         this.credenziali = Credenziali.builder()
                 .cliente(this)
-                .username(username)
+                .username(username.toLowerCase())
                 .password(password)
                 .build();
         this.nome = nome;
         this.cognome = cognome;
         this.cf = cf;
+        this.otp = OtpGenerator.generate(6);
+        this.pin = "1234";
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.address = address;
         this.conto = Conto.builder()
                 .cliente(this)
                 .budget(20)
                 .saldo(0)
                 .build();
+    }
+
+    public static class OtpGenerator {
+
+        private static final char[] CHARACTERS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        private static final Random randomizer = new Random();
+
+        public static String generate(int size) throws HibernateException {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < size; i++) {
+                sb.append(CHARACTERS[randomizer.nextInt(CHARACTERS.length)]);
+            }
+            return sb.toString();
+        }
     }
 
 }

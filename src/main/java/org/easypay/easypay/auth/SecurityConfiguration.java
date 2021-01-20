@@ -38,6 +38,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
+            //            new AntPathRequestMatcher("/api/**"),
             new AntPathRequestMatcher("/css/**"),
             new AntPathRequestMatcher("/images/**"),
             new AntPathRequestMatcher("/img/**"),

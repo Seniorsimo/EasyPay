@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-
+import { haveUppercase, haveLowercase, haveDigit } from 'src/app/core/utils/custom-validator';
 import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-part.component';
 
 @Component({
@@ -11,18 +11,21 @@ import { AbstractJoinPartComponent } from '../abstract-join-part/abstract-join-p
 export class JoinPart0Component extends AbstractJoinPartComponent
   implements OnInit {
   @Output() valuesOutput = new EventEmitter<{
-    username: string;
+    email: string;
     password: string;
   }>();
 
   constructor(private fb: FormBuilder) {
     super();
     this.formCrl = this.fb.group({
-      username: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
       password: this.fb.control('', [
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(16),
+        haveUppercase,
+        haveLowercase,
+        haveDigit,
       ]),
     });
   }
@@ -31,7 +34,7 @@ export class JoinPart0Component extends AbstractJoinPartComponent
 
   getValue() {
     return {
-      username: this.formCrl.controls.username.value,
+      email: this.formCrl.controls.email.value,
       password: this.formCrl.controls.password.value,
     };
   }

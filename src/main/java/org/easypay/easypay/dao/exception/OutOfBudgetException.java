@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author simo
  */
-@ResponseStatus(value = HttpStatus.OK)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class OutOfBudgetException extends CustomException {
 
     private static final String ERROR_CODE = "OUT_OF_BUDGET";
 
-    private final String idCliente;
+    private final long idCliente;
 
-    public OutOfBudgetException(String idCliente) {
+    public OutOfBudgetException(long idCliente) {
         super(HttpStatus.BAD_REQUEST, ERROR_CODE, String.format("budget del cliente %s insufficiente", idCliente));
         this.idCliente = idCliente;
     }
 
-    public String getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 }

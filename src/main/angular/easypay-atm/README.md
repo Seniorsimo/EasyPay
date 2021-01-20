@@ -1,27 +1,25 @@
 # EasypayAtm
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.5.
 
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Server di Sviluppo
+
+Per testare il contenuto in locale è sufficiente lanciare il comando `npm start`.
+per poter funzionare in locale al meglio è necessario anche avviare il mock del server tramite `npm run backend`.
+
+*Nota: a causa di un problema di compatibilità con il nome dei file di `saray` e windows, alla fine il mock del backend è stato cambiato in itinere con uno custom creato con node express. Pertanto alcune delle chiamate rest non sono state completamente riprodotte nel nuovo backend*
+
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Il progetto è rilasciato su Heroku. Essendo un progetto universitario con finalità il conseguimento di un esame lo sviluppo sarà interrotto una volta entrato in produzione e presentato. Pertanto l'ambiente Application e l'ambiente Production sono coincidenti sullo stesso url di heroku, raggiungibile su
+`https://easypay-unito.herokuapp.com/atm`
 
-## Running unit tests
+- build ambiente application (sviluppo): `npm run build` 
+- build ambiente production: `npm run build:prod`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Il risultato dell'operazione rigenererà il contenuto di  /dist.
+per caricarlo su Heroku è sufficiente creare un commit con il suo contenuto e pusharlo sul branch Master del repository GIT `https://github.com/Seniorsimo/BankUnito`. Heroku aggiornerà automaticamente il server.

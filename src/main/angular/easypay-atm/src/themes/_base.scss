@@ -36,3 +36,13 @@ mat-form-field {
   }
 
 }
+
+.toast-warning {
+  background-color: #d2d248;
+  color: #000;
+
+  .mat-button {
+    color: #f00000;
+  }
+
+}

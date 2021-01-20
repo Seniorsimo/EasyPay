@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginType } from '../../constants/login-type.enum';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { RoutingService } from 'src/app/core/services/routing.service';
-import { LoginService } from 'src/app/features/login-page/services/login.service';
+
+import { LoginType } from '../../constants/login-type.enum';
+import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'app-recognition',
@@ -13,7 +14,11 @@ export class RecognitionComponent implements OnInit {
   readonly LoginType = LoginType;
   public loginType = LoginType.pin;
 
-  constructor(private routingService: RoutingService, private loginService: LoginService) { }
+  public cliente: Cliente = null;
+
+  @Output() authClientStatus = new EventEmitter<Cliente>();
+
+  constructor(private routingService: RoutingService) { }
 
   ngOnInit(): void {
     this.routingService.updateHeader('Login');
@@ -21,5 +26,11 @@ export class RecognitionComponent implements OnInit {
 
   changeLogin(choosenLoginType: LoginType) {
     this.loginType = choosenLoginType;
+  }
+
+  authSuccess(cliente: Cliente) {
+    this.loginType = LoginType.success;
+    this.cliente = cliente;
+    this.authClientStatus.emit(cliente);
   }
 }

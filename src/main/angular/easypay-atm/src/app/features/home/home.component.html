@@ -1,46 +1,46 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-  <div fxFlex class="widget-container shadow-border">
+<div class="container">
+  <div class="element">
     <app-big-button
       class="button"
       label="Pagamento"
       icon="euro"
+      [disabled]="!isMercant()"
       (clickEmitter)="gotoPayment()"
     >
     </app-big-button>
   </div>
-
-  <div fxFlex class="widget-container shadow-border">
+  <div class="element">
     <app-big-button
       class="button"
       label="Info Conto"
       icon="info"
-      (clickEmitter)="gotoPayment()"
+      (clickEmitter)="getInfoDialog()"
     ></app-big-button>
   </div>
 </div>
-
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-  <div fxFlex class="widget-container shadow-border">
+<div class="container">
+  <div class="element">
     <app-big-button
-    class="button"
-    label="Ricarica"
-    icon="publish"
-    (clickEmitter)="gotoPayment()"
+      class="button"
+      label="Ricarica"
+      icon="publish"
+      [disabled]="!isMercant()"
+      (clickEmitter)="gotoRecharge()"
     ></app-big-button>
   </div>
-
-  <div fxFlex class="widget-container shadow-border">
+  <div class="element">
     <app-big-button
       class="button"
       label="Movimenti"
       icon="account_balance_wallet"
+      [disabled]="!isMercant()"
       (clickEmitter)="gotoMovements()"
     ></app-big-button>
   </div>
 </div>
 
-<div fxLayout class="footer">
-  <div class="widget-container shadow-border spam-widget">
+<div class="container">
+  <div class="full-element">
     <app-banner></app-banner>
   </div>
 </div>

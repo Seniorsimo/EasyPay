@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,9 +50,9 @@ public class LoginController {
         @ApiResponse(code = 401, message = "Bad credential")
     })
     public ResponseEntity<LoginResponse> login(
-            @RequestBody PublicEndpointsController.LoginForm form) {
+            @RequestBody @Valid PublicEndpointsController.LoginForm form) {
         try {
-            String token = authenticationService.login(form.getUsername(), form.getPassword());
+            String token = authenticationService.login(form.getEmail(), form.getPassword());
             return ResponseEntity.ok(LoginResponse.builder()
                     .token(token)
                     .build());

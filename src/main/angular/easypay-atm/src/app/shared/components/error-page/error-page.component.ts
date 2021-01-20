@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CustomError, LoaderService, LoadingStatus } from 'src/app/core';
+import {LoaderService, LoadingStatus } from 'src/app/core';
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime, switchMap } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class ErrorPageComponent implements OnInit {
   content$: BehaviorSubject<string>;
 
   /** oggetto errore da stampare se presente */
-  error$: BehaviorSubject<CustomError>;
+  error$: BehaviorSubject<any>;
 
   constructor(private route: ActivatedRoute, private loaderService: LoaderService) {
     this.titleLabel$ = new BehaviorSubject('Impossibile procedere con il pagamento. Se il problema persiste contattare il venditore');

@@ -6,45 +6,125 @@
 package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 /**
  *
  * @author simo
  */
-@Data
 @Entity
+@ToString
 @RequiredArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimento implements Serializable {
 
     @Id
+    @Getter
+    @Setter
     @GeneratedValue
     private long id;
 
-    @NotNull
+    @Getter
     @JsonIgnore
-    @ManyToMany(mappedBy = "movimenti")
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "from_id")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Conto> conti;
+    private Conto from;
 
-    @Min(1)
-    private int valore;
+    @JsonProperty("from")
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    public Long getFromId() {
+        return from != null ? from.getId() : null;
+    }
 
-    public Movimento(List<Conto> conti, int valore) {
-        Objects.requireNonNull(conti, "conti cannot be null");
-        this.conti = conti;
+    @JsonProperty("from_name")
+    public String getFromName() {
+        return from != null ? from.getUtente().getMovementName() : null;
+    }
+
+    public void setFrom(Conto from) {
+        if (sameAsFrom(from)) {
+            return;
+        }
+        this.from = from;
+        if (this.from != null) {
+            this.from.addMovimento(this, Conto.Direction.OUT);
+        }
+    }
+
+    @Getter
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "to_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Conto to;
+
+    @JsonProperty("to")
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    public Long getToId() {
+        return to != null ? to.getId() : null;
+    }
+
+    @JsonProperty("to_name")
+    public String getToName() {
+        return to != null ? to.getUtente().getMovementName() : null;
+    }
+
+    @JsonProperty("type")
+    public abstract String getType();
+
+    public void setTo(Conto to) {
+        if (sameAsTo(to)) {
+            return;
+        }
+//        Conto oldTo = this.to;
+        this.to = to;
+//        if (oldTo != null) {
+//            oldTo.removeMovimento(this, Conto.Direction.IN);
+//        }
+        if (this.to != null) {
+            this.to.addMovimento(this, Conto.Direction.IN);
+        }
+    }
+
+    @Getter
+    @Setter
+    private float valore;
+
+    @NotNull
+    @Getter
+    @Setter
+    private LocalDateTime timestamp;
+
+    public Movimento(Conto from, Conto to, float valore) {
+        this.from = from;
+        this.to = to;
         this.valore = valore;
-        conti.forEach(c -> c.addMovimento(this));
+        this.timestamp = LocalDateTime.now();
+        if (this.from != null) {
+            this.from.addMovimento(this, Conto.Direction.OUT);
+        }
+        if (this.to != null) {
+            this.to.addMovimento(this, Conto.Direction.IN);
+        }
+    }
+
+    private boolean sameAsFrom(Conto from) {
+        return this.from == null ? from == null : this.from.equals(from);
+    }
+
+    private boolean sameAsTo(Conto to) {
+        return this.to == null ? to == null : this.to.equals(to);
     }
 }

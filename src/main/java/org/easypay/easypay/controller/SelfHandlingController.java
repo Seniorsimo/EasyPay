@@ -6,6 +6,7 @@
 package org.easypay.easypay.controller;
 
 import org.easypay.easypay.auth.JWTAuthenticationService;
+import org.easypay.easypay.dao.repository.ClientRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -14,10 +15,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public interface SelfHandlingController {
 
-    public default long getUserId(String id) {
+    public default Long getUserId(String id) {
         if ("self".equalsIgnoreCase(id)) {
             JWTAuthenticationService.MyUser u = (JWTAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return u != null ? u.getId() : null;
+        }
+        return Long.parseLong(id);
+    }
+
+    public default Long getContoId(ClientRepository clientRepository, String id) {
+        if ("self".equalsIgnoreCase(id)) {
+            JWTAuthenticationService.MyUser u = (JWTAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (u == null) {
+                return null;
+            }
+            return clientRepository.findById(u.getId())
+                    .map(x -> x.getConto().getId())
+                    .orElse(null);
         }
         return Long.parseLong(id);
     }

@@ -7,13 +7,17 @@ package org.easypay.easypay;
 
 import com.google.common.collect.Lists;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import org.apache.log4j.Logger;
 import org.easypay.easypay.auth.JWTAuthenticationService;
-import org.easypay.easypay.dao.entity.*;
+import org.easypay.easypay.dao.entity.Atm;
+import org.easypay.easypay.dao.entity.Cliente;
+import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -59,7 +63,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = "org.easypay.easypay")
 public class Application extends WebMvcConfigurerAdapter {
 
-    private static Logger LOG = Logger.getLogger(Application.class);
+    private static Logger LOG = Logger.getLogger(Application.class.getName());
     private static ApplicationContext applicationContext;
 
     public static void main(String[] args) {
@@ -191,85 +195,69 @@ public class Application extends WebMvcConfigurerAdapter {
         @Autowired
         private RicaricaRepository ricaricaRepository;
         @Autowired
-        private CredenzialiRepository utenteRepository;
+        private CredenzialiRepository credenzialiRepository;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
 
         @PostConstruct
         public void init() {
-            Cliente cliente1 = clientRepository.save(Cliente.builder()
-                    .username("user1")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Paolo")
-                    .cognome("Pioppo")
-                    .cf("ASDFGHJKLPOIUYTRE")
-                    .build());
-            Cliente cliente2 = clientRepository.save(Cliente.builder()
-                    .username("user2")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Anna")
-                    .cognome("Dico")
-                    .cf("SNHFAIHCFIUHFCUHACUHND")
-                    .build());
-            Commerciante comm1 = clientRepository.save(Commerciante.builder()
-                    .username("user3")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Ababua")
-                    .cognome("Bau")
-                    .cf("SNHFAIHCFIUHFHSYDCUHND")
-                    .ragSoc("Pizzeria Mare Blu")
-                    .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
-                    .build());
-            Commerciante comm2 = clientRepository.save(Commerciante.builder()
-                    .username("user4")
-                    .password(passwordEncoder.encode("password"))
-                    .nome("Ciro")
-                    .cognome("Blu")
-                    .cf("SNHFDLKKLIUHFCUHACUHND")
-                    .ragSoc("Osteria Bella Napoli")
-                    .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
-                    .build());
-            Atm atm1 = atmRepository.save(Atm.builder().build());
+            if (!credenzialiRepository.findById("user1@gmail.com").isPresent()) {
+                clientRepository.save(Cliente.builder()
+                        .username("user1@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Paolo")
+                        .cognome("Pioppo")
+                        .cf("ASDFGHJKLPOIUYTRE")
+                        .birthDate(LocalDate.of(1983, Month.NOVEMBER, 23))
+                        .address("Via Rossi")
+                        .phone("+390123456789")
+                        .build());
+            }
+            if (!credenzialiRepository.findById("user2@gmail.com").isPresent()) {
+                clientRepository.save(Cliente.builder()
+                        .username("user2@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Anna")
+                        .cognome("Dico")
+                        .cf("SNHFAIHCFIUHFCUHACUHND")
+                        .birthDate(LocalDate.of(1993, Month.NOVEMBER, 23))
+                        .address("Viale dei fiori")
+                        .phone("+390123456789")
+                        .build());
+            }
+            if (!credenzialiRepository.findById("user3@gmail.com").isPresent()) {
+                clientRepository.save(Commerciante.builder()
+                        .username("user3@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Ababua")
+                        .cognome("Bau")
+                        .cf("SNHFAIHCFIUHFHSYDCUHND")
+                        .birthDate(LocalDate.of(1989, Month.NOVEMBER, 23))
+                        .address("Strada grande")
+                        .ragSoc("Pizzeria Mare Blu")
+                        .phone("+390123456789")
+                        .pIva("SHKVIYNGARCNIYHCFAIHIANHAI")
+                        .build());
+            }
+            if (!credenzialiRepository.findById("user4@gmail.com").isPresent()) {
+                clientRepository.save(Commerciante.builder()
+                        .username("user4@gmail.com")
+                        .password(passwordEncoder.encode("password"))
+                        .nome("Ciro")
+                        .cognome("Blu")
+                        .cf("SNHFDLKKLIUHFCUHACUHND")
+                        .birthDate(LocalDate.of(2001, Month.NOVEMBER, 23))
+                        .address("Corso Napoleone")
+                        .phone("+390123456789")
+                        .ragSoc("Osteria Bella Napoli")
+                        .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
+                        .build());
+            }
+            if (atmRepository.findAll().isEmpty()) {
+                atmRepository.save(Atm.builder().build());
+            }
 
-            System.out.println(atm1);
-
-            ricaricaRepository.save(Ricarica.builder()
-                    .atm(atm1)
-                    .destinatario(cliente1.getConto())
-                    .valore(100)
-                    .build());
-            ricaricaRepository.save(Ricarica.builder()
-                    .atm(atm1)
-                    .destinatario(comm1.getConto())
-                    .valore(200)
-                    .build());
-
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente1.getConto())
-                    .to(cliente2.getConto())
-                    .value(10)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente1.getConto())
-                    .to(comm1.getConto())
-                    .value(20)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente2.getConto())
-                    .to(comm1.getConto())
-                    .value(5)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(cliente1.getConto())
-                    .to(comm2.getConto())
-                    .value(14)
-                    .build());
-            pagamentoRepository.save(Pagamento.builder()
-                    .from(comm1.getConto())
-                    .to(comm2.getConto())
-                    .value(8)
-                    .build());
         }
 
     }

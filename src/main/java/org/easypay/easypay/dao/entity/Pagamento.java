@@ -5,46 +5,29 @@
  */
 package org.easypay.easypay.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Arrays;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
  * @author simo
  */
-@Data
 @Entity
+@RequiredArgsConstructor
 public class Pagamento extends Movimento {
 
-    @ToString.Include
-    @JsonProperty("id_conto_mittente")
-    public long getMittenteId() {
-        return getMittente().getId();
-    }
-
-    @JsonIgnore
-    public Conto getMittente() {
-        return getConti().get(0);
-    }
-
-    @ToString.Include
-    @JsonProperty("id_conto_destinatario")
-    public long getDestinatarioId() {
-        return getDestinatario().getId();
-    }
-
-    @JsonIgnore
-    public Conto getDestinatario() {
-        return getConti().get(1);
-    }
-
     @Builder
-    public Pagamento(Conto from, Conto to, int value) {
-        super(from != null && to != null ? Arrays.asList(from, to) : null, value);
+    public Pagamento(@NotNull Conto from, @NotNull Conto to, float value) {
+        super(from, to, value);
     }
+
+    @Override
+    @JsonProperty("type")
+    public String getType() {
+        return "pagamento";
+    }
+
 }

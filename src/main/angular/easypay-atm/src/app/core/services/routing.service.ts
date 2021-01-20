@@ -29,15 +29,15 @@ export class RoutingService {
     this.router.navigate([RoutersPath.login]);
   }
 
-  gotoReload() {
-    this.router.navigate([RoutersPath.reload]);
-  }
-
   gotoPayment() {
     this.router.navigate([RoutersPath.payment]);
   }
 
-  gotoMovement() {
-    this.router.navigate([RoutersPath.movement]);
+  gotoRecharge() {
+    this.router.navigate([RoutersPath.recharge]);
+  }
+
+  gotoMovements() {
+    this.router.navigate([RoutersPath.movements]);
   }
 }

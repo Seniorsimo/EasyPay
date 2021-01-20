@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ApiRoute } from 'src/app/core';
-import { map, catchError } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
+import { ClienteService } from 'src/app/core';
+import { RoutingService } from 'src/app/core/services/routing.service';
 
 enum StatusEnum {
   waiting = 'waiting',
@@ -17,17 +16,21 @@ enum StatusEnum {
 export class JoinPart3Component implements OnInit {
   readonly StatusEnum = StatusEnum;
 
-  @Input() data: object;
+  @Input() data: any;
 
   status = StatusEnum.waiting;
 
-  constructor(private http: HttpClient) { }
+  constructor(private clienteService: ClienteService, private routingService: RoutingService) { }
 
   ngOnInit(): void {
-    this.http.post(ApiRoute.clienti, this.data).pipe(
-      map(response => this.status = StatusEnum.success),
-      catchError(error => this.status = StatusEnum.failed))
-    .subscribe();
+    this.clienteService.register(this.data)
+    .subscribe({
+      next: () => {
+        this.status = StatusEnum.success;
+        setInterval(() => this.routingService.gotoHome(), 2000);
+      },
+      error: () => this.status = StatusEnum.failed
+    });
   }
 
 }
