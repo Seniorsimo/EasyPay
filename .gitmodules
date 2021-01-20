@@ -1,0 +1,3 @@
+[submodule "src/main/angular/EasyPay-online"]
+	path = src/main/angular/EasyPay-online
+	url = https://github.com/gmammolo/EasyPay-online.git
