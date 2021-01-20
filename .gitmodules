@@ -1,3 +1,6 @@
 [submodule "src/main/angular/EasyPay-online"]
 	path = src/main/angular/EasyPay-online
 	url = https://github.com/gmammolo/EasyPay-online.git
+[submodule "src/main/angular/Easypay-atm"]
+	path = src/main/angular/Easypay-atm
+	url = https://github.com/gmammolo/Easypay-atm.git
