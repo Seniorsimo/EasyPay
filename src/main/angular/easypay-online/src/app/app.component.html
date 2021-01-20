@@ -1,7 +1,0 @@
-<div class="container">
-  <!-- loader in attesa di recuperare il conto -->
-  <ng-container *ngIf="!(statusLoader$ | async)">
-    <app-loader></app-loader>
-  </ng-container>
-  <router-outlet></router-outlet>
-</div>
