@@ -1,4 +1,5 @@
 .idea
+.directory
 target
 BankUnito.iml
 /angular-src/nbproject/private/
