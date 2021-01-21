@@ -1,9 +1,12 @@
 [submodule "src/main/angular/EasyPay-online"]
 	path = src/main/angular/EasyPay-online
 	url = https://github.com/gmammolo/EasyPay-online.git
+	branch = dev/sprint3
 [submodule "src/main/angular/Easypay-atm"]
 	path = src/main/angular/Easypay-atm
 	url = https://github.com/gmammolo/Easypay-atm.git
+	branch = dev/sprint3
 [submodule "src/main/mobile/EasyPay_Mobile"]
 	path = src/main/mobile/EasyPay_Mobile
 	url = https://github.com/MichelettiAlessandro/EasyPay_Mobile.git
+	branch = dev/sprint3
