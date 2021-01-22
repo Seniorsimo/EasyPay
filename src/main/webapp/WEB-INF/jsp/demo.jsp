@@ -98,7 +98,7 @@ NOTA - Attualmente, nel caso d'uso rappresentato, è attivo un solo mock con due
 <div class="jscode">
 // const idConto = '001';
 // const prezzo = 30;
-const easyPayOrigin = 'https://easypay-mock.herokuapp.com/';
+const easyPayOrigin = 'https://easypay-unito.herokuapp.com/';
 const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
 const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
 </div>
