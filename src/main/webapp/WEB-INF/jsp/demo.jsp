@@ -36,13 +36,48 @@
      -->
     <script type="text/javascript">
         // apre easyPay per pagare
-        function openEasyPay(idConto, prezzo) {
+        // TODO: generarlo tramite spirng
+        const baseUrl = "https://easypay-unito.herokuapp.com";
+        
+        // NOTA: guarda la funzione getToken per dettagli sulla sicurezza
+        function openEasyPay(email, password, idConto, prezzo) {
             console.log('apertura easypay');
-            // modificare l'url per le esigenze
-            const easyPayOrigin = "https://easypay-unito.herokuapp.com/online";
-            const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
-             console.log('apertura easypay: '+url);
-            const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
+            
+            getToken(email, password, (token) => {
+                // modificare l'url per le esigenze
+                const easyPayOrigin = baseUrl + "/online";
+                const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo+ '&token=' + token;
+                 console.log('apertura easypay: '+url);
+                const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
+            });
+            
+
+        }
+        
+        /**
+         * Restituisce il token del commerciante
+         * WARNING SICUREZZA: questo metodo è semplicemente un placeholder ed 
+         * una potenziale falla in sicurezza. In un contesto reale è necessario
+         * un terzo server oAuth che possa garantire la comunicazione sicura
+         * tra commerciante e cliente, ma ai fini di questo progetto verrà 
+         * effettuata una login del commerciante e il token sarà passato 
+         * ad EasyPay-online
+         * @return {string}
+         */
+        function getToken(email, password, callback) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if(this.responseText) {
+                    const res = JSON.parse(this.responseText);
+                    if(res.token) {
+                           callback(res.token);
+                    }
+                }
+            }
+            xhttp.open("POST", baseUrl+"/api/login", false);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify({email: email, password: password}));
+            
         }
 
         window.addEventListener('message', receiveMessage, false);
@@ -152,13 +187,13 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
         <p>Gelateria Buongustario</p>
         <p>Mario Rossi</p>
         <p>4 euro</p>
-        <button onclick="openEasyPay('001', 4)">Paga</button>
+        <button onclick="openEasyPay('user3@gmail.com','password', 1, 4)">Paga</button>
     </div>
     <div class="blocco">
         <p>Pizzeria Bufalona</p>
         <p>Paolo Bianco</p>
         <p>30 euro</p>
-        <button onclick="openEasyPay('002', 30)">Paga</button>
+        <button onclick="openEasyPay('user4@gmail.com','password', '2', 30)">Paga</button>
     </div>
 </div>
 <div id="success" style="display:none">Pagato! :)</div>
