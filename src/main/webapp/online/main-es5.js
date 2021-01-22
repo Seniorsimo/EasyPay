@@ -483,7 +483,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _http_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ./http-interceptors/auth.interceptor */
+    "./src/app/core/http-interceptors/auth.interceptor.ts");
+    /* harmony import */
+
+
+    var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! @angular/platform-browser */
     "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/platform-browser.js");
 
@@ -500,7 +506,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function forRoot() {
           return {
             ngModule: CoreModule,
-            providers: [_services_utente_service__WEBPACK_IMPORTED_MODULE_4__["UtenteService"], _services_pagamento_service__WEBPACK_IMPORTED_MODULE_6__["PagamentoService"], _services_conto_service__WEBPACK_IMPORTED_MODULE_5__["ContoService"], _stores_utenti_store__WEBPACK_IMPORTED_MODULE_7__["UtentiStore"], _stores_conti_store__WEBPACK_IMPORTED_MODULE_8__["ContiStore"]]
+            providers: [_services_utente_service__WEBPACK_IMPORTED_MODULE_4__["UtenteService"], _services_pagamento_service__WEBPACK_IMPORTED_MODULE_6__["PagamentoService"], _services_conto_service__WEBPACK_IMPORTED_MODULE_5__["ContoService"], _stores_utenti_store__WEBPACK_IMPORTED_MODULE_7__["UtentiStore"], _stores_conti_store__WEBPACK_IMPORTED_MODULE_8__["ContiStore"], _http_interceptors_auth_interceptor__WEBPACK_IMPORTED_MODULE_9__["httpInterceptorProviders"]]
           };
         }
       }]);
@@ -513,7 +519,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     });
     CoreModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjector"]({
       factory: function CoreModule_Factory(t) {
-        return new (t || CoreModule)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_material_icon__WEBPACK_IMPORTED_MODULE_3__["MatIconRegistry"]), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__["DomSanitizer"]));
+        return new (t || CoreModule)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_material_icon__WEBPACK_IMPORTED_MODULE_3__["MatIconRegistry"]), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["DomSanitizer"]));
       },
       providers: [
         /* No providers */
@@ -545,12 +551,126 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return [{
           type: _angular_material_icon__WEBPACK_IMPORTED_MODULE_3__["MatIconRegistry"]
         }, {
-          type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_9__["DomSanitizer"]
+          type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["DomSanitizer"]
         }];
       }, null);
     })();
     /***/
 
+  },
+
+  /***/
+  "./src/app/core/http-interceptors/auth.interceptor.ts":
+  /*!************************************************************!*\
+    !*** ./src/app/core/http-interceptors/auth.interceptor.ts ***!
+    \************************************************************/
+
+  /*! exports provided: AuthInterceptor, httpInterceptorProviders */
+
+  /***/
+  function srcAppCoreHttpInterceptorsAuthInterceptorTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AuthInterceptor", function () {
+      return AuthInterceptor;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "httpInterceptorProviders", function () {
+      return httpInterceptorProviders;
+    });
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+    /** Pass untouched request through to the next request handler. */
+
+
+    var AuthInterceptor = /*#__PURE__*/function () {
+      function AuthInterceptor(router) {
+        _classCallCheck(this, AuthInterceptor);
+
+        this.router = router;
+      }
+
+      _createClass(AuthInterceptor, [{
+        key: "intercept",
+        value: function intercept(req, next) {
+          var _this = this;
+
+          var authReq = req.clone({
+            headers: req.headers.set('Authorization', localStorage.getItem('token') || '')
+          });
+          return next.handle(authReq).pipe( // filter((response: HttpResponse<any>) => ),
+          Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (response) {
+            if (response && response.status === 403) {
+              console.error('Token di accesso scaduto, logout!');
+              localStorage.removeItem('token');
+
+              _this.router.navigate([]);
+            }
+
+            return response;
+          }));
+        }
+      }]);
+
+      return AuthInterceptor;
+    }();
+
+    AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) {
+      return new (t || AuthInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]));
+    };
+
+    AuthInterceptor.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({
+      token: AuthInterceptor,
+      factory: AuthInterceptor.ɵfac
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AuthInterceptor, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"]
+      }], function () {
+        return [{
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
+        }];
+      }, null);
+    })();
+    /** Http interceptor providers in outside-in order */
+
+
+    var httpInterceptorProviders = [{
+      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HTTP_INTERCEPTORS"],
+      useClass: AuthInterceptor,
+      multi: true
+    }];
+    /***/
   },
 
   /***/
@@ -937,7 +1057,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "handlePagamento",
         value: function handlePagamento() {
-          var _this = this;
+          var _this2 = this;
 
           this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].LOADING);
           this.pagamento(this.clientiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.clientiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.clientiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.clientiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value // TODO: vedere che fare del prezzo
@@ -958,10 +1078,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.error('Impossibile chiudere pagina');
               }
 
-              _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].SUCCESS);
+              _this2.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].SUCCESS);
             },
             error: function error(_error) {
-              _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].SUCCESS);
+              _this2.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].SUCCESS);
 
               var titleLabel = 'Impossibile procedere con il pagamento';
               window.opener.postMessage(JSON.stringify({
@@ -973,7 +1093,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return window.close();
               }, 1000);
 
-              _this.router.navigateByUrl("/error?titleLabel=".concat(titleLabel, "&content=").concat(_error.message, "&error=").concat(JSON.stringify(_error)));
+              _this2.router.navigateByUrl("/error?titleLabel=".concat(titleLabel, "&content=").concat(_error.message, "&error=").concat(JSON.stringify(_error)));
             }
           });
         }
@@ -1165,7 +1285,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "_getUtenteHttp",
         value: function _getUtenteHttp(id) {
-          var _this2 = this;
+          var _this3 = this;
 
           var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
           return this.http.get("/api/clienti/".concat(id), {
@@ -1181,7 +1301,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               };
             }
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (apiUtente) {
-            return _this2._cleanUtente(apiUtente);
+            return _this3._cleanUtente(apiUtente);
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (error) {
             console.error('error');
             throw {
@@ -1278,7 +1398,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ContiStore, [{
         key: "get",
         value: function get(utenteType) {
-          var _this3 = this;
+          var _this4 = this;
 
           var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
@@ -1286,7 +1406,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return this.store[utenteType];
           } else if (id) {
             return this.store[Object.keys(this.store).find(function (key) {
-              return _this3.store[key].id === id;
+              return _this4.store[key].id === id;
             })];
           }
         }
@@ -1372,7 +1492,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(UtentiStore, [{
         key: "get",
         value: function get(utenteType) {
-          var _this4 = this;
+          var _this5 = this;
 
           var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
@@ -1380,7 +1500,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return this.store[utenteType];
           } else if (id) {
             return this.store[Object.keys(this.store).find(function (key) {
-              return _this4.store[key].id === id;
+              return _this5.store[key].id === id;
             })];
           }
         }
@@ -1496,20 +1616,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ErrorPageComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this5 = this;
+          var _this6 = this;
 
           this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (params) {
             if (params.titleLabel) {
-              _this5.titleLabel$.next(params.titleLabel);
+              _this6.titleLabel$.next(params.titleLabel);
             }
 
             if (params.content) {
-              _this5.content$.next(params.content);
+              _this6.content$.next(params.content);
             }
 
             if (params.error) {
-              _this5.error$.next(JSON.parse(params.error));
+              _this6.error$.next(JSON.parse(params.error));
             }
 
             return [];
@@ -2028,21 +2148,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "login",
         value: function login() {
-          var _this6 = this;
+          var _this7 = this;
 
           this.utenteService.getUtenteByPin(this.formCrl.value.userId, this.formCrl.value.pinCode).subscribe({
             next: function next() {
-              return _this6.pagamentoService.handlePagamento();
+              return _this7.pagamentoService.handlePagamento();
             },
             error: function error(err) {
               // TODO: differenziare dal semplice errore del login per riproporre la schermata
               console.error(err);
 
-              _this6.formCrl.controls.userId.setErrors({
+              _this7.formCrl.controls.userId.setErrors({
                 WrongBE: true
               });
 
-              _this6.formCrl.controls.pinCode.setErrors({
+              _this7.formCrl.controls.pinCode.setErrors({
                 WrongBE: true
               }); // const titleLabel = 'Impossibile effettuare il login';
               // this.router.navigateByUrl(`/error?titleLabel=${titleLabel}&content=${err.message}&error=${JSON.stringify(err)}`);
@@ -2279,14 +2399,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "scanSuccessHandler",
         value: function scanSuccessHandler(token) {
-          var _this7 = this;
+          var _this8 = this;
 
           this.scanner.enable = false;
           this.utenteService.getUtenteByTokenOtp(token).subscribe(function (result) {
             if (result.type !== src_app_core_models_error_model__WEBPACK_IMPORTED_MODULE_4__["CUSTOM_ERROR"]) {
-              _this7.pagamentoService.handlePagamento();
+              _this8.pagamentoService.handlePagamento();
             } else {
-              _this7.scanner.enable = true;
+              _this8.scanner.enable = true;
             }
           });
         }

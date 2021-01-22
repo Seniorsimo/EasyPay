@@ -370,6 +370,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.prezzo$ = this.pagamentoService.prezzo$;
           this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (params) {
+            localStorage.setItem('token', params.token);
+
             _this.pagamentoService.setPrezzo(params.prezzo);
 
             if (_this.commerciante$.value && _this.commerciante$.value.id) {

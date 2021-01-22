@@ -189,6 +189,7 @@ class HomeComponent {
             .pipe(
         // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(params => {
+            localStorage.setItem('token', params.token);
             this.pagamentoService.setPrezzo(params.prezzo);
             if (this.commerciante$.value && this.commerciante$.value.id) {
                 return this.commerciante$;
