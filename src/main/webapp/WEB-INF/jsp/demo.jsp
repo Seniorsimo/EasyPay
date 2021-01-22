@@ -39,7 +39,7 @@
         function openEasyPay(idConto, prezzo) {
             console.log('apertura easypay');
             // modificare l'url per le esigenze
-            const easyPayOrigin = "https://easypay-mock.herokuapp.com/easypay-online";
+            const easyPayOrigin = "https://easypay-unito.herokuapp.com/easypay-online";
             const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
              console.log('apertura easypay: '+url);
             const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
