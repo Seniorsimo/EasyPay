@@ -13,6 +13,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.*;
+import org.easypay.easypay.dao.projection.ClienteView;
+import org.easypay.easypay.dao.projection.CommercianteView;
 import org.hibernate.HibernateException;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,6 +27,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class Cliente implements Serializable {
+
+    public static ClienteView getClientView(Cliente c) {
+        if (c instanceof Commerciante) {
+            return new CommercianteView((Commerciante) c);
+        }
+        return new ClienteView(c);
+    }
 
     @Id
     @GeneratedValue(

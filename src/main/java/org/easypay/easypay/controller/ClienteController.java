@@ -108,25 +108,27 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         ,
         @ApiResponse(code = 403, message = "Accessing the client is forbidden")
     })
-    public ResponseEntity<Cliente> getById(
+    public ResponseEntity<?> getById(
             @PathVariable("id") String id,
             @RequestParam(name = "otp", required = false) String otp,
             @RequestParam(name = "pin", required = false) String pin
     ) {
         UserAuthenticationService.MyUser user = (UserAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Cliente c = clientRepository.findById(getUserId(id))
+        long clientId = getUserId(id);
+        Cliente c = clientRepository.findById(clientId)
                 .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id));
         if ("self".equals(id) || Long.parseLong(id) == user.getId()) {
             return ResponseEntity.ok(c);
         }
         if ((otp == null || otp.isEmpty()) && (pin == null || pin.isEmpty())) {
-            throw new InvalidRequestException(Cliente.class);
-        }
-        if (otp != null && !otp.isEmpty() && otp.equals(c.getOtp())) {
-            return ResponseEntity.ok(c);
-        }
-        if (pin != null && !pin.isEmpty() && pin.equals(c.getPin())) {
-            return ResponseEntity.ok(c);
+            return ResponseEntity.ok(Cliente.getClientView(c));
+        } else {
+            if (otp != null && !otp.isEmpty() && otp.equals(c.getOtp())) {
+                return ResponseEntity.ok(c);
+            }
+            if (pin != null && !pin.isEmpty() && pin.equals(c.getPin())) {
+                return ResponseEntity.ok(c);
+            }
         }
         throw new InvalidRequestException(Cliente.class);
     }
