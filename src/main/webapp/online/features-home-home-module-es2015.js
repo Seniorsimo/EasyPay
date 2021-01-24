@@ -206,6 +206,7 @@ class HomeComponent {
             .subscribe({
             next: result => {
                 if (result.type === src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].commerciante) {
+                    this.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].commerciante, result);
                     this.commerciante$.next(result);
                     this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].SUCCESS);
                 }
