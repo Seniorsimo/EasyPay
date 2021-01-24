@@ -64,7 +64,7 @@ class NominatimService {
         this.http = http;
     }
     searchAddress(address, format = 'json', limit = 5, key = 'O8NebVs6bskCvb2E4bHdHqvgq6WNHZih') {
-        return this.http.get('http://open.mapquestapi.com/nominatim/v1/search.php', { params: {
+        return this.http.get('https://open.mapquestapi.com/nominatim/v1/search.php', { params: {
                 q: `[${address}]`,
                 key,
                 format,
@@ -5641,4 +5641,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.1739d1f81527bbe0d87b.js.map
+//# sourceMappingURL=main-es2015.ebeb9db8ebe60e5dcc14.js.map

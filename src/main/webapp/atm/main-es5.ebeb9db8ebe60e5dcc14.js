@@ -173,7 +173,7 @@
             var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'json';
             var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5;
             var key = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'O8NebVs6bskCvb2E4bHdHqvgq6WNHZih';
-            return this.http.get('http://open.mapquestapi.com/nominatim/v1/search.php', {
+            return this.http.get('https://open.mapquestapi.com/nominatim/v1/search.php', {
               params: {
                 q: "[".concat(address, "]"),
                 key: key,
@@ -11213,4 +11213,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.1739d1f81527bbe0d87b.js.map
+//# sourceMappingURL=main-es5.ebeb9db8ebe60e5dcc14.js.map
