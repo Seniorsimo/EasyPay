@@ -150,61 +150,67 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var src_app_core_models_error_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! src/app/core/models/error.model */
+    "./src/app/core/models/error.model.ts");
+    /* harmony import */
+
+
+    var src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! src/app/core/services/loader.service */
     "./src/app/core/services/loader.service.ts");
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
-    var src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! src/app/core/services/utente.service */
     "./src/app/core/services/utente.service.ts");
     /* harmony import */
 
 
-    var src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! src/app/core/services/pagamento.service */
     "./src/app/core/services/pagamento.service.ts");
     /* harmony import */
 
 
-    var src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! src/app/core/services/conto.service */
     "./src/app/core/services/conto.service.ts");
     /* harmony import */
 
 
-    var src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! src/app/core/stores/utenti.store */
     "./src/app/core/stores/utenti.store.ts");
     /* harmony import */
 
 
-    var src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! src/app/core/stores/conti.store */
     "./src/app/core/stores/conti.store.ts");
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
     /* harmony import */
 
 
-    var _angular_material_icon__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _angular_material_icon__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! @angular/material/icon */
     "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/icon.js");
     /* harmony import */
 
 
-    var _shared_components_error_error_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _shared_components_error_error_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! ../../shared/components/error/error.component */
     "./src/app/shared/components/error/error.component.ts");
 
@@ -349,7 +355,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.contoService = contoService;
         this.utentiStore = utentiStore;
         this.contiStore = contiStore;
-        this.LoadingStatus = src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_4__["LoadingStatus"];
+        this.LoadingStatus = src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"];
         /** dati sull' errore ottenuto cercando di recuperare le informazioni */
 
         this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
@@ -388,13 +394,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               if (result.type === src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].commerciante) {
                 _this.commerciante$.next(result);
 
-                _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_4__["LoadingStatus"].SUCCESS);
+                _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].SUCCESS);
+              } else {
+                // account cliente
+                _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
+
+                throw {
+                  type: src_app_core_models_error_model__WEBPACK_IMPORTED_MODULE_4__["CUSTOM_ERROR"],
+                  name: 'tipo account errato',
+                  message: 'è necessario un account da commerciante, ma questo account è di tipo ' + result.type
+                };
               }
             },
             error: function error(_error) {
               _this.error$.next(_error);
 
-              _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_4__["LoadingStatus"].FAILED);
+              _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
             }
           });
         }
@@ -404,7 +419,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     HomeComponent.ɵfac = function HomeComponent_Factory(t) {
-      return new (t || HomeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_6__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_7__["PagamentoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_4__["LoaderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_8__["ContoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_9__["UtentiStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_10__["ContiStore"]));
+      return new (t || HomeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_7__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_8__["PagamentoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoaderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_9__["ContoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_10__["UtentiStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_11__["ContiStore"]));
     };
 
     HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -432,8 +447,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 4, ctx.statusLoader$) === ctx.LoadingStatus.FAILED);
         }
       },
-      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_12__["MatIcon"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterOutlet"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterLink"], _shared_components_error_error_component__WEBPACK_IMPORTED_MODULE_13__["ErrorComponent"]],
-      pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_11__["AsyncPipe"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["CurrencyPipe"]],
+      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_12__["NgIf"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_13__["MatIcon"], _angular_router__WEBPACK_IMPORTED_MODULE_6__["RouterOutlet"], _angular_router__WEBPACK_IMPORTED_MODULE_6__["RouterLink"], _shared_components_error_error_component__WEBPACK_IMPORTED_MODULE_14__["ErrorComponent"]],
+      pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_12__["AsyncPipe"], _angular_common__WEBPACK_IMPORTED_MODULE_12__["CurrencyPipe"]],
       styles: [".logo[_ngcontent-%COMP%] {\n  width: 90px;\n  height: 90px;\n}\n.logo[_ngcontent-%COMP%]     svg {\n  width: 90px;\n  height: 90px;\n}\n.content[_ngcontent-%COMP%] {\n  margin: 20px;\n  min-height: 175px;\n}\n.customer-rs[_ngcontent-%COMP%] {\n  margin: 0;\n}\n.customer-name[_ngcontent-%COMP%] {\n  margin: 0;\n  font-size: 12px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3RlcmFzdWQvSmF2YVByb2plY3RzL0Vhc3lQYXkvc3JjL21haW4vYW5ndWxhci9FYXN5UGF5LW9ubGluZS9zcmMvYXBwL2ZlYXR1cmVzL2hvbWUvaG9tZS5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvZmVhdHVyZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBRUUsV0FEZ0I7RUFFaEIsWUFGZ0I7QUNFbEI7QURFRTtFQUNFLFdBTGM7RUFNZCxZQU5jO0FDTWxCO0FEUUE7RUFDRSxZQUFBO0VBQ0EsaUJBQUE7QUNMRjtBRFFBO0VBQ0UsU0FBQTtBQ0xGO0FEUUE7RUFDRSxTQUFBO0VBQ0EsZUFBQTtBQ0xGIiwiZmlsZSI6InNyYy9hcHAvZmVhdHVyZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmxvZ28ge1xuICAkbmZjLWljb24tc2l6ZTogOTBweDtcbiAgd2lkdGg6ICRuZmMtaWNvbi1zaXplO1xuICBoZWlnaHQ6ICRuZmMtaWNvbi1zaXplO1xuXG4gICYgOjpuZy1kZWVwIHN2ZyB7XG4gICAgd2lkdGg6ICRuZmMtaWNvbi1zaXplO1xuICAgIGhlaWdodDogJG5mYy1pY29uLXNpemU7XG4gIH1cbn1cblxuLmxvZ28tdGl0bGUge1xuXG59XG5cbi5jb250ZW50IHtcbiAgbWFyZ2luOiAyMHB4O1xuICBtaW4taGVpZ2h0OiAxNzVweDtcbn1cblxuLmN1c3RvbWVyLXJzIHtcbiAgbWFyZ2luOiAwO1xufVxuXG4uY3VzdG9tZXItbmFtZSB7XG4gIG1hcmdpbjogMDtcbiAgZm9udC1zaXplOiAxMnB4O1xufVxuIiwiLmxvZ28ge1xuICB3aWR0aDogOTBweDtcbiAgaGVpZ2h0OiA5MHB4O1xufVxuLmxvZ28gOjpuZy1kZWVwIHN2ZyB7XG4gIHdpZHRoOiA5MHB4O1xuICBoZWlnaHQ6IDkwcHg7XG59XG5cbi5jb250ZW50IHtcbiAgbWFyZ2luOiAyMHB4O1xuICBtaW4taGVpZ2h0OiAxNzVweDtcbn1cblxuLmN1c3RvbWVyLXJzIHtcbiAgbWFyZ2luOiAwO1xufVxuXG4uY3VzdG9tZXItbmFtZSB7XG4gIG1hcmdpbjogMDtcbiAgZm9udC1zaXplOiAxMnB4O1xufSJdfQ== */"]
     });
     /*@__PURE__*/
@@ -448,19 +463,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }]
       }], function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"]
         }, {
-          type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_6__["UtenteService"]
+          type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_7__["UtenteService"]
         }, {
-          type: src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_7__["PagamentoService"]
+          type: src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_8__["PagamentoService"]
         }, {
-          type: src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_4__["LoaderService"]
+          type: src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoaderService"]
         }, {
-          type: src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_8__["ContoService"]
+          type: src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_9__["ContoService"]
         }, {
-          type: src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_9__["UtentiStore"]
+          type: src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_10__["UtentiStore"]
         }, {
-          type: src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_10__["ContiStore"]
+          type: src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_11__["ContiStore"]
         }];
       }, null);
     })();
