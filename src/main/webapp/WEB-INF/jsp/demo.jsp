@@ -184,16 +184,16 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
 <h1>Esempio (usare crtl+U per visualizzare il codice)</h1>
 <div>
     <div class="blocco">
-        <p>Gelateria Buongustario</p>
-        <p>Mario Rossi</p>
+        <p>Attrezzatura scolastica</p>
+        <p>Rossi Ubaldo</p>
         <p>4 euro</p>
-        <button onclick="openEasyPay('user3@gmail.com','password', 1, 4)">Paga</button>
+        <button onclick="openEasyPay('commerciante1@gmail.com','Qwerty1234', '15', 4)">Paga</button>
     </div>
     <div class="blocco">
-        <p>Pizzeria Bufalona</p>
-        <p>Paolo Bianco</p>
+        <p>Dolci e Salati</p>
+        <p>Unica Martina</p>
         <p>30 euro</p>
-        <button onclick="openEasyPay('user4@gmail.com','password', '2', 30)">Paga</button>
+        <button onclick="openEasyPay('commerciante2@gmail.com','Qwerty1234', '17', 30)">Paga</button>
     </div>
 </div>
 <div id="success" style="display:none">Pagato! :)</div>
