@@ -1105,7 +1105,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             to: idContoCommerciante,
             value: prezzo + ''
           };
-          return this.http.post('api/pagamenti', params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
+          return this.http.post('/api/pagamenti', params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
             console.error('TODO: gestire la risposta del pagamento');
             return true; // TODO: caso di saldo mancante:
             // const message = 'Ricaricare il conto';
