@@ -58,6 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/online/**"),
             new AntPathRequestMatcher("/favicon.ico"),
             new AntPathRequestMatcher("/error"),
+            new AntPathRequestMatcher("/map"),
             new AntPathRequestMatcher("/register"),
             new AntPathRequestMatcher("/api/login"),
             new AntPathRequestMatcher("/api/clienti", HttpMethod.POST.name()),
