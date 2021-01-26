@@ -3,6 +3,7 @@ package org.easypay.easypay.controller;
 import io.swagger.annotations.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.exception.InvalidRequestException;
 import org.easypay.easypay.dao.exception.NotFoundException;
 import org.easypay.easypay.dao.exception.UsernameTakenException;
+import org.easypay.easypay.dao.projection.ClienteView;
 import org.easypay.easypay.dao.repository.ClientRepository;
 import org.easypay.easypay.dao.repository.CredenzialiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +53,11 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
         ,
         @ApiResponse(code = 403, message = "Accessing the client's list is forbidden")
     })
-    public ResponseEntity<List<Cliente>> getAll() {
-        return ResponseEntity.ok(clientRepository.findAll());
+    public ResponseEntity<List<ClienteView>> getAll() {
+        return ResponseEntity.ok(clientRepository.findAll()
+                .stream()
+                .map(x -> Cliente.getClientView(x))
+                .collect(Collectors.toList()));
     }
 
     @PostMapping(value = "",

@@ -48,7 +48,7 @@ public class Cliente implements Serializable {
             position = 0,
             required = true,
             readOnly = true,
-            value = "The database generated user ID"
+            value = "The client identifier"
     )
     private long id;
 
