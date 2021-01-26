@@ -3,7 +3,7 @@ package org.easypay.easypay.dao.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,6 +23,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 @RequiredArgsConstructor
 @Entity(name = "Cliente")
+@Schema(
+        description = "A user of the service",
+        subTypes = Commerciante.class
+)
 @EntityListeners(AuditingEntityListener.class)
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
@@ -44,11 +48,10 @@ public class Cliente implements Serializable {
             name = "client_id_sequence",
             allocationSize = 1
     )
-    @ApiModelProperty(
-            position = 0,
+    @Schema(
             required = true,
-            readOnly = true,
-            value = "The client identifier"
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The client internal identifier"
     )
     private long id;
 
@@ -72,50 +75,44 @@ public class Cliente implements Serializable {
     private String pin;
 
     @NotBlank
-    @ApiModelProperty(
-            position = 10,
+    @Schema(
             required = true,
-            value = "Client firstname"
+            description = "Client firstname"
     )
     private String nome;
     @NotBlank
-    @ApiModelProperty(
-            position = 11,
+    @Schema(
             required = true,
-            value = "Client lastname"
+            description = "Client lastname"
     )
     private String cognome;
 
     @NotBlank
-    @ApiModelProperty(
-            position = 12,
+    @Schema(
             required = true,
-            value = "Client fiscal code"
+            description = "Client fiscal code"
     )
     private String cf;
 
     @NotNull
     @JsonProperty("birth_date")
-    @ApiModelProperty(
-            position = 13,
+    @Schema(
             required = true,
-            value = "Client birth date"
+            description = "Client birth date"
     )
     private LocalDate birthDate;
 
     @NotBlank
-    @ApiModelProperty(
-            position = 14,
+    @Schema(
             required = true,
-            value = "Client phone number"
+            description = "Client phone number"
     )
     private String phone;
 
     @NotBlank
-    @ApiModelProperty(
-            position = 15,
+    @Schema(
             required = true,
-            value = "Client address"
+            description = "Client address"
     )
     private String address;
 
@@ -145,10 +142,9 @@ public class Cliente implements Serializable {
     }
 
     @JsonProperty("type")
-    @ApiModelProperty(
-            position = 99,
+    @Schema(
             required = true,
-            value = "Account type: can be 'cliente' or 'commerciante'"
+            description = "Account type: can be 'cliente' or 'commerciante'"
     )
     public String type() {
         return "cliente";
@@ -162,22 +158,20 @@ public class Cliente implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    @ApiModelProperty(
-            position = 97,
+    @Schema(
             required = true,
-            readOnly = true,
-            value = "The creation date"
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The creation date"
     )
     private Date createdAt;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    @ApiModelProperty(
-            position = 98,
+    @Schema(
             required = true,
-            readOnly = true,
-            value = "Last modification date"
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "Last modification date"
     )
     private Date updatedAt;
 

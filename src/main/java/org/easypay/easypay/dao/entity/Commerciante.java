@@ -1,7 +1,7 @@
 package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -14,21 +14,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Entity(name = "Commerciante")
 @EqualsAndHashCode(callSuper = true)
+@Schema(description = "A company user of the service")
 public class Commerciante extends Cliente {
 
 //    @NotBlank
-    @ApiModelProperty(
-            position = 10,
+    @Schema(
             required = true,
-            value = "Business name"
+            description = "Business name"
     )
     private String ragSoc;
 
 //    @NotBlank
-    @ApiModelProperty(
-            position = 11,
+    @Schema(
             required = true,
-            value = "VAT number"
+            description = "VAT number"
     )
     private String pIva;
 
