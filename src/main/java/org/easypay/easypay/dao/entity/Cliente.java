@@ -130,6 +130,11 @@ public class Cliente implements Serializable {
     @JsonProperty("id_conto")
     @ToString.Include
     @EqualsAndHashCode.Include
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The client's account identifier"
+    )
     private long getContoId() {
         return this.conto.getId();
     }
