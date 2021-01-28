@@ -7,6 +7,7 @@ package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +24,7 @@ import lombok.*;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
+@Schema(description = "A transaction from an ATM to an account")
 public class Ricarica extends Movimento {
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -30,6 +32,11 @@ public class Ricarica extends Movimento {
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction atm identifier"
+    )
     private Atm atm;
 
     @JsonProperty("id_atm")
