@@ -22,6 +22,11 @@ public class DemoController {
         return "redirect:/atm";
     }
 
+    @GetMapping("/swagger-ui")
+    public String swagger() {
+        return "redirect:/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/";
+    }
+
     @GetMapping("/demo")
     public ModelAndView demo() {
         return new ModelAndView("demo");

@@ -145,7 +145,10 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                         .address(cliente.getAddress())
                         .pIva(cliente.getPiva())
                         .ragSoc(cliente.getRagSoc())
-                        .build()));
+                        .lat(cliente.getLatitude())
+                        .lon(cliente.getLongitude())
+                        .build())
+                );
         }
         return ResponseEntity.badRequest().build();
     }
@@ -405,5 +408,17 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                 description = "Business name"
         )
         private String ragSoc;
+
+        @Schema(
+                required = true,
+                description = "latitude"
+        )
+        private Double latitude;
+
+        @Schema(
+                required = true,
+                description = "longitude"
+        )
+        private Double longitude;
     }
 }
