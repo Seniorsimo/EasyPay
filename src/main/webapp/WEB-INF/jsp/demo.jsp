@@ -126,19 +126,60 @@ NOTA - Attualmente, nel caso d'uso rappresentato, è attivo un solo mock con due
 
 <h2>Integrazione</h2>
 <p>
-    EasyPay va aperto in una nuova finestra del browser tramite <var>windows.open</var> passando i parametri <b>idConto</b> e <b>prezzo</b> (valore numerico) che indicano rispettivamente l'id del commerciante e il prezzo da pagare.
-    Nel mock i valori accettabili da <b>idConto</b> sono 001 e 002.
+    Il primo passo è creare un account commerciante tramite <a href="https://easypay-unito.herokuapp.com/atm">Easypay-ATM</a>
+    (codice reperibile su <a href="https://github.com/gmammolo/Easypay-atm">github</a>) e prendere nota del proprio idConto.
+</p>
+<p>
+    EasyPay-Online va aperto tramite *windows.open passando* passando tramite queryParams i seguenti parametri:
+    <ul>
+        <li><b>idConto</b> {string} id del conto del commerciante</li>
+        <li><b>prezzo</b> {number} il prezzo da pagare.</li>
+        <li><b>token</b> {string} token di autenticazione del login del commerciante.</li>
+    </ul>
+</p>
+<p style="font-weight: 700;">
+WARNING SICUREZZA: il token inserito in questa fase è semplicemente un placeholder
+ed una potenziale falla in sicurezza. In un contesto reale è necessario un terzo 
+server oAuth che possa garantire la comunicazione sicura tra commerciante e cliente,
+ma ai fini di questo progetto verrà effettuata una login del commerciante e il token 
+sarà passato ad EasyPay-online. Per semplificare ancora di più la demo il login del 
+commerciante verrà svolto lato frontend ma potrebbe essere eseguito dal backend e 
+restituito alla vista solo il token  
 </p>
 
 <div class="jscode">
-// const idConto = '001';
-// const prezzo = 30;
+  /* esempio di getToken per ottenere il token da utilizzare*/
+  function getToken(email, password, callback) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+          if(this.responseText) {
+              const res = JSON.parse(this.responseText);
+              if(res.token) {
+                      // la callback prosegue con l'apertura di EasyPayOnline
+                      callback(res.token);
+              }
+          }
+      }
+      xhttp.open("POST", baseUrl+"/api/login", false);
+      xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.send(JSON.stringify({email: email, password: password}));
+  }
+
+  getToken('commerciante1@gmail.com','Qwerty1234');
+</div>
+
+
+<div class="jscode">
+// apertura di easypay-online passando i parametri
 const easyPayOrigin = 'https://easypay-unito.herokuapp.com/';
 const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
 const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
 </div>
 
-<p>Si prosegue quindi ponendosi in ascolto di eventi <strong>message</strong> inviati tramite postMessage (see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">postMessage MDN</a>)</p>
+<p>Si prosegue quindi ponendosi in ascolto di eventi <strong>message</strong> 
+    inviati tramite postMessage 
+    (see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">postMessage MDN</a>)
+</p>
 
 <div class="jscode">
 window.addEventListener('message', receiveMessage, false);
