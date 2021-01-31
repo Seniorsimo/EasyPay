@@ -2,7 +2,6 @@ package org.easypay.easypay.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.DiscriminatorMapping;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,6 +12,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.easypay.easypay.dao.entity.Conto;
 import org.easypay.easypay.dao.entity.Movimento;
 import org.easypay.easypay.dao.entity.Pagamento;
@@ -53,9 +55,8 @@ public class MovimentoController implements ErrorHandlingController, SelfHandlin
                         responseCode = "200",
                         description = "Successfully retrieved account transaction",
                         content = @Content(
-                                array = @ArraySchema(
-                                        schema = @Schema(
-                                                implementation = Movimento.class))))
+                                schema = @Schema(
+                                        implementation = MovimentiResponse.class)))
                 ,
                 @ApiResponse(
                         responseCode = "401",
@@ -67,7 +68,7 @@ public class MovimentoController implements ErrorHandlingController, SelfHandlin
                         description = "Accessing the transaction's list is forbidden",
                         content = @Content)
             })
-    public ResponseEntity<List<Movimento>> getAll(
+    public ResponseEntity<MovimentiResponse> getAll(
             @Parameter(description = "The internal identifier of the account")
             @RequestParam(required = true) String conto,
             @Parameter(description = "The transaction's direction", schema = @Schema(implementation = Direction.class))
@@ -117,7 +118,7 @@ public class MovimentoController implements ErrorHandlingController, SelfHandlin
                     .collect(Collectors.toList());
         }
 
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(new MovimentiResponse(c.getSaldo(), c.getBudget(), res));
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -153,5 +154,28 @@ public class MovimentoController implements ErrorHandlingController, SelfHandlin
     public ResponseEntity<Movimento> getById(@PathVariable("id") long id) {
         return ResponseEntity.ok(movimentoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Movimento.class, "id", id)));
+    }
+
+    @Data
+    @AllArgsConstructor
+    @RequiredArgsConstructor
+    @Schema(description = "Movement search response")
+    public static class MovimentiResponse {
+
+        @Schema(
+                required = true,
+                description = "The account balance"
+        )
+        private float saldo;
+        @Schema(
+                required = true,
+                description = "The account weekly budget"
+        )
+        private float budget;
+        @Schema(
+                required = true,
+                description = "The movement that match the search criteria"
+        )
+        private List<Movimento> movimenti;
     }
 }
