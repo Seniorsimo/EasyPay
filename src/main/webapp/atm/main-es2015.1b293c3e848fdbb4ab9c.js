@@ -2456,7 +2456,7 @@ class MovimentoService {
      * @param to data di fine periodo di ricerca (AAAA-MM-GG)
      */
     getMovimenti(conto, direction = '', from = '', to = '') {
-        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].movimenti, { params: { conto, direction, from, to } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(apiMovis => apiMovis.map(apiMov => this.cleanMovimento(apiMov))));
+        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].movimenti, { params: { conto, direction, from, to } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(result => result.movimenti), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(apiMovis => apiMovis.map(apiMov => this.cleanMovimento(apiMov))));
     }
     /**
      * restituisce solo le ricariche del conto identificato
@@ -2466,7 +2466,7 @@ class MovimentoService {
      * @param to data di fine periodo di ricerca (AAAA-MM-GG)
      */
     getRicariche(conto, direction = '', from = '', to = '') {
-        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].ricariche, { params: { conto, direction, from, to } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(apiMovis => apiMovis.map(apiMov => this.cleanMovimento(apiMov))));
+        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].ricariche, { params: { conto, direction, from, to } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(result => result.movimenti), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(apiMovis => apiMovis.map(apiMov => this.cleanMovimento(apiMov))));
     }
     /**
      * restituisce solo i pagamenti del conto identificato
@@ -2476,7 +2476,7 @@ class MovimentoService {
      * @param to data di fine periodo di ricerca (AAAA-MM-GG)
      */
     getPagamenti(conto, direction = '', from = '', to = '') {
-        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].pagamenti, { params: { conto, direction, from, to } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(apiMovis => apiMovis.map(apiMov => this.cleanMovimento(apiMov))));
+        return this.http.get(_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["ApiRoute"].pagamenti, { params: { conto, direction, from, to } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(result => result.movimenti), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(apiMovis => apiMovis.map(apiMov => this.cleanMovimento(apiMov))));
     }
     /** ripulisce la risposta di un movimento dal BE e restituisce un Movimento da usare */
     cleanMovimento(apiMov) {
@@ -5641,4 +5641,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.ebeb9db8ebe60e5dcc14.js.map
+//# sourceMappingURL=main-es2015.1b293c3e848fdbb4ab9c.js.map

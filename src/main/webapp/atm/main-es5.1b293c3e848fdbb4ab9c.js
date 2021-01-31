@@ -4810,7 +4810,9 @@
                 from: from,
                 to: to
               }
-            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (apiMovis) {
+            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
+              return result.movimenti;
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (apiMovis) {
               return apiMovis.map(function (apiMov) {
                 return _this17.cleanMovimento(apiMov);
               });
@@ -4839,7 +4841,9 @@
                 from: from,
                 to: to
               }
-            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (apiMovis) {
+            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
+              return result.movimenti;
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (apiMovis) {
               return apiMovis.map(function (apiMov) {
                 return _this18.cleanMovimento(apiMov);
               });
@@ -4868,7 +4872,9 @@
                 from: from,
                 to: to
               }
-            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (apiMovis) {
+            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
+              return result.movimenti;
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (apiMovis) {
               return apiMovis.map(function (apiMov) {
                 return _this19.cleanMovimento(apiMov);
               });
@@ -11213,4 +11219,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.ebeb9db8ebe60e5dcc14.js.map
+//# sourceMappingURL=main-es5.1b293c3e848fdbb4ab9c.js.map
