@@ -311,7 +311,7 @@ class AuthInterceptor {
     }
     intercept(req, next) {
         const authReq = req.clone({
-            headers: req.headers.set('Authorization', localStorage.getItem('token') || '')
+            headers: req.headers.set('Authorization', localStorage.getItem('onlineToken') || '')
         });
         return next.handle(authReq)
             .pipe(
@@ -319,7 +319,7 @@ class AuthInterceptor {
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((response) => {
             if (response && response.status === 403) {
                 console.error('Token di accesso scaduto, logout!');
-                localStorage.removeItem('token');
+                localStorage.removeItem('onlineToken');
                 this.router.navigate([]);
             }
             return response;
@@ -519,6 +519,7 @@ class PagamentoService {
         this.router = router;
         this.loaderService = loaderService;
         this.prezzo$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](0);
+        this.subscriptions = [];
     }
     /** Salva il valore del trasferimento da effettuare */
     setPrezzo(value) {
@@ -533,7 +534,7 @@ class PagamentoService {
     /** gestisce un pagamento una volta che gli store sono stati tutti inizializzati correttamente */
     handlePagamento() {
         this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].LOADING);
-        this.pagamento(this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value // TODO: vedere che fare del prezzo
+        this.subscriptions.push(this.pagamento(this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value // TODO: vedere che fare del prezzo
         ).subscribe({
             next: result => {
                 const response = { timestamp: new Date().getTime() };
@@ -553,7 +554,7 @@ class PagamentoService {
                 setInterval(() => window.close(), 1000);
                 this.router.navigateByUrl(`/error?titleLabel=${titleLabel}&content=${error.message}&error=${JSON.stringify(error)}`);
             }
-        });
+        }));
     }
     pagamento(idContoCliente, idContoCommerciante, prezzo) {
         const params = {
@@ -575,6 +576,9 @@ class PagamentoService {
                 message: error,
             };
         }));
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(subsc => subsc.unsubscribe());
     }
 }
 PagamentoService.ɵfac = function PagamentoService_Factory(t) { return new (t || PagamentoService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_stores_utenti_store__WEBPACK_IMPORTED_MODULE_7__["UtentiStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoaderService"])); };
@@ -811,13 +815,14 @@ class ErrorPageComponent {
     constructor(route, loaderService) {
         this.route = route;
         this.loaderService = loaderService;
+        this.subscriptions = [];
         this.titleLabel$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('Impossibile procedere con il pagamento. Se il problema persiste contattare il venditore');
         this.content$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('SUGGERIMENTO PER IL VENDITORE: assicurarsi che il idConto e prezzo siano validi');
         this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
         this.loaderService.status$.next(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].FAILED);
     }
     ngOnInit() {
-        this.route.queryParams
+        this.subscriptions.push(this.route.queryParams
             .pipe(
         // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(params => {
@@ -832,7 +837,10 @@ class ErrorPageComponent {
             }
             return [];
         }))
-            .subscribe();
+            .subscribe());
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(subsc => subsc.unsubscribe());
     }
 }
 ErrorPageComponent.ɵfac = function ErrorPageComponent_Factory(t) { return new (t || ErrorPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoaderService"])); };
@@ -1061,14 +1069,18 @@ class PinComponent {
         this.utenteService = utenteService;
         this.utentiStore = utentiStore;
         this.pagamentoService = pagamentoService;
+        this.subscriptions = [];
         this.formCrl = this.fb.group({
             userId: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
             pinCode: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, Object(_directives_numeric_directive__WEBPACK_IMPORTED_MODULE_4__["numericValidator"])(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(4)])
         });
     }
     ngOnInit() { }
+    ngOnDestroy() {
+        this.subscriptions.forEach(subsc => subsc.unsubscribe());
+    }
     login() {
-        this.utenteService.getUtenteByPin(this.formCrl.value.userId, this.formCrl.value.pinCode).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(cliente => this.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].cliente, cliente))).subscribe({
+        this.subscriptions.push(this.utenteService.getUtenteByPin(this.formCrl.value.userId, this.formCrl.value.pinCode).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(cliente => this.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].cliente, cliente))).subscribe({
             next: () => this.pagamentoService.handlePagamento(),
             error: (err) => {
                 // TODO: differenziare dal semplice errore del login per riproporre la schermata
@@ -1078,7 +1090,7 @@ class PinComponent {
                 // const titleLabel = 'Impossibile effettuare il login';
                 // this.router.navigateByUrl(`/error?titleLabel=${titleLabel}&content=${err.message}&error=${JSON.stringify(err)}`);
             }
-        });
+        }));
     }
 }
 PinComponent.ɵfac = function PinComponent_Factory(t) { return new (t || PinComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_5__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_6__["UtentiStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_7__["PagamentoService"])); };
@@ -1180,15 +1192,19 @@ class QrCodeComponent {
         this.allowedFormats = [_zxing_library__WEBPACK_IMPORTED_MODULE_1__["BarcodeFormat"].QR_CODE, _zxing_library__WEBPACK_IMPORTED_MODULE_1__["BarcodeFormat"].EAN_13];
         /** determina se è riuscito ad aprire o meno lo scanner */
         this.statusScanner$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
+        this.subscriptions = [];
     }
     ngOnInit() { }
+    ngOnDestroy() {
+        this.subscriptions.forEach(subsc => subsc.unsubscribe());
+    }
     /** alla lettura dello stato prova ad effettuare il login */
     scanSuccessHandler(token) {
         this.scanner.enable = false;
-        this.utenteService.getUtenteByTokenOtp(token).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(cliente => this.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_5__["UtenteType"].cliente, cliente))).subscribe({
+        this.subscriptions.push(this.utenteService.getUtenteByTokenOtp(token).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(cliente => this.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_5__["UtenteType"].cliente, cliente))).subscribe({
             next: () => this.pagamentoService.handlePagamento(),
             error: () => this.scanner.enable = true,
-        });
+        }));
     }
     /** modifica lo stato del reader, che indica se è in funzione o ha dei problemi in esecuzione */
     readerStatus(status) {

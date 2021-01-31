@@ -178,6 +178,7 @@ class HomeComponent {
         this.LoadingStatus = src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"];
         /** dati sull' errore ottenuto cercando di recuperare le informazioni */
         this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
+        this.subscriptions = [];
         this.statusLoader$ = this.loaderService.status$;
     }
     /*
@@ -187,11 +188,11 @@ class HomeComponent {
     ngOnInit() {
         this.commerciante$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](this.utentiStore.get(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].commerciante));
         this.prezzo$ = this.pagamentoService.prezzo$;
-        this.route.queryParams
+        this.subscriptions.push(this.route.queryParams
             .pipe(
         // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(params => {
-            localStorage.setItem('token', params.token);
+            localStorage.setItem('onlineToken', params.token);
             this.pagamentoService.setPrezzo(params.prezzo);
             if (this.commerciante$.value && this.commerciante$.value.id) {
                 return this.commerciante$;
@@ -224,7 +225,10 @@ class HomeComponent {
                 this.error$.next(error);
                 this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
             },
-        });
+        }));
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(subsc => subsc.unsubscribe());
     }
 }
 HomeComponent.ɵfac = function HomeComponent_Factory(t) { return new (t || HomeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_7__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_pagamento_service__WEBPACK_IMPORTED_MODULE_8__["PagamentoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoaderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_conto_service__WEBPACK_IMPORTED_MODULE_9__["ContoService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_utenti_store__WEBPACK_IMPORTED_MODULE_10__["UtentiStore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_stores_conti_store__WEBPACK_IMPORTED_MODULE_11__["ContiStore"])); };

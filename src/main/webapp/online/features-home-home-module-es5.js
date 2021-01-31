@@ -359,6 +359,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         /** dati sull' errore ottenuto cercando di recuperare le informazioni */
 
         this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
+        this.subscriptions = [];
         this.statusLoader$ = this.loaderService.status$;
       }
       /*
@@ -374,9 +375,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           this.commerciante$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](this.utentiStore.get(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].commerciante));
           this.prezzo$ = this.pagamentoService.prezzo$;
-          this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
+          this.subscriptions.push(this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (params) {
-            localStorage.setItem('token', params.token);
+            localStorage.setItem('onlineToken', params.token);
 
             _this.pagamentoService.setPrezzo(params.prezzo);
 
@@ -413,6 +414,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
             }
+          }));
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.subscriptions.forEach(function (subsc) {
+            return subsc.unsubscribe();
           });
         }
       }]);

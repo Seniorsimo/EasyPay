@@ -624,13 +624,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this = this;
 
           var authReq = req.clone({
-            headers: req.headers.set('Authorization', localStorage.getItem('token') || '')
+            headers: req.headers.set('Authorization', localStorage.getItem('onlineToken') || '')
           });
           return next.handle(authReq).pipe( // filter((response: HttpResponse<any>) => ),
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (response) {
             if (response && response.status === 403) {
               console.error('Token di accesso scaduto, logout!');
-              localStorage.removeItem('token');
+              localStorage.removeItem('onlineToken');
 
               _this.router.navigate([]);
             }
@@ -1033,6 +1033,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.router = router;
         this.loaderService = loaderService;
         this.prezzo$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](0);
+        this.subscriptions = [];
       }
       /** Salva il valore del trasferimento da effettuare */
 
@@ -1060,7 +1061,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this2 = this;
 
           this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].LOADING);
-          this.pagamento(this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value // TODO: vedere che fare del prezzo
+          this.subscriptions.push(this.pagamento(this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value // TODO: vedere che fare del prezzo
           ).subscribe({
             next: function next(result) {
               var response = {
@@ -1095,7 +1096,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this2.router.navigateByUrl("/error?titleLabel=".concat(titleLabel, "&content=").concat(_error.message, "&error=").concat(JSON.stringify(_error)));
             }
-          });
+          }));
         }
       }, {
         key: "pagamento",
@@ -1118,6 +1119,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               message: error
             };
           }));
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.subscriptions.forEach(function (subsc) {
+            return subsc.unsubscribe();
+          });
         }
       }]);
 
@@ -1607,6 +1615,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.route = route;
         this.loaderService = loaderService;
+        this.subscriptions = [];
         this.titleLabel$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('Impossibile procedere con il pagamento. Se il problema persiste contattare il venditore');
         this.content$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('SUGGERIMENTO PER IL VENDITORE: assicurarsi che il idConto e prezzo siano validi');
         this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
@@ -1618,7 +1627,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function ngOnInit() {
           var _this6 = this;
 
-          this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
+          this.subscriptions.push(this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (params) {
             if (params.titleLabel) {
               _this6.titleLabel$.next(params.titleLabel);
@@ -1633,7 +1642,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
 
             return [];
-          })).subscribe();
+          })).subscribe());
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.subscriptions.forEach(function (subsc) {
+            return subsc.unsubscribe();
+          });
         }
       }]);
 
@@ -2148,6 +2164,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.utenteService = utenteService;
         this.utentiStore = utentiStore;
         this.pagamentoService = pagamentoService;
+        this.subscriptions = [];
         this.formCrl = this.fb.group({
           userId: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
           pinCode: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, Object(_directives_numeric_directive__WEBPACK_IMPORTED_MODULE_4__["numericValidator"])(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(4)])
@@ -2158,11 +2175,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "ngOnInit",
         value: function ngOnInit() {}
       }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.subscriptions.forEach(function (subsc) {
+            return subsc.unsubscribe();
+          });
+        }
+      }, {
         key: "login",
         value: function login() {
           var _this7 = this;
 
-          this.utenteService.getUtenteByPin(this.formCrl.value.userId, this.formCrl.value.pinCode).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (cliente) {
+          this.subscriptions.push(this.utenteService.getUtenteByPin(this.formCrl.value.userId, this.formCrl.value.pinCode).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (cliente) {
             return _this7.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_3__["UtenteType"].cliente, cliente);
           })).subscribe({
             next: function next() {
@@ -2182,7 +2206,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               // this.router.navigateByUrl(`/error?titleLabel=${titleLabel}&content=${err.message}&error=${JSON.stringify(err)}`);
 
             }
-          });
+          }));
         }
       }]);
 
@@ -2416,11 +2440,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         /** determina se è riuscito ad aprire o meno lo scanner */
 
         this.statusScanner$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
+        this.subscriptions = [];
       }
 
       _createClass(QrCodeComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {}
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.subscriptions.forEach(function (subsc) {
+            return subsc.unsubscribe();
+          });
+        }
         /** alla lettura dello stato prova ad effettuare il login */
 
       }, {
@@ -2429,7 +2461,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this8 = this;
 
           this.scanner.enable = false;
-          this.utenteService.getUtenteByTokenOtp(token).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (cliente) {
+          this.subscriptions.push(this.utenteService.getUtenteByTokenOtp(token).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (cliente) {
             return _this8.utentiStore.add(src_app_core_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_5__["UtenteType"].cliente, cliente);
           })).subscribe({
             next: function next() {
@@ -2438,7 +2470,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             error: function error() {
               return _this8.scanner.enable = true;
             }
-          });
+          }));
         }
         /** modifica lo stato del reader, che indica se è in funzione o ha dei problemi in esecuzione */
 
