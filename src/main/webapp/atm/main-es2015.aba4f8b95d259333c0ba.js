@@ -378,11 +378,12 @@ class HomeComponent {
             verticalPosition: 'top',
             panelClass: 'toast-warning',
         };
+        this.subscriptions = [];
     }
     ngOnInit() {
         this.routingService.updateHeader('Home');
         if (!this.selfStore.email || !this.selfStore.budget) {
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
+            this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
                 this.utenteService.getSelfUtente(),
                 this.utenteService.getSelfConto(),
             ], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((element) => {
@@ -393,11 +394,14 @@ class HomeComponent {
                     this.selfStore.updateConto(element);
                 }
             }))
-                .subscribe(() => this.handleCustomerPermission());
+                .subscribe(() => this.handleCustomerPermission()));
         }
         else {
             this.handleCustomerPermission();
         }
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
     gotoPayment() {
         this.routingService.gotoPayment();
@@ -1012,11 +1016,15 @@ class DialogRechargeComponent {
         this.selfStore = selfStore;
         this.routingService = routingService;
         this.snackBar = snackBar;
+        this.subscriptions = [];
         this.cliente = data.cliente;
         this.priceInfo = data.priceInfo;
     }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
     completeRecharge() {
-        this.movimentoService
+        this.subscriptions.push(this.movimentoService
             .ricarica(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price)
             .subscribe(() => {
             // ricarica avvenuto con successo
@@ -1030,7 +1038,7 @@ class DialogRechargeComponent {
         () => {
             this.dialogRef.close();
             this.routingService.gotoHome();
-        });
+        }));
     }
     undo() {
         this.dialogRef.close();
@@ -1158,6 +1166,7 @@ class LoginComponent {
         this.snackBar = snackBar;
         this.joinRequest = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.errorToastRef = null;
+        this.subscriptions = [];
         this.toastConfig = {
             horizontalPosition: 'center',
             verticalPosition: 'top',
@@ -1173,8 +1182,11 @@ class LoginComponent {
         });
     }
     ngOnInit() { }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
     login() {
-        this.loginService
+        this.subscriptions.push(this.loginService
             .getToken(this.formCrl.value.email, this.formCrl.value.password)
             .subscribe((token) => {
             if (this.errorToastRef) {
@@ -1191,7 +1203,7 @@ class LoginComponent {
                 console.error(error);
                 this.snackBar.open('Errore generico durante il login!', 'Undo', this.toastConfig);
             }
-        });
+        }));
     }
     join() {
         this.joinRequest.next();
@@ -1286,10 +1298,11 @@ class InfoDialogComponent {
         this.selfStore = selfStore;
         this.utenteService = utenteService;
         this.routingService = routingService;
+        this.subscriptions = [];
     }
     ngOnInit() {
         if (!this.selfStore.email || !this.selfStore.budget) {
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
+            this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
                 this.utenteService.getSelfUtente(),
                 this.utenteService.getSelfConto(),
             ], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((element) => {
@@ -1300,8 +1313,11 @@ class InfoDialogComponent {
                     this.selfStore.updateConto(element);
                 }
             }))
-                .subscribe(() => this.handleCustomerPermission());
+                .subscribe(() => this.handleCustomerPermission()));
         }
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
     /** verifica che il cliente sia un mercante */
     isMercant() {
@@ -1485,16 +1501,20 @@ class JoinPart3Component {
         this.routingService = routingService;
         this.StatusEnum = StatusEnum;
         this.status = StatusEnum.waiting;
+        this.subscriptions = [];
     }
     ngOnInit() {
-        this.utenteService.register(this.data)
+        this.subscriptions.push(this.utenteService.register(this.data)
             .subscribe({
             next: () => {
                 this.status = StatusEnum.success;
                 setInterval(() => this.routingService.gotoHome(), 2000);
             },
             error: () => this.status = StatusEnum.failed
-        });
+        }));
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 }
 JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) { return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"])); };
@@ -2196,10 +2216,11 @@ class PaymentsComponent {
         this.dialog = dialog;
         this.a = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.b = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        this.subscriptions = [];
     }
     ngOnInit() {
         if (!this.selfStore.email || !this.selfStore.budget) {
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
+            this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
                 this.utenteService.getSelfUtente(),
                 this.utenteService.getSelfConto(),
             ], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((element) => {
@@ -2210,7 +2231,7 @@ class PaymentsComponent {
                     this.selfStore.updateConto(element);
                 }
             }))
-                .subscribe(() => this.handleCustomerPermission());
+                .subscribe(() => this.handleCustomerPermission()));
         }
         else {
             this.handleCustomerPermission();
@@ -2219,6 +2240,9 @@ class PaymentsComponent {
     }
     ngAfterViewInit() {
         this.routingService.updateHeader('Pagamento');
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
     authClientStatus(cliente) {
         this.a.next(cliente);
@@ -3165,6 +3189,7 @@ class JoinPart1Component extends _abstract_join_part_abstract_join_part_componen
         this.fb = fb;
         this.nominatimService = nominatimService;
         this.addressOptions$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](undefined);
+        this.subscriptions = [];
         this.formCrl = this.fb.group({
             nome: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
             cognome: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
@@ -3175,11 +3200,14 @@ class JoinPart1Component extends _abstract_join_part_abstract_join_part_componen
         });
     }
     ngOnInit() {
-        this.formCrl.controls.address.valueChanges.subscribe((value) => {
+        this.subscriptions.push(this.formCrl.controls.address.valueChanges.subscribe((value) => {
             if (value) {
-                this.nominatimService.searchAddress(value).subscribe(addresses => this.addressOptions$.next(addresses));
+                this.subscriptions.push(this.nominatimService.searchAddress(value).subscribe(addresses => this.addressOptions$.next(addresses)));
             }
-        });
+        }));
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
     getValue() {
         const nominatim = this.addressOptions$.value[0];
@@ -3486,10 +3514,11 @@ class RechargeComponent {
         this.dialog = dialog;
         this.a = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.b = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        this.subscriptions = [];
     }
     ngOnInit() {
         if (!this.selfStore.email || !this.selfStore.budget) {
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
+            this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([
                 this.utenteService.getSelfUtente(),
                 this.utenteService.getSelfConto(),
             ], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((element) => {
@@ -3500,7 +3529,7 @@ class RechargeComponent {
                     this.selfStore.updateConto(element);
                 }
             }))
-                .subscribe(() => this.handleCustomerPermission());
+                .subscribe(() => this.handleCustomerPermission()));
         }
         else {
             this.handleCustomerPermission();
@@ -3509,6 +3538,9 @@ class RechargeComponent {
     }
     ngAfterViewInit() {
         this.routingService.updateHeader('Ricarica');
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
     authClientStatus(cliente) {
         this.a.next(cliente);
@@ -3519,12 +3551,12 @@ class RechargeComponent {
         this.b.complete();
     }
     completeRecharge() {
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({ cliente: this.a, priceInfo: this.b }).subscribe(({ cliente, priceInfo }) => {
+        this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({ cliente: this.a, priceInfo: this.b }).subscribe(({ cliente, priceInfo }) => {
             this.dialog.open(_components_dialog_recharge_dialog_recharge_component__WEBPACK_IMPORTED_MODULE_4__["DialogRechargeComponent"], {
                 data: { cliente, priceInfo },
                 disableClose: true,
             });
-        });
+        }));
     }
     /** verifica che il cliente sia un mercante */
     isMercant() {
@@ -5073,13 +5105,14 @@ class ErrorPageComponent {
     constructor(route, loaderService) {
         this.route = route;
         this.loaderService = loaderService;
+        this.subscriptions = [];
         this.titleLabel$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('Impossibile procedere con il pagamento. Se il problema persiste contattare il venditore');
         this.content$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('SUGGERIMENTO PER IL VENDITORE: assicurarsi che il idConto e prezzo siano validi');
         this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
         this.loaderService.status$.next(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].FAILED);
     }
     ngOnInit() {
-        this.route.queryParams
+        this.subscriptions.push(this.route.queryParams
             .pipe(
         // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(params => {
@@ -5094,7 +5127,10 @@ class ErrorPageComponent {
             }
             return [];
         }))
-            .subscribe();
+            .subscribe());
+    }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 }
 ErrorPageComponent.ɵfac = function ErrorPageComponent_Factory(t) { return new (t || ErrorPageComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoaderService"])); };
@@ -5152,11 +5188,15 @@ class DialogPaymentComponent {
         this.selfStore = selfStore;
         this.routingService = routingService;
         this.snackBar = snackBar;
+        this.subscriptions = [];
         this.cliente = data.cliente;
         this.priceInfo = data.priceInfo;
     }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
     completePayment() {
-        this.movimentoService
+        this.subscriptions.push(this.movimentoService
             .pagamento(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price)
             .subscribe(() => {
             // pagamento avvenuto con successo
@@ -5170,7 +5210,7 @@ class DialogPaymentComponent {
         () => {
             this.dialogRef.close();
             this.routingService.gotoHome();
-        });
+        }));
     }
     undo() {
         this.dialogRef.close();
@@ -5274,15 +5314,19 @@ class LoginPageComponent {
         this.dialog = dialog;
         this.FormTypes = FormTypes;
         this.formType = FormTypes.login;
+        this.subscriptions = [];
     }
     ngOnInit() {
         this.routingService.updateHeader('Login');
     }
+    ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
     clickInfo() {
         const dialogRef = this.dialog.open(src_app_shared_info_atm_info_atm_component__WEBPACK_IMPORTED_MODULE_1__["InfoAtmComponent"]);
-        dialogRef.afterClosed().subscribe(result => {
+        this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
-        });
+        }));
     }
     switchForm(formType) {
         this.formType = formType;
@@ -5641,4 +5685,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.1b293c3e848fdbb4ab9c.js.map
+//# sourceMappingURL=main-es2015.aba4f8b95d259333c0ba.js.map

@@ -867,6 +867,7 @@
             verticalPosition: 'top',
             panelClass: 'toast-warning'
           };
+          this.subscriptions = [];
         }
 
         _createClass(HomeComponent, [{
@@ -877,7 +878,7 @@
             this.routingService.updateHeader('Home');
 
             if (!this.selfStore.email || !this.selfStore.budget) {
-              Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
+              this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
                 if (_this3.isSelfCliente(element)) {
                   _this3.selfStore.updateCliente(element);
                 } else if (_this3.isSelfConto(element)) {
@@ -885,10 +886,17 @@
                 }
               })).subscribe(function () {
                 return _this3.handleCustomerPermission();
-              });
+              }));
             } else {
               this.handleCustomerPermission();
             }
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
           }
         }, {
           key: "gotoPayment",
@@ -2097,16 +2105,24 @@
           this.selfStore = selfStore;
           this.routingService = routingService;
           this.snackBar = snackBar;
+          this.subscriptions = [];
           this.cliente = data.cliente;
           this.priceInfo = data.priceInfo;
         }
 
         _createClass(DialogRechargeComponent, [{
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
+          }
+        }, {
           key: "completeRecharge",
           value: function completeRecharge() {
             var _this8 = this;
 
-            this.movimentoService.ricarica(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
+            this.subscriptions.push(this.movimentoService.ricarica(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
               // ricarica avvenuto con successo
               _this8.openSnackBar('ricarica effettuata con successo', 'success');
             }, function (error) {
@@ -2119,7 +2135,7 @@
               _this8.dialogRef.close();
 
               _this8.routingService.gotoHome();
-            });
+            }));
           }
         }, {
           key: "undo",
@@ -2387,6 +2403,7 @@
           this.snackBar = snackBar;
           this.joinRequest = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
           this.errorToastRef = null;
+          this.subscriptions = [];
           this.toastConfig = {
             horizontalPosition: 'center',
             verticalPosition: 'top',
@@ -2402,11 +2419,18 @@
           key: "ngOnInit",
           value: function ngOnInit() {}
         }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
+          }
+        }, {
           key: "login",
           value: function login() {
             var _this9 = this;
 
-            this.loginService.getToken(this.formCrl.value.email, this.formCrl.value.password).subscribe(function (token) {
+            this.subscriptions.push(this.loginService.getToken(this.formCrl.value.email, this.formCrl.value.password).subscribe(function (token) {
               if (_this9.errorToastRef) {
                 _this9.errorToastRef.dismiss();
               }
@@ -2422,7 +2446,7 @@
 
                 _this9.snackBar.open('Errore generico durante il login!', 'Undo', _this9.toastConfig);
               }
-            });
+            }));
           }
         }, {
           key: "join",
@@ -2642,6 +2666,7 @@
           this.selfStore = selfStore;
           this.utenteService = utenteService;
           this.routingService = routingService;
+          this.subscriptions = [];
         }
 
         _createClass(InfoDialogComponent, [{
@@ -2650,7 +2675,7 @@
             var _this10 = this;
 
             if (!this.selfStore.email || !this.selfStore.budget) {
-              Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
+              this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
                 if (_this10.isSelfCliente(element)) {
                   _this10.selfStore.updateCliente(element);
                 } else if (_this10.isSelfConto(element)) {
@@ -2658,8 +2683,15 @@
                 }
               })).subscribe(function () {
                 return _this10.handleCustomerPermission();
-              });
+              }));
             }
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
           }
           /** verifica che il cliente sia un mercante */
 
@@ -3028,6 +3060,7 @@
           this.routingService = routingService;
           this.StatusEnum = StatusEnum;
           this.status = StatusEnum.waiting;
+          this.subscriptions = [];
         }
 
         _createClass(JoinPart3Component, [{
@@ -3035,7 +3068,7 @@
           value: function ngOnInit() {
             var _this11 = this;
 
-            this.utenteService.register(this.data).subscribe({
+            this.subscriptions.push(this.utenteService.register(this.data).subscribe({
               next: function next() {
                 _this11.status = StatusEnum.success;
                 setInterval(function () {
@@ -3045,6 +3078,13 @@
               error: function error() {
                 return _this11.status = StatusEnum.failed;
               }
+            }));
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
             });
           }
         }]);
@@ -4282,6 +4322,7 @@
           this.dialog = dialog;
           this.a = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
           this.b = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+          this.subscriptions = [];
         }
 
         _createClass(PaymentsComponent, [{
@@ -4290,7 +4331,7 @@
             var _this15 = this;
 
             if (!this.selfStore.email || !this.selfStore.budget) {
-              Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
+              this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
                 if (_this15.isSelfCliente(element)) {
                   _this15.selfStore.updateCliente(element);
                 } else if (_this15.isSelfConto(element)) {
@@ -4298,7 +4339,7 @@
                 }
               })).subscribe(function () {
                 return _this15.handleCustomerPermission();
-              });
+              }));
             } else {
               this.handleCustomerPermission();
             }
@@ -4309,6 +4350,13 @@
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
             this.routingService.updateHeader('Pagamento');
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
           }
         }, {
           key: "authClientStatus",
@@ -6283,6 +6331,7 @@
           _this20.fb = fb;
           _this20.nominatimService = nominatimService;
           _this20.addressOptions$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](undefined);
+          _this20.subscriptions = [];
           _this20.formCrl = _this20.fb.group({
             nome: _this20.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
             cognome: _this20.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
@@ -6299,12 +6348,19 @@
           value: function ngOnInit() {
             var _this21 = this;
 
-            this.formCrl.controls.address.valueChanges.subscribe(function (value) {
+            this.subscriptions.push(this.formCrl.controls.address.valueChanges.subscribe(function (value) {
               if (value) {
-                _this21.nominatimService.searchAddress(value).subscribe(function (addresses) {
+                _this21.subscriptions.push(_this21.nominatimService.searchAddress(value).subscribe(function (addresses) {
                   return _this21.addressOptions$.next(addresses);
-                });
+                }));
               }
+            }));
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
             });
           }
         }, {
@@ -6920,6 +6976,7 @@
           this.dialog = dialog;
           this.a = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
           this.b = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+          this.subscriptions = [];
         }
 
         _createClass(RechargeComponent, [{
@@ -6928,7 +6985,7 @@
             var _this22 = this;
 
             if (!this.selfStore.email || !this.selfStore.budget) {
-              Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
+              this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["scheduled"])([this.utenteService.getSelfUtente(), this.utenteService.getSelfConto()], rxjs__WEBPACK_IMPORTED_MODULE_1__["asyncScheduler"]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeAll"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (element) {
                 if (_this22.isSelfCliente(element)) {
                   _this22.selfStore.updateCliente(element);
                 } else if (_this22.isSelfConto(element)) {
@@ -6936,7 +6993,7 @@
                 }
               })).subscribe(function () {
                 return _this22.handleCustomerPermission();
-              });
+              }));
             } else {
               this.handleCustomerPermission();
             }
@@ -6947,6 +7004,13 @@
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
             this.routingService.updateHeader('Ricarica');
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
           }
         }, {
           key: "authClientStatus",
@@ -6965,7 +7029,7 @@
           value: function completeRecharge() {
             var _this23 = this;
 
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({
+            this.subscriptions.push(Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])({
               cliente: this.a,
               priceInfo: this.b
             }).subscribe(function (_ref9) {
@@ -6979,7 +7043,7 @@
                 },
                 disableClose: true
               });
-            });
+            }));
           }
           /** verifica che il cliente sia un mercante */
 
@@ -10076,6 +10140,7 @@
 
           this.route = route;
           this.loaderService = loaderService;
+          this.subscriptions = [];
           this.titleLabel$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('Impossibile procedere con il pagamento. Se il problema persiste contattare il venditore');
           this.content$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]('SUGGERIMENTO PER IL VENDITORE: assicurarsi che il idConto e prezzo siano validi');
           this.error$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](undefined);
@@ -10087,7 +10152,7 @@
           value: function ngOnInit() {
             var _this29 = this;
 
-            this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
+            this.subscriptions.push(this.route.queryParams.pipe( // debounceTime evita l'emit iniziale prima che i param siano effettivamente inizializzati
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (params) {
               if (params.titleLabel) {
                 _this29.titleLabel$.next(params.titleLabel);
@@ -10102,7 +10167,14 @@
               }
 
               return [];
-            })).subscribe();
+            })).subscribe());
+          }
+        }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
           }
         }]);
 
@@ -10232,16 +10304,24 @@
           this.selfStore = selfStore;
           this.routingService = routingService;
           this.snackBar = snackBar;
+          this.subscriptions = [];
           this.cliente = data.cliente;
           this.priceInfo = data.priceInfo;
         }
 
         _createClass(DialogPaymentComponent, [{
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
+          }
+        }, {
           key: "completePayment",
           value: function completePayment() {
             var _this30 = this;
 
-            this.movimentoService.pagamento(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
+            this.subscriptions.push(this.movimentoService.pagamento(this.cliente.idConto, this.selfStore.idConto, this.priceInfo.price).subscribe(function () {
               // pagamento avvenuto con successo
               _this30.openSnackBar('pagamento effettuato con successo', 'success');
             }, function (error) {
@@ -10254,7 +10334,7 @@
               _this30.dialogRef.close();
 
               _this30.routingService.gotoHome();
-            });
+            }));
           }
         }, {
           key: "undo",
@@ -10498,6 +10578,7 @@
           this.dialog = dialog;
           this.FormTypes = FormTypes;
           this.formType = FormTypes.login;
+          this.subscriptions = [];
         }
 
         _createClass(LoginPageComponent, [{
@@ -10506,12 +10587,19 @@
             this.routingService.updateHeader('Login');
           }
         }, {
+          key: "ngOnDestroy",
+          value: function ngOnDestroy() {
+            this.subscriptions.forEach(function (sub) {
+              return sub.unsubscribe();
+            });
+          }
+        }, {
           key: "clickInfo",
           value: function clickInfo() {
             var dialogRef = this.dialog.open(src_app_shared_info_atm_info_atm_component__WEBPACK_IMPORTED_MODULE_1__["InfoAtmComponent"]);
-            dialogRef.afterClosed().subscribe(function (result) {
+            this.subscriptions.push(dialogRef.afterClosed().subscribe(function (result) {
               console.log("Dialog result: ".concat(result));
-            });
+            }));
           }
         }, {
           key: "switchForm",
@@ -11219,4 +11307,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.1b293c3e848fdbb4ab9c.js.map
+//# sourceMappingURL=main-es5.aba4f8b95d259333c0ba.js.map
