@@ -3053,11 +3053,12 @@
       })(StatusEnum || (StatusEnum = {}));
 
       var JoinPart3Component = /*#__PURE__*/function () {
-        function JoinPart3Component(utenteService, routingService) {
+        function JoinPart3Component(utenteService, routingService, ngZone) {
           _classCallCheck(this, JoinPart3Component);
 
           this.utenteService = utenteService;
           this.routingService = routingService;
+          this.ngZone = ngZone;
           this.StatusEnum = StatusEnum;
           this.status = StatusEnum.waiting;
           this.subscriptions = [];
@@ -3072,7 +3073,9 @@
               next: function next() {
                 _this11.status = StatusEnum.success;
                 setInterval(function () {
-                  return _this11.routingService.gotoHome();
+                  return _this11.ngZone.run(function () {
+                    return _this11.routingService.gotoHome();
+                  });
                 }, 2000);
               },
               error: function error() {
@@ -3093,7 +3096,7 @@
       }();
 
       JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) {
-        return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]));
+        return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]));
       };
 
       JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -3144,6 +3147,8 @@
             type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]
           }, {
             type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]
+          }, {
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]
           }];
         }, {
           data: [{
@@ -11307,4 +11312,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.16140e79804feae572bc.js.map
+//# sourceMappingURL=main-es5.491a19172fb5772b2112.js.map

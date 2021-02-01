@@ -1496,9 +1496,10 @@ var StatusEnum;
     StatusEnum["failed"] = "failed";
 })(StatusEnum || (StatusEnum = {}));
 class JoinPart3Component {
-    constructor(utenteService, routingService) {
+    constructor(utenteService, routingService, ngZone) {
         this.utenteService = utenteService;
         this.routingService = routingService;
+        this.ngZone = ngZone;
         this.StatusEnum = StatusEnum;
         this.status = StatusEnum.waiting;
         this.subscriptions = [];
@@ -1508,7 +1509,7 @@ class JoinPart3Component {
             .subscribe({
             next: () => {
                 this.status = StatusEnum.success;
-                setInterval(() => this.routingService.gotoHome(), 2000);
+                setInterval(() => this.ngZone.run(() => this.routingService.gotoHome()), 2000);
             },
             error: () => this.status = StatusEnum.failed
         }));
@@ -1517,7 +1518,7 @@ class JoinPart3Component {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 }
-JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) { return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"])); };
+JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) { return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"])); };
 JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: JoinPart3Component, selectors: [["app-join-part3"]], inputs: { data: "data" }, decls: 3, vars: 3, consts: [[4, "ngIf"]], template: function JoinPart3Component_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, JoinPart3Component_p_0_Template, 2, 0, "p", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, JoinPart3Component_p_1_Template, 2, 0, "p", 0);
@@ -1536,7 +1537,7 @@ JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
                 templateUrl: './join-part3.component.html',
                 styleUrls: ['./join-part3.component.scss']
             }]
-    }], function () { return [{ type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"] }, { type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"] }]; }, { data: [{
+    }], function () { return [{ type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"] }, { type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] }]; }, { data: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
@@ -5685,4 +5686,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.16140e79804feae572bc.js.map
+//# sourceMappingURL=main-es2015.491a19172fb5772b2112.js.map
