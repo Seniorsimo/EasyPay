@@ -6374,9 +6374,9 @@
               birth_date: this.formCrl.controls.bornDate.value,
               phone: this.formCrl.controls.phone.value,
               address: this.formCrl.controls.address.value,
-              place_id: nominatim.place_id,
-              lat: nominatim.lat,
-              lon: nominatim.lon
+              // place_id: nominatim.place_id,
+              latitudine: nominatim.lat,
+              longitudine: nominatim.lon
             };
           }
         }]);
@@ -11307,4 +11307,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.aba4f8b95d259333c0ba.js.map
+//# sourceMappingURL=main-es5.52bbbe689cf34ef9dc9b.js.map
