@@ -6375,8 +6375,8 @@
               phone: this.formCrl.controls.phone.value,
               address: this.formCrl.controls.address.value,
               // place_id: nominatim.place_id,
-              latitudine: nominatim.lat,
-              longitudine: nominatim.lon
+              latitude: nominatim.lat,
+              longitude: nominatim.lon
             };
           }
         }]);
@@ -11307,4 +11307,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.52bbbe689cf34ef9dc9b.js.map
+//# sourceMappingURL=main-es5.16140e79804feae572bc.js.map

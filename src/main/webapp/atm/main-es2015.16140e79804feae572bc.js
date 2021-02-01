@@ -3219,8 +3219,8 @@ class JoinPart1Component extends _abstract_join_part_abstract_join_part_componen
             phone: this.formCrl.controls.phone.value,
             address: this.formCrl.controls.address.value,
             // place_id: nominatim.place_id,
-            latitudine: nominatim.lat,
-            longitudine: nominatim.lon,
+            latitude: nominatim.lat,
+            longitude: nominatim.lon,
         };
     }
 }
@@ -5685,4 +5685,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.52bbbe689cf34ef9dc9b.js.map
+//# sourceMappingURL=main-es2015.16140e79804feae572bc.js.map
