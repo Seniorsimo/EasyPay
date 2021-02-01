@@ -1,8 +1,16 @@
 package org.easypay.easypay.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +25,8 @@ import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.exception.InvalidRequestException;
 import org.easypay.easypay.dao.exception.NotFoundException;
 import org.easypay.easypay.dao.exception.UsernameTakenException;
+import org.easypay.easypay.dao.projection.ClienteView;
+import org.easypay.easypay.dao.projection.CommercianteView;
 import org.easypay.easypay.dao.repository.ClientRepository;
 import org.easypay.easypay.dao.repository.CredenzialiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +38,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/clienti")
-@Api(value = "Client", description = "Client listing")
+@Tag(name = "Client", description = "Client listing")
 public class ClienteController implements ErrorHandlingController, SelfHandlingController {
 
     private static final Logger LOG = Logger.getLogger(ClienteController.class);
@@ -43,29 +53,70 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Retrieve all client")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully retrieved client's list")
-        ,
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource")
-        ,
-        @ApiResponse(code = 403, message = "Accessing the client's list is forbidden")
-    })
-    public ResponseEntity<List<Cliente>> getAll() {
-        return ResponseEntity.ok(clientRepository.findAll());
+    @Operation(summary = "Retrieve all clients")
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Successfully retrieved client's list",
+                        content = @Content(
+                                array = @ArraySchema(
+                                        schema = @Schema(
+                                                implementation = ClienteView.class))))
+                ,
+                @ApiResponse(
+                        responseCode = "401",
+                        description = "You are not authorized to view the resource",
+                        content = @Content)
+                ,
+                @ApiResponse(
+                        responseCode = "403",
+                        description = "Accessing the client's list is forbidden",
+                        content = @Content)
+            })
+    public ResponseEntity<List<ClienteView>> getAll() {
+        return ResponseEntity.ok(clientRepository.findAll()
+                .stream()
+                .map(x -> Cliente.getClientView(x))
+                .collect(Collectors.toList()));
     }
 
     @PostMapping(value = "",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Create a client")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully created user")
-        ,
-        @ApiResponse(code = 400, message = "Request was incorrect")
-        ,
-        @ApiResponse(code = 401, message = "You are not authorized to create client")
-    })
+    @Operation(
+            summary = "Create a client",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ClienteCreate.class
+                            )
+                    )
+            )
+    )
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Successfully created user",
+                        content = @Content(
+                                schema = @Schema(
+                                        anyOf = {
+                                            Cliente.class,
+                                            Commerciante.class
+                                        })))
+                ,
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "Request was incorrect",
+                        content = @Content)
+                ,
+                @ApiResponse(
+                        responseCode = "401",
+                        description = "You are not authorized to view the resource",
+                        content = @Content)
+            })
     public ResponseEntity<Cliente> create(@Valid @RequestBody ClienteCreate cliente) {
         if (credenzialiRepository.existsById(cliente.getEmail().toLowerCase())) {
             throw new UsernameTakenException(cliente.getEmail());
@@ -83,6 +134,9 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                         .address(cliente.getAddress())
                         .build()));
             case "commerciante":
+                if (cliente.getLatitude() == null || cliente.getLongitude() == null) {
+                    throw new InvalidRequestException(Commerciante.class);
+                }
                 return ResponseEntity.ok(clientRepository.save(Commerciante.builder()
                         .username(cliente.getEmail())
                         .password(passwordEncoder.encode(cliente.getPassword()))
@@ -94,39 +148,65 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                         .address(cliente.getAddress())
                         .pIva(cliente.getPiva())
                         .ragSoc(cliente.getRagSoc())
-                        .build()));
+                        .lat(cliente.getLatitude())
+                        .lon(cliente.getLongitude())
+                        .build())
+                );
         }
         return ResponseEntity.badRequest().build();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Retrieve client by id")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully retrieved client")
-        ,
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource")
-        ,
-        @ApiResponse(code = 403, message = "Accessing the client is forbidden")
-    })
-    public ResponseEntity<Cliente> getById(
+    @Operation(summary = "Retrieve client by id")
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Successfully retrieved client",
+                        content = @Content(
+                                schema = @Schema(
+                                        anyOf = {
+                                            Cliente.class,
+                                            ClienteView.class,
+                                            Commerciante.class,
+                                            CommercianteView.class
+                                        }))
+                )
+                ,
+                @ApiResponse(
+                        responseCode = "401",
+                        description = "You are not authorized to view the resource",
+                        content = @Content)
+                ,
+                @ApiResponse(
+                        responseCode = "403",
+                        description = "Accessing the client's infos is forbidden",
+                        content = @Content)
+            })
+    public ResponseEntity<?> getById(
+            @Parameter(description = "The internal identifier of the user")
             @PathVariable("id") String id,
+            @Parameter(description = "The otp to authenticate user")
             @RequestParam(name = "otp", required = false) String otp,
+            @Parameter(description = "The pin to authenticate user")
             @RequestParam(name = "pin", required = false) String pin
     ) {
         UserAuthenticationService.MyUser user = (UserAuthenticationService.MyUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Cliente c = clientRepository.findById(getUserId(id))
+        long clientId = getUserId(id);
+        Cliente c = clientRepository.findById(clientId)
                 .orElseThrow(() -> new NotFoundException(Cliente.class, "id", id));
         if ("self".equals(id) || Long.parseLong(id) == user.getId()) {
             return ResponseEntity.ok(c);
         }
         if ((otp == null || otp.isEmpty()) && (pin == null || pin.isEmpty())) {
-            throw new InvalidRequestException(Cliente.class);
-        }
-        if (otp != null && !otp.isEmpty() && otp.equals(c.getOtp())) {
-            return ResponseEntity.ok(c);
-        }
-        if (pin != null && !pin.isEmpty() && pin.equals(c.getPin())) {
-            return ResponseEntity.ok(c);
+            return ResponseEntity.ok(Cliente.getClientView(c));
+        } else {
+            if (otp != null && !otp.isEmpty() && otp.equals(c.getOtp())) {
+                return ResponseEntity.ok(c);
+            }
+            if (pin != null && !pin.isEmpty() && pin.equals(c.getPin())) {
+                return ResponseEntity.ok(c);
+            }
         }
         throw new InvalidRequestException(Cliente.class);
     }
@@ -134,17 +214,46 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     @PostMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Edit client by id")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully edited client")
-        ,
-        @ApiResponse(code = 400, message = "Request was incorrect")
-        ,
-        @ApiResponse(code = 401, message = "You are not authorized to edit the resource")
-        ,
-        @ApiResponse(code = 403, message = "Accessing the client is forbidden")
-    })
+    @Operation(
+            summary = "Edit client by id",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ClienteEdit.class
+                            )
+                    )
+            )
+    )
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Successfully edited client",
+                        content = @Content(
+                                schema = @Schema(
+                                        anyOf = {
+                                            Cliente.class,
+                                            Commerciante.class
+                                        })))
+                ,
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "Request was incorrect",
+                        content = @Content)
+                ,
+                @ApiResponse(
+                        responseCode = "401",
+                        description = "You are not authorized to edit the resource",
+                        content = @Content)
+                ,
+                @ApiResponse(
+                        responseCode = "403",
+                        description = "Accessing the client is forbidden",
+                        content = @Content)
+            })
     public ResponseEntity<Cliente> edit(
+            @Parameter(description = "The internal identifier of the user")
             @PathVariable("id") String id,
             @Valid @RequestBody ClienteEdit cliente
     ) {
@@ -160,15 +269,33 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Delete client by id")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully deleted client")
-        ,
-        @ApiResponse(code = 401, message = "You are not authorized to delete the resource")
-        ,
-        @ApiResponse(code = 403, message = "Accessing the client is forbidden")
-    })
-    public ResponseEntity<Cliente> deleteById(@PathVariable("id") String id) {
+    @Operation(summary = "Delete client by id")
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Successfully deleted client",
+                        content = @Content(
+                                schema = @Schema(
+                                        anyOf = {
+                                            Cliente.class,
+                                            Commerciante.class
+                                        })))
+                ,
+                @ApiResponse(
+                        responseCode = "401",
+                        description = "You are not authorized to delete the resource",
+                        content = @Content)
+                ,
+                @ApiResponse(
+                        responseCode = "403",
+                        description = "Accessing the client is forbidden",
+                        content = @Content)
+            })
+    public ResponseEntity<Cliente> deleteById(
+            @Parameter(description = "The internal identifier of the user")
+            @PathVariable("id") String id
+    ) {
         return ResponseEntity.ok(clientRepository.findById(getUserId(id))
                 .map(u -> {
                     clientRepository.delete(u);
@@ -181,14 +308,14 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     @Data
     @AllArgsConstructor
     @RequiredArgsConstructor
+    @Schema(description = "Creation form")
     public static class ClienteCreate extends ClienteEdit {
 
         @NotBlank
         @Pattern(regexp = "^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)?[@](([a-zA-Z]+[.])+[a-zA-Z]{2,3})$", message = "Email must be a valid email address")
-        @ApiModelProperty(
-                position = 1,
+        @Schema(
                 required = true,
-                value = "The login email"
+                description = "The login email"
         )
         private String email;
 
@@ -204,19 +331,17 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
             ,
             @Pattern(regexp = "^.{5,32}$", message = "Password must be at least 5 character long")
         })
-        @ApiModelProperty(
-                position = 2,
+        @Schema(
                 required = true,
-                value = "The login password"
+                description = "The login password"
         )
         private String password;
 
         @NotBlank
         @Pattern(regexp = "^cliente|commerciante$", message = "Valid values are [\"cliente\", \"commerciante\"]")
-        @ApiModelProperty(
-                position = 3,
+        @Schema(
                 required = true,
-                value = "The account type. Valid values are [\"cliente\", \"commerciante\"]"
+                description = "The account type. Valid values are [\"cliente\", \"commerciante\"]"
         )
         private String type;
 
@@ -225,70 +350,78 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
     @Data
     @AllArgsConstructor
     @RequiredArgsConstructor
+    @Schema(
+            description = "Client edit form",
+            subTypes = ClienteCreate.class
+    )
     public static class ClienteEdit {
 
         @NotBlank
-        @ApiModelProperty(
-                position = 10,
+        @Schema(
                 required = true,
-                value = "Client firstname"
+                description = "Client firstname"
         )
         private String nome;
 
         @NotBlank
-        @ApiModelProperty(
-                position = 11,
+        @Schema(
                 required = true,
-                value = "Client lastname"
+                description = "Client lastname"
         )
         private String cognome;
 
         @NotBlank
-        @ApiModelProperty(
-                position = 12,
+        @Schema(
                 required = true,
-                value = "Client fiscal code"
+                description = "Client fiscal code"
         )
         private String cf;
 
         @NotNull
 //        @Pattern(regexp = "^[0-9]{2}[/][0-9]{2}[/](?:(?:[1][9][0-9]{2})|(?:[2][0][0-9]{2}))$", message = "Birth date must be in format 'dd/mm/yyyy'")
-        @ApiModelProperty(
-                position = 13,
+        @Schema(
                 required = true,
-                value = "Client birth date"
+                description = "Client birth date"
         )
         private LocalDate birth_date;
 
         @NotBlank
         @Pattern(regexp = "^([+][0-9]{1,2})?([0-9]{8,10})$", message = "Phone number must be a valid number '(+xx)xxxxxxxxxx'. Space are not allowed")
-        @ApiModelProperty(
-                position = 14,
+        @Schema(
                 required = true,
-                value = "Client phone number"
+                description = "Client phone number"
         )
         private String phone;
 
         @NotBlank
-        @ApiModelProperty(
-                position = 15,
+        @Schema(
                 required = true,
-                value = "Client address"
+                description = "Client address"
         )
         private String address;
 
-        @ApiModelProperty(
-                position = 20,
+        @Schema(
                 required = true,
-                value = "VAT number"
+                description = "VAT number"
         )
         private String piva;
 
-        @ApiModelProperty(
-                position = 21,
+        @Schema(
                 required = true,
-                value = "Business name"
+                description = "Business name"
         )
         private String ragSoc;
+
+        @Schema(
+                required = true,
+                description = "latitude"
+        )
+        private Double latitude;
+
+        @Schema(
+                required = true,
+                description = "longitude"
+        )
+        private Double longitude;
     }
 }

@@ -7,6 +7,7 @@ package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.easypay.easypay.dao.exception.OutOfBudgetException;
 @Entity
 @ToString
 @RequiredArgsConstructor
+@Schema(description = "A client's account")
 public class Conto implements Serializable {
 
     public static enum Direction {
@@ -45,16 +47,29 @@ public class Conto implements Serializable {
             name = "conti_id_sequence",
             allocationSize = 1
     )
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The account internal identifier"
+    )
     private long id;
 
     @Min(0)
     @Getter
     @Setter
+    @Schema(
+            required = true,
+            description = "The account weekly budget"
+    )
     private float budget;
 
     @Min(0)
     @Getter
     @Setter
+    @Schema(
+            required = true,
+            description = "The account balance"
+    )
     private float saldo;
 
     @NotNull
@@ -69,6 +84,11 @@ public class Conto implements Serializable {
     @JsonProperty("id_cliente")
     @ToString.Include
     @EqualsAndHashCode.Include
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The account's client"
+    )
     public long getIdCliente() {
         return utente.getId();
     }

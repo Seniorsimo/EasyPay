@@ -6,6 +6,7 @@
 package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Entity
 @RequiredArgsConstructor
+@Schema(description = "A transaction between two account")
 public class Pagamento extends Movimento {
 
     @Builder

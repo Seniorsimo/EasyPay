@@ -5,19 +5,18 @@
  */
 package org.easypay.easypay;
 
-import com.google.common.collect.Lists;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import org.easypay.easypay.auth.JWTAuthenticationService;
 import org.easypay.easypay.dao.entity.Atm;
-import org.easypay.easypay.dao.entity.Cliente;
-import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -42,20 +41,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  *
  * @author simo
  */
 @Configuration
-@EnableSwagger2
+//@EnableSwagger2
 @EnableJpaAuditing
 @EnableJpaRepositories
 @SpringBootApplication
@@ -123,45 +115,24 @@ public class Application extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-//
 
     @Bean
-    public Docket productApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("org.easypay.easypay.controller"))
-                .paths(PathSelectors.ant("/api/**"))
-                .build()
-                .apiInfo(new ApiInfo(
-                        "EasyPay REST API",
-                        "General api to interact with EasyPay service",
-                        "1.0",
-                        "Terms of Service",
-                        new Contact("EasyPay Team", "https://easypay-unito.herokuapp.com/", ""),
-                        "Apache 2.0", // Apache 2.0
-                        "http://www.apache.org/licenses/LICENSE-2.0", // http://www.apache.org/licenses/LICENSE-2.0
-                        Collections.emptyList()
-                ))
-                .securitySchemes(Lists.newArrayList(apiKey()))
-                .securityContexts(Arrays.asList(securityContext()));
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("Bearer", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth())
-                .forPaths(PathSelectors.any()).build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope(
-                "global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("Bearer",
-                authorizationScopes));
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("EasyPay REST API")
+                        .description("General api to interact with EasyPay service")
+                        .version("v1.0")
+                        .license(new License().name("Apache 2.0").url("http://www.apache.org/licenses/LICENSE-2.0")))
+                .components(new Components()
+                        .addSecuritySchemes("Authorization", new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .name("Authorization")))
+                .security(Arrays.asList(
+                        new SecurityRequirement().addList("Authorization")));
+        /*.externalDocs(new ExternalDocumentation()
+                        .description("SpringShop Wiki Documentation")
+                        .url("https://springshop.wiki.github.org/docs"))*/
     }
 
     public static class SelfConverter implements Converter<String, Long> {
@@ -202,7 +173,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
         @PostConstruct
         public void init() {
-            if (!credenzialiRepository.findById("user1@gmail.com").isPresent()) {
+            /*if (!credenzialiRepository.findById("user1@gmail.com").isPresent()) {
                 clientRepository.save(Cliente.builder()
                         .username("user1@gmail.com")
                         .password(passwordEncoder.encode("password"))
@@ -253,7 +224,7 @@ public class Application extends WebMvcConfigurerAdapter {
                         .ragSoc("Osteria Bella Napoli")
                         .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                         .build());
-            }
+            }*/
             if (atmRepository.findAll().isEmpty()) {
                 atmRepository.save(Atm.builder().build());
             }

@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/terasud/JavaProjects/EasyPay/src/main/angular/easypay-atm/src/polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! /home/terasud/JavaProjects/EasyPay/src/main/angular/Easypay-atm/src/polyfills.ts */"hN/g");
 
 
 /***/ }),
