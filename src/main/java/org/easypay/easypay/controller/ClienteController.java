@@ -134,6 +134,9 @@ public class ClienteController implements ErrorHandlingController, SelfHandlingC
                         .address(cliente.getAddress())
                         .build()));
             case "commerciante":
+                if (cliente.getLatitude() == null || cliente.getLongitude() == null) {
+                    throw new InvalidRequestException(Commerciante.class);
+                }
                 return ResponseEntity.ok(clientRepository.save(Commerciante.builder()
                         .username(cliente.getEmail())
                         .password(passwordEncoder.encode(cliente.getPassword()))
