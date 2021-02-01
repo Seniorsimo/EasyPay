@@ -1,6 +1,7 @@
 package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
@@ -38,7 +39,26 @@ public class Commerciante extends Cliente {
             required = true,
             description = "Geolocation"
     )
+    @JsonIgnore
     private Point point;
+
+    @JsonProperty("latitude")
+    @Schema(
+            required = true,
+            description = "Geolocation latitude"
+    )
+    public double getLatitude() {
+        return point.getX();
+    }
+
+    @JsonProperty("longitude")
+    @Schema(
+            required = true,
+            description = "Geolocation longitude"
+    )
+    public double getLongitude() {
+        return point.getY();
+    }
 
     @Override
     public String type() {
