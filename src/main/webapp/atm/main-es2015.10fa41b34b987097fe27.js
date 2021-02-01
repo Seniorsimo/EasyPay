@@ -1470,10 +1470,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JoinPart3Component", function() { return JoinPart3Component; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/core/services/utente.service */ "+yPv");
-/* harmony import */ var src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/routing.service */ "8QkR");
-/* harmony import */ var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/snack-bar */ "dNgK");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "ofXK");
-
+/* harmony import */ var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/snack-bar */ "dNgK");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
 
@@ -1501,9 +1499,8 @@ var StatusEnum;
     StatusEnum["failed"] = "failed";
 })(StatusEnum || (StatusEnum = {}));
 class JoinPart3Component {
-    constructor(utenteService, routingService, snackBar) {
+    constructor(utenteService, snackBar) {
         this.utenteService = utenteService;
-        this.routingService = routingService;
         this.snackBar = snackBar;
         this.StatusEnum = StatusEnum;
         this.status = StatusEnum.waiting;
@@ -1511,7 +1508,7 @@ class JoinPart3Component {
         this.toastConfig = {
             horizontalPosition: 'center',
             verticalPosition: 'top',
-            panelClass: 'toast-success',
+            panelClass: '',
         };
     }
     ngOnInit() {
@@ -1519,18 +1516,19 @@ class JoinPart3Component {
             .subscribe({
             next: () => {
                 this.status = StatusEnum.success;
-                this.snackBar.open('Account creato correttamente!', 'ok', this.toastConfig);
-                this.routingService.gotoBase();
-                // setInterval(() => this.ngZone.run(() =>  this.routingService.gotoHome()), 2000);
+                this.snackBar.open('Account creato correttamente!', 'ok', Object.assign(Object.assign({}, this.toastConfig), { panelClass: 'toast-success' }));
             },
-            error: () => this.status = StatusEnum.failed
+            error: () => {
+                this.snackBar.open('Registrazione fallita!', 'indietro', Object.assign(Object.assign({}, this.toastConfig), { panelClass: 'toast-error' }));
+                this.status = StatusEnum.failed;
+            }
         }));
     }
     ngOnDestroy() {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 }
-JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) { return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"])); };
+JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) { return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"])); };
 JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: JoinPart3Component, selectors: [["app-join-part3"]], inputs: { data: "data" }, decls: 3, vars: 3, consts: [[4, "ngIf"]], template: function JoinPart3Component_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, JoinPart3Component_p_0_Template, 2, 0, "p", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, JoinPart3Component_p_1_Template, 2, 0, "p", 0);
@@ -1541,7 +1539,7 @@ JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.status === ctx.StatusEnum.success);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.status === ctx.StatusEnum.failed);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJqb2luLXBhcnQzLmNvbXBvbmVudC5zY3NzIn0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJqb2luLXBhcnQzLmNvbXBvbmVudC5zY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](JoinPart3Component, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -1549,7 +1547,7 @@ JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
                 templateUrl: './join-part3.component.html',
                 styleUrls: ['./join-part3.component.scss']
             }]
-    }], function () { return [{ type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"] }, { type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"] }, { type: _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"] }]; }, { data: [{
+    }], function () { return [{ type: src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"] }, { type: _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"] }]; }, { data: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
@@ -3232,8 +3230,8 @@ class JoinPart1Component extends _abstract_join_part_abstract_join_part_componen
             phone: this.formCrl.controls.phone.value,
             address: this.formCrl.controls.address.value,
             // place_id: nominatim.place_id,
-            latitude: nominatim.lat,
-            longitude: nominatim.lon,
+            latitude: nominatim === null || nominatim === void 0 ? void 0 : nominatim.lat,
+            longitude: nominatim === null || nominatim === void 0 ? void 0 : nominatim.lon,
         };
     }
 }
@@ -3382,7 +3380,7 @@ LoginPageModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineIn
 /*!************************************************!*\
   !*** ./src/app/core/utils/custom-validator.ts ***!
   \************************************************/
-/*! exports provided: isOver18, isBorn, isPhone, haveUppercase, haveLowercase, haveDigit, haveSpace */
+/*! exports provided: isOver18, isBorn, isPhone, haveUppercase, haveLowercase, haveDigit, haveSpace, checkPasswords */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3394,6 +3392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "haveLowercase", function() { return haveLowercase; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "haveDigit", function() { return haveDigit; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "haveSpace", function() { return haveSpace; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkPasswords", function() { return checkPasswords; });
 // NOTA: apparentemente la risposta { [errorName]: false } viene cmq bloccata dal validatore.
 // Trick Solution: in caso di validatore corretto passo null.
 /** form validator per verificare se l'età inserita (presumibilmente di nascita) sia maggiore di 18 */
@@ -3464,6 +3463,11 @@ function haveSpace(control) {
         return test ? { [errorCode]: true } : null;
     }
     return null;
+}
+function checkPasswords(group) {
+    const password = group.get('password').value;
+    const confirmPassword = group.get('confirmPassword').value;
+    return password === confirmPassword ? null : { notSame: true };
 }
 /**
  * funzione che restituisce gli anni dell' utente
@@ -3908,12 +3912,13 @@ JoinComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
 /*!*********************************************************************************!*\
   !*** ./src/app/shared/components/join/parts/join-part0/join-part0.component.ts ***!
   \*********************************************************************************/
-/*! exports provided: JoinPart0Component */
+/*! exports provided: JoinPart0Component, MyErrorStateMatcher */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JoinPart0Component", function() { return JoinPart0Component; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyErrorStateMatcher", function() { return MyErrorStateMatcher; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
 /* harmony import */ var src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/utils/custom-validator */ "hUH/");
@@ -3978,11 +3983,17 @@ function JoinPart0Component_mat_error_15_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " La password non pu\u00F2 contenere spazi o tabulazioni ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
+function JoinPart0Component_mat_error_18_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-error");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " deve essere uguale alla password ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} }
 class JoinPart0Component extends _abstract_join_part_abstract_join_part_component__WEBPACK_IMPORTED_MODULE_3__["AbstractJoinPartComponent"] {
     constructor(fb) {
         super();
         this.fb = fb;
         this.valuesOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.matcher = new MyErrorStateMatcher();
         this.formCrl = this.fb.group({
             email: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]),
             password: this.fb.control('', [
@@ -3994,7 +4005,8 @@ class JoinPart0Component extends _abstract_join_part_abstract_join_part_componen
                 src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["haveDigit"],
                 src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["haveSpace"],
             ]),
-        });
+            confirmPassword: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
+        }, { validators: src_app_core_utils_custom_validator__WEBPACK_IMPORTED_MODULE_2__["checkPasswords"] });
     }
     ngOnInit() { }
     getValue() {
@@ -4005,7 +4017,7 @@ class JoinPart0Component extends _abstract_join_part_abstract_join_part_componen
     }
 }
 JoinPart0Component.ɵfac = function JoinPart0Component_Factory(t) { return new (t || JoinPart0Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"])); };
-JoinPart0Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: JoinPart0Component, selectors: [["app-join-part0"]], outputs: { valuesOutput: "valuesOutput" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵInheritDefinitionFeature"]], decls: 16, vars: 9, consts: [[1, "form", 3, "formGroup"], ["fxFlex", ""], ["matInput", "", "placeholder", "email*", "formControlName", "email"], [4, "ngIf"], [1, "full-width"], ["matInput", "", "type", "password", "placeholder", "Password*", "formControlName", "password"]], template: function JoinPart0Component_Template(rf, ctx) { if (rf & 1) {
+JoinPart0Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: JoinPart0Component, selectors: [["app-join-part0"]], outputs: { valuesOutput: "valuesOutput" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵInheritDefinitionFeature"]], decls: 19, vars: 11, consts: [[1, "form", 3, "formGroup"], ["fxFlex", ""], ["matInput", "", "placeholder", "email*", "formControlName", "email"], [4, "ngIf"], [1, "full-width"], ["matInput", "", "type", "password", "placeholder", "Password*", "formControlName", "password"], ["matInput", "", "type", "password", "placeholder", "conferma password*", "formControlName", "confirmPassword", 3, "errorStateMatcher"]], template: function JoinPart0Component_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "form", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 1);
@@ -4025,6 +4037,10 @@ JoinPart0Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](13, JoinPart0Component_mat_error_13_Template, 2, 0, "mat-error", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](14, JoinPart0Component_mat_error_14_Template, 2, 0, "mat-error", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](15, JoinPart0Component_mat_error_15_Template, 2, 0, "mat-error", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "mat-form-field", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](17, "input", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](18, JoinPart0Component_mat_error_18_Template, 2, 0, "mat-error", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -4046,6 +4062,10 @@ JoinPart0Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("notHaveDigit"));
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["password"].hasError("haveSpace"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("errorStateMatcher", ctx.matcher);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.formCrl.controls["confirmPassword"].hasError("required") || ctx.formCrl.hasError("notSame"));
     } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_flex_layout_flex__WEBPACK_IMPORTED_MODULE_4__["DefaultFlexDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormField"], _angular_material_input__WEBPACK_IMPORTED_MODULE_6__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatError"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJqb2luLXBhcnQwLmNvbXBvbmVudC5zY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](JoinPart0Component, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
@@ -4057,6 +4077,13 @@ JoinPart0Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
     }], function () { return [{ type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"] }]; }, { valuesOutput: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
         }] }); })();
+class MyErrorStateMatcher {
+    isErrorState(control, form) {
+        const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+        const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+        return (invalidCtrl || invalidParent);
+    }
+}
 
 
 /***/ }),
@@ -5481,7 +5508,7 @@ const routes = [
             {
                 path: _core_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].base,
                 redirectTo: '/login',
-                pathMatch: 'full'
+                pathMatch: 'full',
             },
             {
                 path: _core_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].home,
@@ -5508,7 +5535,7 @@ const routes = [
                 component: _features_movements_movements_component__WEBPACK_IMPORTED_MODULE_7__["MovementsComponent"],
                 canActivate: [_core_guards_auth_guard_service__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
             },
-        ]
+        ],
     }
 ];
 class AppRoutingModule {
@@ -5698,4 +5725,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.fd28c0a70ee82c7cc03a.js.map
+//# sourceMappingURL=main-es2015.10fa41b34b987097fe27.js.map
