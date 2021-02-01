@@ -5,6 +5,8 @@
  */
 package org.easypay.easypay.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Schema(description = "A ATM that support the service")
 public class Atm implements Serializable {
 
     @Id
@@ -32,12 +35,18 @@ public class Atm implements Serializable {
             allocationSize = 1
     )
     @EqualsAndHashCode.Include
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The ATM internal identifier"
+    )
     private long id;
 
     @OneToMany(
             mappedBy = "atm",
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     @ToString.Exclude
     @OrderBy(value = "timestamp desc")
     private List<Ricarica> ricariche;

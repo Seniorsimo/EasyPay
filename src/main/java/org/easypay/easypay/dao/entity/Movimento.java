@@ -7,6 +7,7 @@ package org.easypay.easypay.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.*;
@@ -19,6 +20,10 @@ import lombok.*;
  */
 @Entity
 @ToString
+@Schema(
+        description = "A user transaction",
+        subTypes = {Pagamento.class, Ricarica.class}
+)
 @RequiredArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimento implements Serializable {
@@ -27,6 +32,11 @@ public abstract class Movimento implements Serializable {
     @Getter
     @Setter
     @GeneratedValue
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction internal identifier"
+    )
     private long id;
 
     @Getter
@@ -41,11 +51,19 @@ public abstract class Movimento implements Serializable {
     @JsonProperty("from")
     @ToString.Include
     @EqualsAndHashCode.Include
+    @Schema(
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction origin account identifier"
+    )
     public Long getFromId() {
         return from != null ? from.getId() : null;
     }
 
     @JsonProperty("from_name")
+    @Schema(
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction origin account description"
+    )
     public String getFromName() {
         return from != null ? from.getUtente().getMovementName() : null;
     }
@@ -72,16 +90,29 @@ public abstract class Movimento implements Serializable {
     @JsonProperty("to")
     @ToString.Include
     @EqualsAndHashCode.Include
+    @Schema(
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction destination account identifier"
+    )
     public Long getToId() {
         return to != null ? to.getId() : null;
     }
 
     @JsonProperty("to_name")
+    @Schema(
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction destination account description"
+    )
     public String getToName() {
         return to != null ? to.getUtente().getMovementName() : null;
     }
 
     @JsonProperty("type")
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction type"
+    )
     public abstract String getType();
 
     public void setTo(Conto to) {
@@ -100,6 +131,11 @@ public abstract class Movimento implements Serializable {
 
     @Getter
     @Setter
+    @Schema(
+            required = true,
+            accessMode = Schema.AccessMode.READ_ONLY,
+            description = "The transaction amount"
+    )
     private float valore;
 
     @NotNull
