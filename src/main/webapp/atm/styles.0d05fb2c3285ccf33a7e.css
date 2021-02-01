@@ -34,12 +34,19 @@ mat-form-field {
   color: #000;
 }
 .toast-error .mat-button {
-  color: yellow;
+  color: #0ea779;
 }
 .toast-warning {
   background-color: #d2d248;
   color: #000;
 }
 .toast-warning .mat-button {
-  color: #f00000;
+  color: #be7abe;
+}
+.toast-success {
+  background-color: #4adb4a;
+  color: #000;
+}
+.toast-success .mat-button {
+  color: #eb4343;
 }

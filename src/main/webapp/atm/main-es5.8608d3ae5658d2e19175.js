@@ -3010,7 +3010,13 @@
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/material/snack-bar */
+      "dNgK");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
@@ -3053,15 +3059,20 @@
       })(StatusEnum || (StatusEnum = {}));
 
       var JoinPart3Component = /*#__PURE__*/function () {
-        function JoinPart3Component(utenteService, routingService, ngZone) {
+        function JoinPart3Component(utenteService, routingService, snackBar) {
           _classCallCheck(this, JoinPart3Component);
 
           this.utenteService = utenteService;
           this.routingService = routingService;
-          this.ngZone = ngZone;
+          this.snackBar = snackBar;
           this.StatusEnum = StatusEnum;
           this.status = StatusEnum.waiting;
           this.subscriptions = [];
+          this.toastConfig = {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: 'toast-success'
+          };
         }
 
         _createClass(JoinPart3Component, [{
@@ -3072,11 +3083,11 @@
             this.subscriptions.push(this.utenteService.register(this.data).subscribe({
               next: function next() {
                 _this11.status = StatusEnum.success;
-                setInterval(function () {
-                  return _this11.ngZone.run(function () {
-                    return _this11.routingService.gotoHome();
-                  });
-                }, 2000);
+
+                _this11.snackBar.open('Account creato correttamente!', 'ok', _this11.toastConfig);
+
+                _this11.routingService.gotoHome(); // setInterval(() => this.ngZone.run(() =>  this.routingService.gotoHome()), 2000);
+
               },
               error: function error() {
                 return _this11.status = StatusEnum.failed;
@@ -3096,7 +3107,7 @@
       }();
 
       JoinPart3Component.ɵfac = function JoinPart3Component_Factory(t) {
-        return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]));
+        return new (t || JoinPart3Component)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_utente_service__WEBPACK_IMPORTED_MODULE_1__["UtenteService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]));
       };
 
       JoinPart3Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -3129,7 +3140,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.status === ctx.StatusEnum.failed);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"]],
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"]],
         styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJqb2luLXBhcnQzLmNvbXBvbmVudC5zY3NzIn0= */"]
       });
       /*@__PURE__*/
@@ -3148,7 +3159,7 @@
           }, {
             type: src_app_core_services_routing_service__WEBPACK_IMPORTED_MODULE_2__["RoutingService"]
           }, {
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]
+            type: _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]
           }];
         }, {
           data: [{
@@ -11312,4 +11323,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.491a19172fb5772b2112.js.map
+//# sourceMappingURL=main-es5.8608d3ae5658d2e19175.js.map
