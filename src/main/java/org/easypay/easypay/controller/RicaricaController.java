@@ -1,5 +1,6 @@
 package org.easypay.easypay.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -201,13 +202,14 @@ public class RicaricaController implements ErrorHandlingController, SelfHandling
     @Schema(description = "Creation form")
     public static class RequestRechargeBody {
 
-        @NotNull
+        @NotNull(message = "id_atm can not be null")
         @Schema(description = "The id of the origin ATM")
+        @JsonProperty("id_atm")
         private Long from;
-        @NotNull
+        @NotNull(message = "to can not be null")
         @Schema(description = "The id of the destination account")
         private Long to;
-        @NotNull
+        @NotNull(message = "value can not be null")
         @Schema(description = "The amount to transfert")
         private Float value;
     }
