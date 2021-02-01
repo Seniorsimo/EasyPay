@@ -1820,6 +1820,11 @@
             this.activeSection$.next(text);
           }
         }, {
+          key: "gotoBase",
+          value: function gotoBase() {
+            this.router.navigate([_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].base]);
+          }
+        }, {
           key: "gotoHome",
           value: function gotoHome() {
             this.router.navigate([_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].home]);
@@ -3086,7 +3091,7 @@
 
                 _this11.snackBar.open('Account creato correttamente!', 'ok', _this11.toastConfig);
 
-                _this11.routingService.gotoHome(); // setInterval(() => this.ngZone.run(() =>  this.routingService.gotoHome()), 2000);
+                _this11.routingService.gotoBase(); // setInterval(() => this.ngZone.run(() =>  this.routingService.gotoHome()), 2000);
 
               },
               error: function error() {
@@ -11323,4 +11328,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.8608d3ae5658d2e19175.js.map
+//# sourceMappingURL=main-es5.fd28c0a70ee82c7cc03a.js.map

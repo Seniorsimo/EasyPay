@@ -864,6 +864,9 @@ class RoutingService {
         this.activeSection = text;
         this.activeSection$.next(text);
     }
+    gotoBase() {
+        this.router.navigate([_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].base]);
+    }
     gotoHome() {
         this.router.navigate([_constants_routing_constants__WEBPACK_IMPORTED_MODULE_2__["RoutersPath"].home]);
     }
@@ -1517,7 +1520,7 @@ class JoinPart3Component {
             next: () => {
                 this.status = StatusEnum.success;
                 this.snackBar.open('Account creato correttamente!', 'ok', this.toastConfig);
-                this.routingService.gotoHome();
+                this.routingService.gotoBase();
                 // setInterval(() => this.ngZone.run(() =>  this.routingService.gotoHome()), 2000);
             },
             error: () => this.status = StatusEnum.failed
@@ -5695,4 +5698,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.8608d3ae5658d2e19175.js.map
+//# sourceMappingURL=main-es2015.fd28c0a70ee82c7cc03a.js.map
