@@ -12,15 +12,11 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Arrays;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import org.easypay.easypay.auth.JWTAuthenticationService;
 import org.easypay.easypay.dao.entity.Atm;
-import org.easypay.easypay.dao.entity.Cliente;
-import org.easypay.easypay.dao.entity.Commerciante;
 import org.easypay.easypay.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -177,7 +173,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
         @PostConstruct
         public void init() {
-            if (!credenzialiRepository.findById("user1@gmail.com").isPresent()) {
+            /*if (!credenzialiRepository.findById("user1@gmail.com").isPresent()) {
                 clientRepository.save(Cliente.builder()
                         .username("user1@gmail.com")
                         .password(passwordEncoder.encode("password"))
@@ -228,7 +224,7 @@ public class Application extends WebMvcConfigurerAdapter {
                         .ragSoc("Osteria Bella Napoli")
                         .pIva("SHKVIYNGAHABFKHKFYAHIYYNHAI")
                         .build());
-            }
+            }*/
             if (atmRepository.findAll().isEmpty()) {
                 atmRepository.save(Atm.builder().build());
             }
