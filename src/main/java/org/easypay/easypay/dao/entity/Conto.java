@@ -153,7 +153,7 @@ public class Conto implements Serializable {
                 if (saldo < movimento.getValore()) {
                     throw new InsufficientFundsException(utente.getId());
                 }
-                if (getAvailableBudget() < movimento.getValore()) {
+                if (this.budget > 0 && getAvailableBudget() < movimento.getValore()) {
                     throw new OutOfBudgetException(utente.getId());
                 }
                 this.saldo -= movimento.getValore();
