@@ -225,16 +225,16 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
 <h1>Esempio (usare crtl+U per visualizzare il codice)</h1>
 <div>
     <div class="blocco">
-        <p>Attrezzatura scolastica</p>
-        <p>Rossi Ubaldo</p>
+        <p>Sedie da Manager</p>
+        <p>Fantozzi Ugo</p>
         <p>4 euro</p>
-        <button onclick="openEasyPay('commerciante1@gmail.com','Qwerty1234', '15', 4)">Paga</button>
+        <button onclick="openEasyPay('commerciante1@gmail.com','Qwerty1234', '20', 4)">Paga</button>
     </div>
     <div class="blocco">
-        <p>Dolci e Salati</p>
-        <p>Unica Martina</p>
+        <p>Prodotti scolastici</p>
+        <p>Rossi Ubaldo</p>
         <p>30 euro</p>
-        <button onclick="openEasyPay('commerciante2@gmail.com','Qwerty1234', '17', 30)">Paga</button>
+        <button onclick="openEasyPay('commerciante2@gmail.com','Qwerty1234', '21', 30)">Paga</button>
     </div>
 </div>
 <div id="success" style="display:none">Pagato! :)</div>
@@ -243,6 +243,7 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
     <div id="failed_code"></div>
 </div>
 
+<!--
 <h2>Clienti</h2>
 <div>
     <div class="blocco">
@@ -260,5 +261,6 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
         <img src="<c:url value="/img/002.png" />" width="200px" height="200px"/>
     </div>
 </div>
+-->
 </body>
 </html>
