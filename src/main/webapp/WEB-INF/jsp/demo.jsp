@@ -86,19 +86,24 @@
             // controllo dell' origine per controlli di sicurezza
             // if (event.origin !== 'http://localhost:4200') return;
             console.log(event.data);
+            let response = event.data
             try {
-                const response = JSON.parse(event.data);
+                response = JSON.parse(event.data);
+            } catch () { }
+            try {
                 if (response.success) {
                     document.getElementById('success').style.display = 'block';
                     document.getElementById('failed').style.display = 'none';
                 } else {
                     document.getElementById('success').style.display = 'none';
                     document.getElementById('failed').style.display = 'block';
+                    if(response)
                     document.getElementById('failed_code').innerHTML = response.message;
                 }
             } catch (e) {
                 console.error(e);
             }
+
         }
     </script>
     <!--
