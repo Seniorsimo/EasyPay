@@ -400,13 +400,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].SUCCESS);
               } else {
                 // account cliente
-                _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
-
-                throw {
+                var error = {
                   type: src_app_core_models_error_model__WEBPACK_IMPORTED_MODULE_4__["CUSTOM_ERROR"],
                   name: 'tipo account errato',
                   message: 'è necessario un account da commerciante, ma questo account è di tipo ' + result.type
                 };
+
+                _this.error$.next(error);
+
+                _this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
+
+                throw error;
               }
             },
             error: function error(_error) {

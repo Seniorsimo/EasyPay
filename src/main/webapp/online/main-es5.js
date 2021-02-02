@@ -1061,8 +1061,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this2 = this;
 
           this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].LOADING);
-          this.subscriptions.push(this.pagamento(this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value // TODO: vedere che fare del prezzo
-          ).subscribe({
+          this.subscriptions.push(this.pagamento(this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].cliente).idConto : '', this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante) ? this.utentiStore.get(_constants_utente_type_enum__WEBPACK_IMPORTED_MODULE_4__["UtenteType"].commerciante).idConto : '', this.prezzo$.value).subscribe({
             next: function next(result) {
               var response = {
                 timestamp: new Date().getTime()
@@ -1082,19 +1081,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this2.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].SUCCESS);
             },
             error: function error(_error) {
-              _this2.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].SUCCESS);
-
               var titleLabel = 'Impossibile procedere con il pagamento';
-              window.opener.postMessage(JSON.stringify({
-                success: false,
-                erroCode: _error.name,
-                errorMessage: _error.message
-              }), '*');
-              setInterval(function () {
-                return window.close();
-              }, 1000);
 
-              _this2.router.navigateByUrl("/error?titleLabel=".concat(titleLabel, "&content=").concat(_error.message, "&error=").concat(JSON.stringify(_error)));
+              if (window.opener) {
+                window.opener.postMessage(JSON.stringify({
+                  success: false,
+                  erroCode: _error.name,
+                  errorMessage: _error.message
+                }), '*');
+                setInterval(function () {
+                  return window.close();
+                }, 1000);
+              } else {
+                console.error('Impossibile chiudere pagina');
+              }
+
+              _this2.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_3__["LoadingStatus"].FAILED);
+
+              _this2.router.navigate(['/error'], {
+                queryParams: {
+                  titleLabel: titleLabel,
+                  content: _error.name,
+                  error: JSON.stringify(_error)
+                }
+              });
             }
           }));
         }
@@ -1107,12 +1117,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: prezzo + ''
           };
           return this.http.post('/api/pagamenti', params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
-            console.error('TODO: gestire la risposta del pagamento');
-            return true; // TODO: caso di saldo mancante:
-            // const message = 'Ricaricare il conto';
-            // throw { type: CUSTOM_ERROR, name: 'Saldo Insufficiente', message } as CustomError;
+            return true;
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (error) {
-            console.error('error');
+            console.error(error);
             throw {
               type: _models_error_model__WEBPACK_IMPORTED_MODULE_5__["CUSTOM_ERROR"],
               name: 'backend error',
@@ -1753,6 +1760,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ErrorComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {}
+      }, {
+        key: "getFormattedError",
+        value: function getFormattedError() {
+          var _a;
+
+          var message = (_a = this.error) === null || _a === void 0 ? void 0 : _a.message;
+
+          try {
+            message = JSON.parse(message);
+          } catch (err) {
+            /* nessun problema: message può essere una stringa */
+          }
+
+          if (typeof message === 'string') {
+            return message;
+          }
+
+          if (typeof message === 'object') {
+            var unknowError = message;
+
+            if (typeof unknowError.message === 'string') {
+              return unknowError.message;
+            }
+
+            return JSON.stringify(unknowError);
+          }
+
+          return '';
+        }
       }]);
 
       return ErrorComponent;
@@ -1770,9 +1806,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         content: "content",
         error: "error"
       },
-      decls: 9,
-      vars: 5,
-      consts: [[1, "mb-0"], ["svgIcon", "alert-circle", 1, "logo"], [1, "logo-title", "mt-0"], [3, "innerHTML"]],
+      decls: 11,
+      vars: 6,
+      consts: [[1, "mb-0"], ["svgIcon", "alert-circle", 1, "logo"], [1, "logo-title", "mt-0"], [3, "innerHTML"], [1, "message"], [1, "debug"]],
       template: function ErrorComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
@@ -1791,11 +1827,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](5, "div", 3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 4);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](8, "json");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](10, "json");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1813,12 +1855,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](8, 3, ctx.error));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Informazioni: ", ctx.getFormattedError(), "");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](10, 4, ctx.error));
         }
       },
       directives: [_angular_material_icon__WEBPACK_IMPORTED_MODULE_1__["MatIcon"]],
       pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["JsonPipe"]],
-      styles: [".logo[_ngcontent-%COMP%] {\n  width: 90px;\n  height: 90px;\n  color: #f00;\n}\n.logo[_ngcontent-%COMP%]     svg {\n  width: 90px;\n  height: 90px;\n}\n.logo-title[_ngcontent-%COMP%] {\n  color: #f00;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3RlcmFzdWQvSmF2YVByb2plY3RzL0Vhc3lQYXkvc3JjL21haW4vYW5ndWxhci9FYXN5UGF5LW9ubGluZS9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2Vycm9yL2Vycm9yLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9lcnJvci9lcnJvci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUVFLFdBRGdCO0VBRWhCLFlBRmdCO0VBR2hCLFdBTE07QUNJUjtBREdFO0VBQ0UsV0FOYztFQU9kLFlBUGM7QUNNbEI7QURLQTtFQUNFLFdBZE07QUNZUiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2Vycm9yL2Vycm9yLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiJGNvbG9yOiAjZjAwO1xuLmxvZ28ge1xuICAkbmZjLWljb24tc2l6ZTogOTBweDtcbiAgd2lkdGg6ICRuZmMtaWNvbi1zaXplO1xuICBoZWlnaHQ6ICRuZmMtaWNvbi1zaXplO1xuICBjb2xvcjogJGNvbG9yO1xuXG4gICYgOjpuZy1kZWVwIHN2ZyB7XG4gICAgd2lkdGg6ICRuZmMtaWNvbi1zaXplO1xuICAgIGhlaWdodDogJG5mYy1pY29uLXNpemU7XG4gIH1cbn1cblxuLmxvZ28tdGl0bGUge1xuICBjb2xvcjogJGNvbG9yO1xufVxuIiwiLmxvZ28ge1xuICB3aWR0aDogOTBweDtcbiAgaGVpZ2h0OiA5MHB4O1xuICBjb2xvcjogI2YwMDtcbn1cbi5sb2dvIDo6bmctZGVlcCBzdmcge1xuICB3aWR0aDogOTBweDtcbiAgaGVpZ2h0OiA5MHB4O1xufVxuXG4ubG9nby10aXRsZSB7XG4gIGNvbG9yOiAjZjAwO1xufSJdfQ== */"]
+      styles: [".logo[_ngcontent-%COMP%] {\n  width: 90px;\n  height: 90px;\n  color: #f00;\n}\n.logo[_ngcontent-%COMP%]     svg {\n  width: 90px;\n  height: 90px;\n}\n.logo-title[_ngcontent-%COMP%] {\n  color: #f00;\n}\n.message[_ngcontent-%COMP%] {\n  margin-top: 20px;\n}\n.debug[_ngcontent-%COMP%] {\n  margin-top: 20px;\n  font-size: xx-small;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3RlcmFzdWQvSmF2YVByb2plY3RzL0Vhc3lQYXkvc3JjL21haW4vYW5ndWxhci9FYXN5UGF5LW9ubGluZS9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2Vycm9yL2Vycm9yLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9lcnJvci9lcnJvci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUVFLFdBRGdCO0VBRWhCLFlBRmdCO0VBR2hCLFdBTE07QUNJUjtBREdFO0VBQ0UsV0FOYztFQU9kLFlBUGM7QUNNbEI7QURLQTtFQUNFLFdBZE07QUNZUjtBREtBO0VBQ0UsZ0JBQUE7QUNGRjtBREtBO0VBQ0UsZ0JBQUE7RUFDQSxtQkFBQTtBQ0ZGIiwiZmlsZSI6InNyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvZXJyb3IvZXJyb3IuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIkY29sb3I6ICNmMDA7XG4ubG9nbyB7XG4gICRuZmMtaWNvbi1zaXplOiA5MHB4O1xuICB3aWR0aDogJG5mYy1pY29uLXNpemU7XG4gIGhlaWdodDogJG5mYy1pY29uLXNpemU7XG4gIGNvbG9yOiAkY29sb3I7XG5cbiAgJiA6Om5nLWRlZXAgc3ZnIHtcbiAgICB3aWR0aDogJG5mYy1pY29uLXNpemU7XG4gICAgaGVpZ2h0OiAkbmZjLWljb24tc2l6ZTtcbiAgfVxufVxuXG4ubG9nby10aXRsZSB7XG4gIGNvbG9yOiAkY29sb3I7XG59XG5cbi5tZXNzYWdlIHtcbiAgbWFyZ2luLXRvcDogMjBweDtcbn1cblxuLmRlYnVnIHtcbiAgbWFyZ2luLXRvcDogMjBweDtcbiAgZm9udC1zaXplOiB4eC1zbWFsbDtcbn0iLCIubG9nbyB7XG4gIHdpZHRoOiA5MHB4O1xuICBoZWlnaHQ6IDkwcHg7XG4gIGNvbG9yOiAjZjAwO1xufVxuLmxvZ28gOjpuZy1kZWVwIHN2ZyB7XG4gIHdpZHRoOiA5MHB4O1xuICBoZWlnaHQ6IDkwcHg7XG59XG5cbi5sb2dvLXRpdGxlIHtcbiAgY29sb3I6ICNmMDA7XG59XG5cbi5tZXNzYWdlIHtcbiAgbWFyZ2luLXRvcDogMjBweDtcbn1cblxuLmRlYnVnIHtcbiAgbWFyZ2luLXRvcDogMjBweDtcbiAgZm9udC1zaXplOiB4eC1zbWFsbDtcbn0iXX0= */"]
     });
     /*@__PURE__*/
 
