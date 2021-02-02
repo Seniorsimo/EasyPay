@@ -97,8 +97,19 @@
                 } else {
                     document.getElementById('success').style.display = 'none';
                     document.getElementById('failed').style.display = 'block';
-                    if(response)
-                    document.getElementById('failed_code').innerHTML = response.message;
+                    if(response.message) {
+                         document.getElementById('failed_code').innerHTML = response.message;
+                    } else if(response.errorMessage) {
+                        if(response.errorMessage.error && response.errorMessage.error.message  ) {
+                            document.getElementById('failed_code').innerHTML = response.errorMessage.error.message;
+                        } else if (typeof response.errorMessage === 'object') {
+                            document.getElementById('failed_code').innerHTML = JSON.stringify(response.errorMessage);
+                        } else {
+                            document.getElementById('failed_code').innerHTML = response.errorMessage;
+                        }
+                    }
+                    
+                   
                 }
             } catch (e) {
                 console.error(e);
