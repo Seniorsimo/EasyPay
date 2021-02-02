@@ -89,7 +89,7 @@
             let response = event.data
             try {
                 response = JSON.parse(event.data);
-            } catch () { }
+            } catch { }
             try {
                 if (response.success) {
                     document.getElementById('success').style.display = 'block';
