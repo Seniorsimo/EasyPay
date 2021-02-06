@@ -1,6 +1,8 @@
 # Sequence Diagram
 
+## Old
 
+### Pagamento
 
 ```mermaid
 sequenceDiagram
