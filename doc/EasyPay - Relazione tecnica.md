@@ -28,9 +28,17 @@ Maggiori informazioni nel [README](https://github.com/Seniorsimo/EasyPay/)  prin
 
 ### EasyPay Atm
 
+Easypay-Atm è il frontend della vista dedicata al commerciante per la gestione delle operazioni e le interazioni fisiche con un cliente.
+
+L'idea è la realizzazione di una interfaccia ispirata ad un ATM bancario. ma che permetta di effettuare semplici operazioni di pagamento e di ricarica da parte di un cliente che si presenta fisicamente al negozio.
+
+Il punto di accesso predefinito è un dispositivo simile ad un tablet con videocamera per lettura di qrcode e sensore NFC. 
+
 Maggiori informazioni nel [README](https://github.com/gmammolo/Easypay-atm)  del progetto.
 
 ### EasyPay Online
+
+Easypay-Online è una sezione extra del progetto di EasyPay. Il suo scopo è la realizzazione di una interfaccia di pagamento online che un commerciante affiliato a Easypay può inserire sul suo sito per permettere al cliente di pagare.
 
 Maggiori informazioni nel [README](https://github.com/gmammolo/EasyPay-online)  del progetto.
 
@@ -45,9 +53,11 @@ Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyP
 
 < dettagli tecnici e implementativi, volendo anche includendo le card o schemi UML>
 
-[Sequence diagram](/Sequence%20Diagram.md)
-
-
+[Sequence diagram](/doc/Sequence%20Diagram.md)
+[ER Diagram](/doc/ER%20Diagram.md)
+[CRC Card](/doc/CRC%20Card.md)
+[Class diagram](/doc/Class%20Diagram.md)
+[Analisi Post Mortem del progetto](/doc/Analisi%20Post%20Mortem.md)
 
 ## Documentazione
 
