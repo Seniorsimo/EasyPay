@@ -145,7 +145,7 @@
 | Cliente                                                      | Superclasse: -                                               |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **Descrizione**: Utente che utilizza il sistema di pagamento *EasyPay* | **Subclassi: Commerciante**                                  |
-| **Responsabilità**:<br />- Visualizzare i propri dati<br />- Modificare i propri dati<br />- Inserire i propri dati<br />- Effettuare pagamenti | **Collaborazioni**:<br />- Conto<br />- Credenziali<br />- Commerciante |
+| **Responsabilità**:<br />- Visualizzare i propri dati<br />- Modificare i propri dati<br />- Inserire i propri dati<br />- Effettuare pagamenti | **Collaborazioni**:<br />- Conto<br />- Credenziali<br />- Commerciante<br /> |
 
 | Commerciante                                                 | Superclasse: Cliente                                        |
 | ------------------------------------------------------------ | :---------------------------------------------------------- |

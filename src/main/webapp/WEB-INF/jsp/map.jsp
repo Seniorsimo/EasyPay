@@ -25,6 +25,9 @@
                 height: 100%;
                 width: 100vw;
             }
+            .myMarker{
+                filter: hue-rotate(154deg) saturate(1.6);
+            }
         </style>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
                 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -49,7 +52,10 @@
             ${model.self.lat},
             ${model.self.lon}
             ], 14);
-            L.marker({lat: ${model.self.lat}, lon: ${model.self.lon}}).addTo(map).bindPopup("${model.self.name}");
+            let myMarker = L.marker({lat: ${model.self.lat}, lon: ${model.self.lon}});
+            myMarker.getIcon().options.className = 'myMarker';
+            myMarker.addTo(map).bindPopup("${model.self.name}");
+            delete myMarker.getIcon().options.className;
             
             <c:forEach var="point" items="${model.points}">
             L.marker({lat: ${point.lat}, lon: ${point.lon}}).addTo(map).bindPopup("${point.name}");
