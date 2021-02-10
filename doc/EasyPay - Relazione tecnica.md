@@ -45,7 +45,7 @@ Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyP
 
 < dettagli tecnici e implementativi, volendo anche includendo le card o schemi UML>
 
-[Sequence diagram](/Sequence Diagram.md)
+[Sequence diagram](/Sequence%20Diagram.md)
 
 
 
