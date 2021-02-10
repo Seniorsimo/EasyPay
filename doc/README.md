@@ -1,5 +1,8 @@
 # EasyPay - Relazione tecnica
 
+> NOTA: Github non supporta ancora gran parte delle funzioni più avanzate di md. per una corretta visualizzazione si consiglia di visualizzare la cartella doc con un visualizzatore di md più avanzato (es. [Typora](https://typora.io/) ) o di visualizzare la documentazione generata ed esportata in html TOTO: inserire l'url qui
+>
+
 <info del progetto generali, come nome persone, ruoli nel team ecc>
 
  Il progetto è un lavoro universitario e non ha alcuna finalità commerciale. Il progetto è un semplice prototipo dell'idea
@@ -53,11 +56,17 @@ Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyP
 
 < dettagli tecnici e implementativi, volendo anche includendo le card o schemi UML>
 
-[Sequence diagram](/doc/Sequence%20Diagram.md)
-[ER Diagram](/doc/ER%20Diagram.md)
-[CRC Card](/doc/CRC%20Card.md)
-[Class diagram](/doc/Class%20Diagram.md)
-[Analisi Post Mortem del progetto](/doc/Analisi%20Post%20Mortem.md)
+- [Sequence diagram](/doc/Sequence%20Diagram.md)
+
+- [ER Diagram](/doc/ER%20Diagram.md)
+
+- [CRC Card](/doc/CRC%20Card.md)
+
+- [Class diagram](/doc/Class%20Diagram.md)
+
+- [Analisi Post Mortem del progetto](/doc/Analisi%20Post%20Mortem.md)
+
+  
 
 ## Documentazione
 
