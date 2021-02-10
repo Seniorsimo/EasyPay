@@ -1,11 +1,24 @@
 # EasyPay - Relazione tecnica
 
 > NOTA: Github non supporta ancora gran parte delle funzioni più avanzate di md. per una corretta visualizzazione si consiglia di visualizzare la cartella doc con un visualizzatore di md più avanzato (es. [Typora](https://typora.io/) ) o di visualizzare la documentazione generata ed esportata in html TOTO: inserire l'url qui
->
-
-<info del progetto generali, come nome persone, ruoli nel team ecc>
 
  Il progetto è un lavoro universitario e non ha alcuna finalità commerciale. Il progetto è un semplice prototipo dell'idea
+
+
+
+| Nome                       | EasyPay                                               |
+| -------------------------- | ----------------------------------------------------- |
+| **Project Manager**        | -                                                     |
+| **Team di sviluppo**       | Mammolo Giuseppe, Micheletti Alessandro, Picco Simone |
+| **Inizio lavori**          | -                                                     |
+| **Prima Project Review**   | Gennaio 2019                                          |
+| **Seconda Project Review** | Novembre 2019                                         |
+
+| Revisioni documentazione |              |
+| ------------------------ | ------------ |
+| 02-2021                  | Picco Simone |
+
+
 
 ## Indice
 
@@ -13,9 +26,29 @@
 
 ## Informazioni generali
 
-<descrizione veloce del progetto, il suo scopo, punto di partenza  e punto di arrivo>
+EasyPay è il prototipo di un sistema di pagamento cliente-commerciante sia fisicamente tramite dispositivo `ATM`, sia  online tramite integrazione di api sulla piattaforma.
 
-Easypay è il prototipo di un sistema di pagamento cliente-commerciante sia fisicamente tramite dispositivo `ATM`, sia  online tramite integrazione di api sulla piattaforma 
+Lo scopo  del progetto è la realizzazione di un sistema di pagamenti innovativo che vada contro le normali problematiche dei competitors e i cui punti focali sono:
+
+- fornire alternativa al contante per i piccoli e medi acquisti
+- abbattere i costi fissi dei trasferimenti e dei pagamenti dei servizi online
+- integrazione direttamente con i commercianti
+- pagamento tramite smartphone e non
+
+
+
+Fra gli obiettivi di EasyPay possiamo annoverare:
+
+- l'essere un sistema per il pagamento online semplice e veloce
+- il permettere trasferimento di denaro tra amici senza commissioni
+- l'incentivazione della moneta elettronica
+- l'utilizzabilità con qualsiasi banca convenzionata
+- la fruizione dei servizi tramite cellulare e attività convenzionate
+
+Mentre è possibile affermare che EasyPay non è:
+
+- una banca.
+- una carta virtuale associata ad una banca
 
 
 
