@@ -5722,8 +5722,8 @@ class QrCodeComponent {
             this.currentDevice = this.availableDevices[0];
         }
     }
-    selectDevice(deviceId) {
-        this.currentDevice = this.availableDevices.find(dev => dev.deviceId === deviceId);
+    selectDevice(change) {
+        this.currentDevice = this.availableDevices.find(dev => dev.deviceId === change.value) || null;
     }
     /** modifica lo stato del reader, che indica se è in funzione o ha dei problemi in esecuzione */
     readerStatus(status) {
@@ -5798,4 +5798,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.800bd1e831b1ed97e060.js.map
+//# sourceMappingURL=main-es2015.883dffbac6e1bf9141ec.js.map

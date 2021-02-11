@@ -11389,10 +11389,10 @@
           }
         }, {
           key: "selectDevice",
-          value: function selectDevice(deviceId) {
+          value: function selectDevice(change) {
             this.currentDevice = this.availableDevices.find(function (dev) {
-              return dev.deviceId === deviceId;
-            });
+              return dev.deviceId === change.value;
+            }) || null;
           }
           /** modifica lo stato del reader, che indica se è in funzione o ha dei problemi in esecuzione */
 
@@ -11550,4 +11550,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.800bd1e831b1ed97e060.js.map
+//# sourceMappingURL=main-es5.883dffbac6e1bf9141ec.js.map
