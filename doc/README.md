@@ -54,11 +54,40 @@ Mentre è possibile affermare che EasyPay non è:
 
 ## Specifiche Tecniche
 
-<ad esempio tecnologie utilizzate, motivi delle scelte se necessario, struttura richiesta, moduli ecc>
+Il progetto si suddivide in 4 macro-parti, ognuna con le sue caratteristiche proprie. Ad ognuna sarà dedicata una sezione specifica del presente documento. Le parti di cui si compone EasyPay sono:
+
+- un backend: sviluppato utilizzando Spring Boot e PostgreSQL
+- un frontend (EasyPay Atm): sviluppato utilizzando AngularJS
+- una interfaccia integrabile in servizi terzi (EasyPay Online): sviluppata in AngularJS
+- un applicativo android (EasyPay Mobile): sviluppato utilizzando Kotlin
+
+Il backend è il fulcro attorno al quale ruotano gli altri moduli: questi si interfacciano e comunicano con il backend.
+
+```mermaid
+flowchart LR
+	db1[(PostgreSQL)]
+	bk(backend)
+	atm(EasyPay Atm)
+	online(EasyPay Online)
+	mobile(EasyPay Mobile)
+	
+	subgraph EasyPay Server
+		db1 <--> bk
+	end
+	bk <--> atm
+	bk <--> online
+	bk <--> mobile
+```
+
+
 
 ### Backend
 
-< dettagli specifici>
+Il backend è stato realizzato seguendo le linee guida per lo standard REST. Ulteriori informazioni in merito, possono essere reperite al seguente indirizzo: [https://spring.io/guides/tutorials/rest/](https://spring.io/guides/tutorials/rest/) 
+
+E' stata inoltre aggiunta una funzione di autenticazione secondo lo standard JWT per permettere l'invocazione dei servizi REST in maniera sicura. Maggiori informazioni su JWT possono essere reperite all'indirizzo: [https://jwt.io/introduction](https://jwt.io/introduction) , mentre per le informazioni relative alla sua implementazione in Spring si faccia riferimento a questa pagina: [https://italiancoders.it/autenticazione-di-servizi-rest-con-jwt-spring/](https://italiancoders.it/autenticazione-di-servizi-rest-con-jwt-spring/).
+
+La persistenza dei dati è stata implementata utilizzando [PostgreSQL](https://www.postgresql.org/) (scelta dettata dall'utilizzo di [Heroku](https://dashboard.heroku.com/) come piattaforma di rilascio). L'implementazione ha seguito le linee guida di standard per l'accesso ad dati tramite [Spring-data](https://spring.io/projects/spring-data).
 
 Maggiori informazioni nel [README](https://github.com/Seniorsimo/EasyPay/)  principale del progetto.
 
