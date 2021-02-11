@@ -83,9 +83,9 @@ flowchart LR
 
 ### Backend
 
-Il backend è stato realizzato seguendo le linee guida per lo standard REST. Ulteriori informazioni in merito, possono essere reperite al seguente indirizzo: [https://spring.io/guides/tutorials/rest/](https://spring.io/guides/tutorials/rest/) 
+Il backend è stato realizzato seguendo le linee guida per lo standard [REST](https://spring.io/guides/tutorials/rest/).
 
-E' stata inoltre aggiunta una funzione di autenticazione secondo lo standard JWT per permettere l'invocazione dei servizi REST in maniera sicura. Maggiori informazioni su JWT possono essere reperite all'indirizzo: [https://jwt.io/introduction](https://jwt.io/introduction) , mentre per le informazioni relative alla sua implementazione in Spring si faccia riferimento a questa pagina: [https://italiancoders.it/autenticazione-di-servizi-rest-con-jwt-spring/](https://italiancoders.it/autenticazione-di-servizi-rest-con-jwt-spring/).
+E' stata inoltre aggiunta una funzione di autenticazione secondo lo standard [JWT](https://jwt.io/introduction) per permettere l'invocazione dei servizi REST in maniera sicura.
 
 La persistenza dei dati è stata implementata utilizzando [PostgreSQL](https://www.postgresql.org/) (scelta dettata dall'utilizzo di [Heroku](https://dashboard.heroku.com/) come piattaforma di rilascio). L'implementazione ha seguito le linee guida di standard per l'accesso ad dati tramite [Spring-data](https://spring.io/projects/spring-data).
 
