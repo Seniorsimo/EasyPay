@@ -109,14 +109,12 @@ Maggiori informazioni nel [README](https://github.com/gmammolo/EasyPay-online)  
 
 ### EasyPay Mobile
 
-< dettagli specifici>
+Easypay-Mobile è la versione realizzata per smartphone Android dedicata ai clienti.
+Tramite questa applicazione è possibile registrarsi alla piattaforma e, per coloro che sono registrati, è possibile visualizzare i movimenti effettuati sul proprio conto, effettuare pagamenti ed infine permette la visualizzazione su mappa dei commercianti convenzionati con la piattaforma.
+
 Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyPay_Mobile)  del progetto.
 
-
-
 ## Codice
-
-< dettagli tecnici e implementativi, volendo anche includendo le card o schemi UML>
 
 - [Sequence diagram](/doc/Sequence%20Diagram.md)
 
