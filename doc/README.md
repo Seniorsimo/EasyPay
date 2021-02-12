@@ -114,6 +114,15 @@ Tramite questa applicazione è possibile registrarsi alla piattaforma e, per col
 
 Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyPay_Mobile)  del progetto.
 
+
+
+## Sviluppo
+
+<dettagli sull' applicazione dello extreme programming>
+
+[Xtreme Programming](/doc/Xtreme%20Programming.md)
+
+
 ## Codice
 
 - [Sequence diagram](/doc/Sequence%20Diagram.md)
