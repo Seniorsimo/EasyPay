@@ -2825,7 +2825,7 @@ function MovementsComponent_td_28_Template(rf, ctx) { if (rf & 1) {
     const movimento_r17 = ctx.$implicit;
     const ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](movimento_r17.type === ctx_r7.MovimentoType.ricarica ? movimento_r17.from_name : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 3, movimento_r17.id_atm)) || "-");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](movimento_r17.type === ctx_r7.MovimentoType.pagamento ? movimento_r17.from_name : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 3, movimento_r17.id_atm)) || "-");
 } }
 function MovementsComponent_th_30_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 21);
@@ -5778,4 +5778,4 @@ var UtenteType;
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.37437cb45a70980b17c6.js.map
+//# sourceMappingURL=main-es2015.810b536b6c7febfd77c7.js.map

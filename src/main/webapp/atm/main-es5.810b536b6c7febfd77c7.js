@@ -5552,7 +5552,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](movimento_r17.type === ctx_r7.MovimentoType.ricarica ? movimento_r17.from_name : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 3, movimento_r17.id_atm)) || "-");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](movimento_r17.type === ctx_r7.MovimentoType.pagamento ? movimento_r17.from_name : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 3, movimento_r17.id_atm)) || "-");
         }
       }
 
@@ -11518,4 +11518,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.37437cb45a70980b17c6.js.map
+//# sourceMappingURL=main-es5.810b536b6c7febfd77c7.js.map
