@@ -5420,12 +5420,6 @@
       var _angular_flex_layout_extended__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/flex-layout/extended */
       "znSr");
-      /* harmony import */
-
-
-      var _pipes_atm_name_pipe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-      /*! ./pipes/atm-name.pipe */
-      "/BoP");
 
       function MovementsComponent_th_18_Template(rf, ctx) {
         if (rf & 1) {
@@ -5538,10 +5532,6 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "async");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "atmName");
-
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
 
@@ -5552,7 +5542,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](movimento_r17.type === ctx_r7.MovimentoType.pagamento ? movimento_r17.from_name : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 3, movimento_r17.id_atm)) || "-");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r7.getFromName(movimento_r17) || "-");
         }
       }
 
@@ -5578,9 +5568,11 @@
         if (rf & 2) {
           var movimento_r18 = ctx.$implicit;
 
+          var ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](movimento_r18.to_name);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r9.getToName(movimento_r18));
         }
       }
 
@@ -5657,10 +5649,34 @@
               return sub.unsubscribe();
             });
           }
+          /** contrassegna chi riceve i messaggi */
+
         }, {
           key: "isReceipt",
           value: function isReceipt(movimento) {
             return movimento.type === src_app_core_constants_movimento_type_enum__WEBPACK_IMPORTED_MODULE_1__["MovimentoType"].ricarica || movimento.to === this.selfStore.idConto;
+          }
+        }, {
+          key: "getFromName",
+          value: function getFromName(movimento) {
+            if (movimento.type === src_app_core_constants_movimento_type_enum__WEBPACK_IMPORTED_MODULE_1__["MovimentoType"].ricarica) {
+              return 'ATM01';
+            }
+
+            if (movimento.to === this.selfStore.id) {
+              return movimento.from_name;
+            } else {
+              return movimento.to_name;
+            }
+          }
+        }, {
+          key: "getToName",
+          value: function getToName(movimento) {
+            if (movimento.to === this.selfStore.id) {
+              return movimento.to_name;
+            } else {
+              return movimento.from_name;
+            }
           }
         }]);
 
@@ -5759,7 +5775,7 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](27, MovementsComponent_th_27_Template, 2, 0, "th", 11);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](28, MovementsComponent_td_28_Template, 4, 5, "td", 12);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](28, MovementsComponent_td_28_Template, 2, 1, "td", 12);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
 
@@ -5813,7 +5829,7 @@
           }
         },
         directives: [_angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatCell"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgClass"], _angular_flex_layout_extended__WEBPACK_IMPORTED_MODULE_8__["DefaultClassDirective"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatRow"]],
-        pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["AsyncPipe"], _pipes_atm_name_pipe__WEBPACK_IMPORTED_MODULE_9__["AtmNamePipe"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]],
+        pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["AsyncPipe"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]],
         styles: ["table[_ngcontent-%COMP%] {\n  width: 100%;\n}\n\n.info[_ngcontent-%COMP%] {\n  text-align: left;\n  margin-left: 4em;\n  margin-right: 4em;\n  width: auto;\n  margin-bottom: 50px;\n}\n\n.labels[_ngcontent-%COMP%], .values[_ngcontent-%COMP%] {\n  display: inline-block;\n}\n\n.label[_ngcontent-%COMP%] {\n  font-weight: 700;\n}\n\n.value[_ngcontent-%COMP%] {\n  margin-left: 1em;\n}\n\n.td-green[_ngcontent-%COMP%] {\n  color: #2fdf29;\n}\n\n.td-red[_ngcontent-%COMP%] {\n  color: #b4261c;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL21vdmVtZW50cy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7QUFDRjs7QUFHQTtFQUNFLGdCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxpQkFBQTtFQUNBLFdBQUE7RUFDQSxtQkFBQTtBQUFGOztBQUdBO0VBQ0UscUJBQUE7QUFBRjs7QUFHQTtFQUNFLGdCQUFBO0FBQUY7O0FBR0E7RUFDRSxnQkFBQTtBQUFGOztBQUdBO0VBQ0UsY0FBQTtBQUFGOztBQUdBO0VBQ0UsY0FBQTtBQUFGIiwiZmlsZSI6Im1vdmVtZW50cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbInRhYmxlIHtcbiAgd2lkdGg6IDEwMCU7XG59XG5cblxuLmluZm8ge1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xuICBtYXJnaW4tbGVmdDogNGVtO1xuICBtYXJnaW4tcmlnaHQ6IDRlbTtcbiAgd2lkdGg6IGF1dG87XG4gIG1hcmdpbi1ib3R0b206IDUwcHg7XG59XG5cbi5sYWJlbHMsIC52YWx1ZXMge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbi5sYWJlbCB7XG4gIGZvbnQtd2VpZ2h0OiA3MDA7XG59XG5cbi52YWx1ZSB7XG4gIG1hcmdpbi1sZWZ0OiAxZW07XG59XG5cbi50ZC1ncmVlbiB7XG4gIGNvbG9yOiByZ2IoNDcsIDIyMywgNDEpOyBcbn1cblxuLnRkLXJlZCB7XG4gIGNvbG9yOiByZ2IoMTgwLCAzOCwgMjgpOyBcbn0iXX0= */"]
       });
       /*@__PURE__*/
@@ -11518,4 +11534,4 @@
     }
   }, [[0, "runtime", "vendor"]]]);
 })();
-//# sourceMappingURL=main-es5.810b536b6c7febfd77c7.js.map
+//# sourceMappingURL=main-es5.ce6884e821a1c6be4d73.js.map
