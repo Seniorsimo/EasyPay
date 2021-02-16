@@ -1,96 +1,94 @@
-# EASYPAY DEMO
+# EasyPay
 
-TODO: in scrittura
+EasyPay è un servizio di micro-pagamenti, caratterizzato dalla possibilità di effettuare gli stessi in maniera pratica e veloce tramite il proprio smartphone.
 
-## Avvio di Spring
+Il progetto è composto da molteplici moduli:
 
-Per avviare il server con spring è sufficiente lanciare il jar fornito
+- un frontend dedicato ai commercianti [EasyPayAtm (https://github.com/gmammolo/Easypay-atm)](https://github.com/gmammolo/Easypay-atm)
+- un applicativo Android dedicato agli utilizzatori [EasyPayMobile (https://github.com/MichelettiAlessandro/EasyPay_Mobile)](https://github.com/MichelettiAlessandro/EasyPay_Mobile)
+- una interfaccia per l'integrazione con servizi terzi [EasyPayOnline (https://github.com/gmammolo/EasyPay-online)](https://github.com/gmammolo/EasyPay-online)
 
-```$xslt
-$ java -jar /home/terasud/IdeaProjects/EasyPay-mock/target/BankUnito-1.0.jar --server.port=8080
+**ATTENZIONE: Il progetto è un lavoro universitario e non ha alcuna finalità commerciale. Il progetto è un semplice prototipo dell'idea**
 
+
+
+## Spring Boot
+
+Il progetto è stato realizzato utilizzando [Spring Boot](https://spring.io/projects/spring-boot) nella sua versione 2.1.9
+
+```
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.9.RELEASE)
+ 
+spring-boot-starter-web      2.1.9.RELEASE
+spring-boot-starter-data-jpa 2.1.9.RELEASE
+spring-boot-starter-security 2.1.9.RELEASE
+spring-boot-starter-actuator 2.1.9.RELEASE
+springdoc-openapi-ui         1.5.2
+log4j                        1.2.17
+lombok                       1.18.6
+jstl                         1.2
+tomcat-embed-jasper          9.0.22
+derby                        10.13.1.1
+postgresql                   42.2.6
+hibernate-spatial            5.3.12.Final
+java-jwt                     3.4.0
 ```
 
 
 
-## Come usare EasyPay
+## Server di Sviluppo
 
-Un semplice file di demo utilizzato per mostrare come implementare correttamente easyPay.
+ Per testare il contenuto locale è sufficiente lanciare il jar tramite il comando
 
-In seguito saranno presenti i passaggi fondamentali, mentre in index.html è presente un esempio completo di implementazione.
-
-EasyPay va aperto tramite windows.open passando i parametri **idConto** e **prezzo** (valore numerico) che indicano rispettivamente l'id del commerciante e il prezzo da pagare.
-
-Nel mock i valori accettabili da idConto sono 001 e 002.
-
-```js
-const easyPayOrigin = 'http://localhost:8080';
-const url = easyPayOrigin + '/home/pin?idConto=' + idConto + '&prezzo=' + prezzo;
-const easyPay = window.open(url, 'myWindow', 'width=500, height=900'); // Opens a new window
+```
+$ java -jar ./target/EasyPay-1.0.jar --server.port=8080
 ```
 
+*Nota: a causa di un problema di compatibilità l'ambiente di sviluppo non può essere eseguito senza un supporto database compatibile con Hibernate spatial. Il progetto è configurato per avviarsi tramite Derby con un database "in memory" nel profilo di sviluppo, ma affinché l'avvio avvenga correttamente è necessario rimuovere suddetta dipendenza o utilizzare un database supportato.*
 
-per la ricezione del risultato invece si utilizza postMessage
-(see [postMessage MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) )
+## Server di Application / Produzione
 
-```js
-window.addEventListener('message', receiveMessage, false);
+Per avviare il contenuto tramite profilo di produzione è necessario lanciare il jar opportunamente configurato
 
-function receiveMessage(event) {
-  const response = JSON.parse(event.data);
-  
-}
+```
+$ java -jar ./target/EasyPay-1.0.jar --server.port=8080 -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://<database_host> -Dspring.datasource.username=<database_username> -Dspring.datasource.password=<database_password>
 ```
 
-La risposta ottenuta da easypay è un JSON stringifato.
-il suo contenuto è: 
-```typescript
-interface Response {
-  /** true in caso di successo durante il pagamento, false con esito negativo */
-  success: boolean;
-  /** codice dell' errore in caso di fallimento  */
-  errorCode?: string;
-  /** messaggio dell' errore ottenuto durante il pagamento*/
-  errorMessage?: string;
-  /** data di avvenuto pagamento */
-  timestamp: number;
-}
-```
+Il progetto è rilasciato su [Heroku](https://www.heroku.com/). *Essendo un progetto universitario con finalità il conseguimento di un esame lo sviluppo sarà interrotto una volta entrato in produzione e presentato.*
 
-## Dati del Mock
+L'ambiente di Application verrà sostituito dall'ambiente di Production in data 14/02/2021 ed è raggiungibile su [https:///easypay-unito.herokuapp.com/](https://easypay-unito.herokuapp.com/).
+
+La descrizione delle api per l'integrazione del servizio sono disponibili qui: [https://easypay-unito.herokuapp.com/swagger-ui)](https://easypay-unito.herokuapp.com/swagger-ui).
 
 
-```js
-const commercianti = {
-  '001': {
-    idConto: '001',
-    nome: 'Mario Rossi',
-    nomenclatura: 'Gelateria Buongustario',
-  },
-  '002': {
-    idConto: '002',
-    nome: 'Paolo Bianco',
-    nomenclatura: 'Pizzeria Bufalona',
-  }
-}
-```
 
+## Info utili su Spring
 
-```js
-const clienti = {
-  '0010001': {
-    id: '001',
-    pin: '0001',
-    token: '0001',
-    nome: 'Paolo Pioppo',
-    budget: 5000,
-  },
-  '0020002': {
-    id: '002',
-    pin: '0002',
-    token: '0002',
-    nome: 'Anna Dico',
-    budget: 2,
-  }
-}
-```
+Spring è un framework java molto flessibile focalizzato all'utilizzo enterprise. Agevola lo sviluppo a livello applicativo permettendo un disaccoppiamento fra quest'ultimo e l'ambiente di lavoro.
+
+Spring Boot, invece, permette la realizzazione di applicazioni tramite Spring astraendo ulteriormente l'applicativo, il quale conterrà tutto il necessario per poter essere "eseguito" semplicemente avviandolo.
+
+### Componenti utilizzate
+
+#### spring-data-jpa
+
+Utilizzato a livello di persistenza dei dati: permette la realizzazione di *Repository* per l'accesso ai dati tramite le **Java Persistance API** e il framework [Hibernate (https://hibernate.org/)](https://hibernate.org/)
+
+#### spring-security
+
+Utilizzato per la gestione degli accessi all'intero sistema.
+
+#### hibernate-spatial
+
+Permette l'utilizzo e l'integrazione nei *Repository JPA* di query *Spaziali*. Utilizzato per l'estrazione dei dati relativi ai commercianti presenti in zona.
+
+#### lombok
+
+Libreria Java per ridurre la quantità di codice *boilerplate* e velocizzare lo sviluppo. Permette di automatizzare la realizzazione di metodi get, set, costruttori e molto altro. [Lombok (https://projectlombok.org/)](https://projectlombok.org/).
+
