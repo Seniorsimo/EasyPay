@@ -213,12 +213,14 @@ class HomeComponent {
                 }
                 else {
                     // account cliente
-                    this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
-                    throw {
+                    const error = {
                         type: src_app_core_models_error_model__WEBPACK_IMPORTED_MODULE_4__["CUSTOM_ERROR"],
                         name: 'tipo account errato',
                         message: 'è necessario un account da commerciante, ma questo account è di tipo ' + result.type,
                     };
+                    this.error$.next(error);
+                    this.loaderService.changeStatus(src_app_core_services_loader_service__WEBPACK_IMPORTED_MODULE_5__["LoadingStatus"].FAILED);
+                    throw error;
                 }
             },
             error: error => {

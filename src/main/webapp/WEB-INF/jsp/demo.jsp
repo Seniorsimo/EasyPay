@@ -86,19 +86,35 @@
             // controllo dell' origine per controlli di sicurezza
             // if (event.origin !== 'http://localhost:4200') return;
             console.log(event.data);
+            let response = event.data
             try {
-                const response = JSON.parse(event.data);
+                response = JSON.parse(event.data);
+            } catch { }
+            try {
                 if (response.success) {
                     document.getElementById('success').style.display = 'block';
                     document.getElementById('failed').style.display = 'none';
                 } else {
                     document.getElementById('success').style.display = 'none';
                     document.getElementById('failed').style.display = 'block';
-                    document.getElementById('failed_code').innerHTML = response.message;
+                    if(response.message) {
+                         document.getElementById('failed_code').innerHTML = response.message;
+                    } else if(response.errorMessage) {
+                        if(response.errorMessage.error && response.errorMessage.error.message  ) {
+                            document.getElementById('failed_code').innerHTML = response.errorMessage.error.message;
+                        } else if (typeof response.errorMessage === 'object') {
+                            document.getElementById('failed_code').innerHTML = JSON.stringify(response.errorMessage);
+                        } else {
+                            document.getElementById('failed_code').innerHTML = response.errorMessage;
+                        }
+                    }
+                    
+                   
                 }
             } catch (e) {
                 console.error(e);
             }
+
         }
     </script>
     <!--
@@ -225,16 +241,16 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
 <h1>Esempio (usare crtl+U per visualizzare il codice)</h1>
 <div>
     <div class="blocco">
-        <p>Attrezzatura scolastica</p>
-        <p>Rossi Ubaldo</p>
+        <p>Sedie da Manager</p>
+        <p>Fantozzi Ugo</p>
         <p>4 euro</p>
-        <button onclick="openEasyPay('commerciante1@gmail.com','Qwerty1234', '15', 4)">Paga</button>
+        <button onclick="openEasyPay('commerciante1@gmail.com','Qwerty1234', '20', 4)">Paga</button>
     </div>
     <div class="blocco">
-        <p>Dolci e Salati</p>
-        <p>Unica Martina</p>
+        <p>Prodotti scolastici</p>
+        <p>Rossi Ubaldo</p>
         <p>30 euro</p>
-        <button onclick="openEasyPay('commerciante2@gmail.com','Qwerty1234', '17', 30)">Paga</button>
+        <button onclick="openEasyPay('commerciante2@gmail.com','Qwerty1234', '21', 30)">Paga</button>
     </div>
 </div>
 <div id="success" style="display:none">Pagato! :)</div>
@@ -243,6 +259,7 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
     <div id="failed_code"></div>
 </div>
 
+<!--
 <h2>Clienti</h2>
 <div>
     <div class="blocco">
@@ -260,5 +277,6 @@ Come per i commercianti, in basso sono presenti i dati mock di un paio di acquir
         <img src="<c:url value="/img/002.png" />" width="200px" height="200px"/>
     </div>
 </div>
+-->
 </body>
 </html>

@@ -200,7 +200,7 @@ public class Cliente implements Serializable {
         this.address = address;
         this.conto = Conto.builder()
                 .cliente(this)
-                .budget(20)
+                .budget(0)
                 .saldo(0)
                 .build();
     }
