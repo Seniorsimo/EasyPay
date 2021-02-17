@@ -68,6 +68,18 @@ La descrizione delle api per l'integrazione del servizio sono disponibili qui: [
 
 
 
+## Creazione immagine Docker
+
+Per generare un'immagine docker del pacchetto è sufficiente lanciare in sequenza i seguenti comandi dalla root folder del progetto (dopo la build):
+*NB: Sul sistema deve essere installato [Docker](https://docker.com/), (disponibile solo su architetture a 64-bit). Visitare https://docs.docker.com/installation/#installation per i dettagli su come installare e configurare Docker per il proprio sistema.*
+
+```bash
+docker build -t easypay/easypay .
+docker run -p 8080:8080 easypay/easypay
+```
+
+
+
 ## Info utili su Spring
 
 Spring è un framework java molto flessibile focalizzato all'utilizzo enterprise. Agevola lo sviluppo a livello applicativo permettendo un disaccoppiamento fra quest'ultimo e l'ambiente di lavoro.
