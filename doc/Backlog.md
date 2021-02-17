@@ -1,14 +1,4 @@
-# Xtreme Programming
-
-<qualche dettaglio sull'applicazione della metodologia agile nel nostro contesto>
-
-## Variazioni effettuate
-
-<mancanza dell'applicazione del pair programming ed un approccio alle user story più scrum oriented>
-
-
-
-## Implementazione
+# Backlog
 
 
 

@@ -118,9 +118,7 @@ Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyP
 
 ## Sviluppo
 
-<dettagli sull' applicazione dello extreme programming>
-
-[Xtreme Programming](/doc/Xtreme%20Programming.md)
+[Backlog](/doc/Backlog.md)
 
 
 ## Codice
@@ -136,7 +134,3 @@ Maggiori informazioni nel [README](https://github.com/MichelettiAlessandro/EasyP
 - [Analisi Post Mortem del progetto](/doc/Analisi%20Post%20Mortem.md)
 
   
-
-## Documentazione
-
-< dettagli tecnini sulla documentazione e volendo anche una sua integrazione>
